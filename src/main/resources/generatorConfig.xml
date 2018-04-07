@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 
-    <classPathEntry location="E:\Repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+    <classPathEntry location="E:\maven\Repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
 
     <context id="ssm" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
@@ -20,10 +20,10 @@
         
         <!-- 连接数据库 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/home_decoration" userId="root" password="123456">
+                        connectionURL="jdbc:mysql://119.23.69.225:3306/home_decoration" userId="root" password="bir19951225">
         </jdbcConnection>
         <javaTypeResolver>
-            <property name="forceBigDecimals" value="false" />
+            <property name="forceBigDecimals" value="true" />
         </javaTypeResolver>
         <!-- 实体生成-->
         <javaModelGenerator targetPackage="com.hd.domain" targetProject="src/main/java">
@@ -49,7 +49,116 @@
             <property name="useActualColumnNames" value="false" />
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
-        
+
+        <!--<table schema="mybatis" tableName="decoration_apply" domainObjectName="DecorationApply"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="decoration_effect" domainObjectName="DecorationEffect"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="decoration_effect_key" domainObjectName="DecorationEffectKey"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="decoration_style" domainObjectName="DecorationStyle"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="designer" domainObjectName="Designer"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="designer_style" domainObjectName="DesignerStyle"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="img_source" domainObjectName="ImgSource"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="question" domainObjectName="Question"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="question_answer" domainObjectName="QuestionAnswer"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="sys_company" domainObjectName="SysCompany"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="sys_experience_list" domainObjectName="SysExperienceList"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <table schema="mybatis" tableName="sys_preferential_activities" domainObjectName="SysPreferentialActivities"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+-->
 
     </context>
 </generatorConfiguration>
