@@ -1,5 +1,7 @@
 package com.hd.mapper;
 
+import java.util.List;
+
 import com.hd.domain.User;
 
 public interface UserMapper {
@@ -50,4 +52,11 @@ public interface UserMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(User record);
+    
+    /**
+     * 查询用户信息
+     * @param user
+     * @return
+     */
+    List<User> selectUserBySelective(User user);
 }
