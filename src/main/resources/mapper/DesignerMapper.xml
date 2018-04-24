@@ -331,6 +331,7 @@
   </select>
   
   <select id="queryDesignerInfo" resultMap="ResultMapWithBLOBs">
+      SELECT
   	<include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -338,7 +339,10 @@
     	designer
     WHERE
     	user_id = #{userId}
-    	AND
-    	status = #{status}
+
+      <if test="status!=null and status!=''">
+          AND status = #{status}
+      </if>
+
   </select>
 </mapper>

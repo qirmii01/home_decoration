@@ -2,7 +2,7 @@ package com.hd.domain;
 
 import java.math.BigDecimal;
 
-public class DesignerCheckInfo{
+public class DesignerCheckInfo extends BasePage{
 	private String designerId;
 	private String designerName;
 	private String telphone;
@@ -14,6 +14,9 @@ public class DesignerCheckInfo{
 	private float engageTime;
 	private BigDecimal designAmountLow;
 	private BigDecimal designAmountHigh;
+	private String userId;
+
+	private String status;
 	public String getDesignerId() {
 		return designerId;
 	}
@@ -79,5 +82,21 @@ public class DesignerCheckInfo{
 	}
 	public void setDesignAmountHigh(BigDecimal designAmountHigh) {
 		this.designAmountHigh = designAmountHigh;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

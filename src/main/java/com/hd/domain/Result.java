@@ -22,17 +22,17 @@ public class Result {
 	public final static String sessionInvalid = "3";
 	private String code;
 	private String msg;
-	private Object body;
+	private Object data;
 	
 	public Result(){}
 	
-	public Result(Object body){
+	public Result(Object data){
 		this.code = SUCCESS;
-		this.body = body;
+		this.data = data;
 	}
 	
-	public Result(Object body, Integer count){
-		this(body);
+	public Result(Object data, Integer count){
+		this(data);
 		this.count = count;
 	}
 	
@@ -77,10 +77,12 @@ public class Result {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public Object getBody() {
-		return body;
+
+	public Object getData() {
+		return data;
 	}
-	public void setBody(Object body) {
-		this.body = body;
+
+	public void setData(Object data) {
+		this.data = data;
 	}
 }

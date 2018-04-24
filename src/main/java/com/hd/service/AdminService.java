@@ -2,10 +2,7 @@ package com.hd.service;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.hd.domain.Result;
-import com.hd.domain.SysCompanyWithBLOBs;
-import com.hd.domain.SysExperienceList;
-import com.hd.domain.SysPreferentialActivities;
+import com.hd.domain.*;
 
 /**
  * 管理员服务接口
@@ -77,7 +74,7 @@ public interface AdminService {
 	 * 查询设计师申请信息
 	 * @return
 	 */
-	public Result querySignerCheckInfo();
+	public Result querySignerCheckInfo(DesignerCheckInfo designerCheckInfo);
 	
 	/**
 	 * 设计师审核
@@ -85,7 +82,7 @@ public interface AdminService {
 	 * @param userId 被审核的用户id
 	 * @return
 	 */
-	public Result checkDesigner(String status, String userId);
+	public Result checkDesigner(String status, String userId,String designerId);
 	
 	/**
 	 * 查询菜单信息

@@ -60,7 +60,14 @@ public interface UserMapper {
      * 查询设计师申请审核信息
      * @return
      */
-    List<DesignerCheckInfo> queryAllDesignerCheckInfo();
+    List<DesignerCheckInfo> queryAllDesignerCheckInfo(DesignerCheckInfo designerCheckInfo);
+
+	/**
+	 * 统计申请审核的设计师
+	 * @param designerCheckInfo
+	 * @return
+	 */
+	Integer queryCountAllDesignerCheckInfo(DesignerCheckInfo designerCheckInfo);
     
     /**
      * 通过用户id查询设计师申请审核信息

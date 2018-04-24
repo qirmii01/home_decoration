@@ -40,7 +40,7 @@ public class UserController {
 	public String index(Integer login){
 		HttpSession session = request.getSession();
 		//存公司基本信息
-		session.setAttribute("baseInfo", adminService.queryAllCompanyInfo().getBody());
+		session.setAttribute("baseInfo", adminService.queryAllCompanyInfo().getData());
 		session.setMaxInactiveInterval(10*60);
 		request.setAttribute("login", login);
 		return "index";
@@ -58,7 +58,7 @@ public class UserController {
 		if(result.noError()){
 			HttpSession session = request.getSession();
 			//存用户信息
-			session.setAttribute("userInfo", result.getBody());
+			session.setAttribute("userInfo", result.getData());
 			session.setMaxInactiveInterval(10*60);
 		}
 		return result;
@@ -87,7 +87,7 @@ public class UserController {
 	public Result useRegister(User user){
 		Result result = userService.registerUer(user);
 		if(result.noError()){
-			User userInfo = (User)result.getBody();
+			User userInfo = (User)result.getData();
 			HttpSession session = request.getSession();
 			session.setAttribute("userInfo", userInfo);
 			session.setMaxInactiveInterval(10*60);

@@ -142,7 +142,7 @@ public class AdminServiceImpl implements AdminService {
 		List<SysPreferentialActivities> preferentialActivitiesLis = 
 				sysPreferentialActivitiesMapper.selectValidPreferentialActivities();
 		Result result = new Result();
-		result.setBody(preferentialActivitiesLis);
+		result.setData(preferentialActivitiesLis);
 		return result;
 	}
 	
@@ -175,13 +175,14 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Result querySignerCheckInfo() {
-		List<DesignerCheckInfo> checkInfos = userMapper.queryAllDesignerCheckInfo();
-		return new Result(checkInfos);
+	public Result querySignerCheckInfo(DesignerCheckInfo designerCheckInfo) {
+		List<DesignerCheckInfo> checkInfos = userMapper.queryAllDesignerCheckInfo(designerCheckInfo);
+		Integer count =userMapper.queryCountAllDesignerCheckInfo(designerCheckInfo);
+		return new Result(checkInfos,count);
 	}
 
 	@Override
-	public Result checkDesigner(String status, String userId) {
+	public Result checkDesigner(String status, String userId,String designerId) {
 		if(StringUtil.isEmpty(status)){
 			return Result.buildErrorResult("选择结果不能为空");
 		}
@@ -189,7 +190,7 @@ public class AdminServiceImpl implements AdminService {
 		if(StringUtil.isEmpty(userId)){
 			return Result.buildErrorResult("用户id不能为空");
 		}
-		DesignerWithBLOBs designer = null;
+		DesignerWithBLOBs designer = new DesignerWithBLOBs();
 		if(status.equals("1")){
 			User user =  new User();
 			user.setId(userId);
@@ -201,13 +202,8 @@ public class AdminServiceImpl implements AdminService {
 			
 		}else if( ! status.equals("2")){
 			return Result.buildErrorResult("选择结果不是正常值");
-		}else{
-			List<DesignerWithBLOBs> bloBs = designerMapper.queryDesignerInfo(userId, "0");
-			if(bloBs.isEmpty() || bloBs.size() != 1){
-				return Result.buildErrorResult("设计师信息有误");
-			}
-			designer = bloBs.get(0);
 		}
+		designer.setId(designerId);
 		designer.setStatus(status);
 		designerMapper.updateByPrimaryKeySelective(designer);
 		return new Result("审核完成");

@@ -66,5 +66,5 @@ public interface DesignerMapper {
      * @param status 状态
      * @return
      */
-    List<DesignerWithBLOBs> queryDesignerInfo(String userId, String status);
+    List<DesignerWithBLOBs> queryDesignerInfo(@Param("userId") String userId, @Param("status") String status);
 }

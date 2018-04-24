@@ -3,6 +3,7 @@ package com.hd.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.hd.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.hd.domain.Result;
-import com.hd.domain.SysCompanyWithBLOBs;
-import com.hd.domain.SysExperienceList;
-import com.hd.domain.SysPreferentialActivities;
 import com.hd.service.AdminService;
 import com.hd.util.StringUtil;
 
@@ -63,7 +60,7 @@ public class AdminController {
 	@RequestMapping("menuList")
 	public String menuList(HttpServletRequest request){
 		Result result = adminService.queryMenuList();
-		request.setAttribute("menuList", result.getBody());
+		request.setAttribute("menuList", result.getData());
 		return "adminIndex";
 	}
 	
@@ -123,7 +120,7 @@ public class AdminController {
 	@ResponseBody
 	public Result addOrUpdateBaseInfo(SysCompanyWithBLOBs sysCompany){
 		Result result = adminService.queryAllCompanyInfo();
-		if(result.getBody() == null){
+		if(result.getData() == null){
 			result = adminService.addBaseInfo(sysCompany);
 		}else{
 			result = adminService.updateBaseInfo(sysCompany);
@@ -172,18 +169,23 @@ public class AdminController {
 		Result result = adminService.updatePreferentialActivities(sysPreferentialActivities);
 		return result;
 	}
-	
+
+	/**
+	 * 查询申请审核的设计师
+	 * @param designerCheckInfo
+	 * @return
+	 */
 	@RequestMapping("queryDesignerCheckInfo")
 	@ResponseBody
-	public Result queryDesignerCheckInfo(){
-		Result result = adminService.querySignerCheckInfo();
+	public Result queryDesignerCheckInfo(DesignerCheckInfo designerCheckInfo){
+		Result result = adminService.querySignerCheckInfo(designerCheckInfo);
 		return result;
 	}
 	
 	@RequestMapping("checkDesigner")
 	@ResponseBody
-	public Result checkDesigner(@RequestParam("status")String status, @RequestParam("userId")String userId){
-		Result result = adminService.checkDesigner(status, userId);
+	public Result checkDesigner(@RequestParam("status")String status, @RequestParam("userId")String userId,@RequestParam("designerId")String designerId){
+		Result result = adminService.checkDesigner(status, userId,designerId);
 		return result;
 	}
 	

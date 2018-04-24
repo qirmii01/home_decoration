@@ -28,6 +28,12 @@
     id, user_name, sex, password, telphone, avatar, type, positional_titles, case_example, 
     status, create_time
   </sql>
+
+    <sql id="Base_Limit">
+        limit #{page},#{limit}
+    </sql>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--
       WARNING - @mbggenerated
@@ -265,9 +271,9 @@
   		telphone = #{telphone}
   </select>
   
-  <select id="queryAllDesignerCheckInfo" resultType="com.hd.domain.DesignerCheckInfo">
+  <select id="queryAllDesignerCheckInfo" resultType="com.hd.domain.DesignerCheckInfo" parameterType="com.hd.domain.DesignerCheckInfo">
   	SELECT
-  		u.id designerId,
+  		d.id designerId,
   		u.user_name designerName,
   		u.telphone telphone,
   		u.sex sex,
@@ -277,17 +283,66 @@
   		d.positional_title positionalTitle,
   		d.engage_time engageTime,
   		d.design_amount_low designAmountLow,
-  		d.design_amount_high designAmountHigh
+  		d.design_amount_high designAmountHigh,
+        d.status status,
+        u.id userId
   	FROM
   		designer d,
   		user u
   	WHERE
   		u.id = d.user_id
-  		AND
-  		d.status = '0'
+      <if test="designerName!=null and designerName!=''">
+        AND
+          u.user_name LIKE '%${designerName}%'
+      </if>
+      <if test="telphone!=null and telphone!=''">
+        AND
+          u.telphone =#{telphone}
+      </if>
+      <if test="positionalTitle!=null and positionalTitle!=''">
+        AND
+          d.positional_title LIKE '%${positionalTitle}%'
+      </if>
+      <if test="status!=null and status!=''">
+        AND
+          d.status =#{status}
+      </if>
   	ORDER BY
   		u.create_time
+      <if test="page!=null and limit!=null">
+          <include refid="Base_Limit"/>
+      </if>
   </select>
+
+
+    <!--统计申请审核的设计师-->
+    <select id="queryCountAllDesignerCheckInfo" resultType="java.lang.Integer" parameterType="com.hd.domain.DesignerCheckInfo">
+        SELECT
+        COUNT(1)
+        FROM
+        designer d,
+        user u
+        WHERE
+        u.id = d.user_id
+        <if test="designerName!=null and designerName!=''">
+            AND
+            u.user_name LIKE '%${designerName}%'
+        </if>
+        <if test="telphone!=null and telphone!=''">
+            AND
+            u.telphone =#{telphone}
+        </if>
+        <if test="positionalTitle!=null and positionalTitle!=''">
+            AND
+            d.positional_title LIKE '%${positionalTitle}%'
+        </if>
+        <if test="status!=null and status!=''">
+            AND
+            d.status =#{status}
+        </if>
+        ORDER BY
+        u.create_time
+    </select>
   
   <select id="queryDesignerCheckInfoById" resultType="com.hd.domain.DesignerCheckInfo">
   	SELECT
