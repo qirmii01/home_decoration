@@ -1,3 +1,4 @@
+@charset "utf-8";
 * {margin: 0;padding: 0;}
 body, button, input, select, textarea {color: #666;font: 14px/1.5 "Microsoft YaHei",微软雅黑,黑体,宋体,"Microsoft JhengHei",华文细黑,STHeiti,MingLiu;}
 body{ min-width:1220px;}
@@ -2087,8 +2088,8 @@ line-height: 28px;width: 120px;-webkit-appearance: none;}
 .main_content .small_tip{margin:10px 0 10px 78px;width:270px;}
 .main_content .small_tip em a{ float:none; color:#5dc560;}
 .main_content .small_tip a{ float:right;}
-.main_content .loading_sub{width:265px;}
-.main_content .loading_sub input{margin-left:78px;width:100%;height:40px;background-color:#5dc560;color:#FFF;text-align:center;font-size:16px;line-height:40px;cursor:pointer;}
+.main_content .loading_sub{width:272px;}
+.main_content .loading_sub input{margin-left:71px;width:100%;height:40px;background-color:#5dc560;color:#FFF;text-align:center;font-size:16px;line-height:40px;cursor:pointer;}
 .login_logo span{font-size: 18px}
 .getbox{width:25%;}
 .getbox .get_click{clear:both;width:307px;height:86px;background:url(../images/trial_223.jpg) no-repeat;}

@@ -13,6 +13,13 @@ public class Result {
 	 * 执行失败代码
 	 */
 	public final static String FAIL = "1";
+	
+	private Integer count;
+	
+	/**
+	 * session失效
+	 */
+	public final static String sessionInvalid = "3";
 	private String code;
 	private String msg;
 	private Object body;
@@ -22,6 +29,11 @@ public class Result {
 	public Result(Object body){
 		this.code = SUCCESS;
 		this.body = body;
+	}
+	
+	public Result(Object body, Integer count){
+		this(body);
+		this.count = count;
 	}
 	
 	public static Result buildResult(String code, String msg){
@@ -38,9 +50,17 @@ public class Result {
 	}
 	
 	public boolean hasError(){
-		return code.equals(FAIL);
+		return !noError();
 	}
 	
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
 	public boolean noError(){
 		return code.equals(SUCCESS);
 	}

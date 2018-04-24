@@ -7,10 +7,13 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author admin
  *
  */
+@Component
 public class RandomSequence implements Sequence {
 
 	/**
@@ -53,6 +56,7 @@ public class RandomSequence implements Sequence {
 		return string.substring(leng-32);
 	}
 
+	@Override
 	public String getCommonID() {
 		StringBuffer seqSb = new StringBuffer(32);
 		seqSb.append(getTimeStr()); // 时间前缀

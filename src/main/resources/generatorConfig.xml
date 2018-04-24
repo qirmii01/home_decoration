@@ -5,17 +5,17 @@
 
 <generatorConfiguration>
 
-    <classPathEntry location="E:\maven\Repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+    <classPathEntry location="E:\Repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
 
     <context id="ssm" targetRuntime="MyBatis3">
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+       	<property name="javaFileEncoding" value="UTF-8"/>
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
-        <!-- <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin> -->
+        
         <!-- 注释 -->
         <commentGenerator>
             <property name="suppressDate" value="true" />
             <property name="suppressAllComments" value="false" />
+            <property name="addRemarkComments" value="true"/>
         </commentGenerator>
         
         <!-- 连接数据库 -->
@@ -26,20 +26,41 @@
             <property name="forceBigDecimals" value="true" />
         </javaTypeResolver>
         <!-- 实体生成-->
-        <javaModelGenerator targetPackage="com.hd.domain" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.hd.domain" targetProject="hd/src/main/java">
             <property name="constructorBased" value="true" />
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mapper" targetProject="hd/src/main/resources">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hd.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hd.mapper" targetProject="hd/src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-        <!--不生成Example相关文件-->
+        <table schema="mybatis" tableName="decoration_effect_key" domainObjectName="DecorationEffectKey"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+        <!-- 
+		<table schema="mybatis" tableName="sys_menu" domainObjectName="SysMenu"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               enableUpdateByExample="false">
+            <property name="constructorBased" value="true" />
+            <property name="useActualColumnNames" value="false" />
+            <property name="ignoreQualifiersAtRuntime" value="true" />
+        </table>
+         -->
+        <!--不生成Example相关文件-->	
+        <!-- 
         <table schema="mybatis" tableName="user" domainObjectName="User"
                enableSelectByExample="false"
                enableDeleteByExample="false"
@@ -49,8 +70,7 @@
             <property name="useActualColumnNames" value="false" />
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
-
-        <!--<table schema="mybatis" tableName="decoration_apply" domainObjectName="DecorationApply"
+        <table schema="mybatis" tableName="decoration_apply" domainObjectName="DecorationApply"
                enableSelectByExample="false"
                enableDeleteByExample="false"
                enableCountByExample="false"
@@ -158,7 +178,6 @@
             <property name="useActualColumnNames" value="false" />
             <property name="ignoreQualifiersAtRuntime" value="true" />
         </table>
--->
-
+ -->
     </context>
 </generatorConfiguration>

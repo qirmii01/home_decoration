@@ -1,81 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="base.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>透明家装 </title>
-    <meta name="keywords" content="透明家装"/>
-    <meta name="description" content="透明家装，从选择到装修，让你看得见的家庭装修"/>
-    <meta name="viewport"  content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <link href="<%=basePath%>css/index.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@include file="jsp/common/header.jsp"%>
+<link rel="stylesheet" href="<%=basePath%>plugins/layui/css/layui.css">
 <div class="al1l w">
-    <header class="home_top">
-        <div class="top_t w">
-            <div class="w1">
-                <div class="top_t_i fl">
-                    <span class="icon_person"></span>
-                    <a href="http://sz.jiazhuang.com" title="首页" target="_blank">首页</a>
-                    <a href="../../shejishi/index.html" title="设计师" target="_blank">设计师</a>
-                    <a href="../../xiaoguotu/index.html" title="装修效果图" target="_blank">装修效果图</a>
-                    <a href="../../zxxt/index.html" title="装修学堂" target="_blank">装修学堂</a>
-                </div>
-                <div class="top_t_z fr">
-                    <a link="topLogin" rel="nofollow">登录</a> <span class="line">|</span>
-                    <a href="http://user.jiazhuang.com/register" rel="nofollow">注册</a>                    <span class="line">|</span>
-                    <a href="../../baojia/index.html" class="gr" rel="nofollow">我要装修</a>
-                    <span class="line">|</span>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!--头部CSS 结束-->
-    <div class="jz_header" style="background: rgba(128, 128, 128, 0.24)">
-    	<div class="w1" style="height:inherit;">
-	        <div class="logo_lf">
-	            <a href="<%=basePath%>index" class="logo">
-	                <img src="<%=basePath%>images/logo.png" alt="透明家装" width="80" class="company_logo">
-	            </a>
-	            <h1>透明家装</h1>
-	            <span>一个让你放心的家装网</span>
-	        </div>
-	        <ul>
-	            <li>
-	                <div class="fr">
-	                    <div class="jzicon1"></div>
-	                    <span>400-889-7706</span>
-	                </div>
-	            </li>
-	            <li>
-	                <div class="jzicon2"></div>
-	                <div class="jz_headertxt_a">支持免费量房</div>
-	                <div class="jzicon3"></div>
-	                <div class="jz_headertxt_b">支持满意后付款</div>
-	                <div class="jzicon4"></div>
-	                <div class="jz_headertxt_c">支持先行赔付</div>
-	            </li>
-	        </ul>
-       	</div>
-    </div>
-    <!--导航 开始-->
-    <nav class="navbg">
-        <div class="nav">
-            <ul>
-                <li>
-                    <a href="index.html" class="navxd" >
-                    <div class="jzicon5"></div>
-                    <div class="fl">公司首页</div>
-                </a>
-                </li>
-                <li><a href="../14178_case/index.html"   >设计方案</a></li><li><a href="../14178_designer/index.html"   >设计团队</a></li><li><a href="../14178_info/index.html"   >公司介绍</a></li><li><a href="../14178_news/index.html"   >装修经验</a></li><li><a href="../14178_promotion/index.html"   >优惠活动</a></li>            </ul>
-            <div class="navtag"><a href="javascript:;" onclick="helpDesign('http://www.jiazhuang.com/layer_design/?t=5&po=13&id=14178','立即申请预约')">立即申请预约</a></div>
-        </div>
-    </nav>
-    <!--导航 结束-->
-
 	<a href="javascript:;">
     <img src="http://img.jiazhuang.com/Uploads/user/2018-03-14/5aa87c954d0b1.png" alt="" class="banner_img" style="width: 1220px;max-height: 300px;"/></a>
 	<div class="home_main w">
@@ -85,7 +13,7 @@
 	    <div class="companyinfo">
 	        <div class="companyinfo_a">
 	            <img src="http://img-resize.jiazhuang.com/Uploads/news/2017-08-23/599d31ab7a64c.png@!200_200_jz">
-	            <span class="name">一号家居网</span>
+	            <span class="name">透明家装</span>
 	            <i class="jzicon6"></i>
 	        </div>
 	        <div class="companyinfo_b">
@@ -197,263 +125,36 @@
 	                <div class="path1">
 	                    <div class="fl w650">
 	                        <div class="jzwicon34"></div>
-	                        <p><em>一号家居网（面对面装饰公司）：</em>通过家装网平台预约的业主，独享本品牌智能装修报价及家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
+	                        <p><em>透明家装：</em>通过家装网平台预约的业主，独享本品牌智能装修报价及家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
 	                    </div>
-	                    <div class="fr w200"><a href="javascript:;"
-	                                            onclick="helpDesign('/layer_design/?t=5&po=14&id=14178','申请预约')">立即申请预约</a>
-	                        <p>（ 已有<em> 1652274</em> 名业主预约成功 ）</p></div>
 	                </div>
 	            </div>
 	            <div class="path2 mt20">
 	                <h2>最近量房申请</h2>
 	                <div class="plan"><a class="navhl_more_b" href="../../baojia/index.html">我也要免费申请 </a>
-	                    <span><a href="../../zhaobiao/list/index.html" target="_blank">查看所有申请 &gt;&gt;</a></span>
+	                    <span><a href="<%=basePath%>decoration/allApply" target="_blank">查看所有申请 &gt;&gt;</a></span>
 	                    <div></div>
 	                </div>
 	            </div>
-	            <div class="form">
-	                <ul class="the_first">
-	                    <li>装修类型</li>
-	                    <li>装修预算</li>
-	                    <li>项目大小</li>
-	                    <li>业主姓名</li>
-	                    <li>联系方式</li>
-	                    <li>发布时间</li>
-	                </ul>
-	                <ul>
-	                        <li>面议</li>
-	                        <li>￥预算面议</li>
-	                        <li>135.00㎡</li>
-	                        <li>熊先生</li>
-	                        <li>158576*****</li>
-	                        <li>03月23日</li>
-	                    </ul><ul>
-	                        <li>面议</li>
-	                        <li>￥5万以下</li>
-	                        <li>46.00㎡</li>
-	                        <li>钟女士</li>
-	                        <li>139707*****</li>
-	                        <li>03月23日</li>
-	                    </ul><ul>
-	                        <li>面议</li>
-	                        <li>￥5-8万</li>
-	                        <li>75.00㎡</li>
-	                        <li>邱润盛</li>
-	                        <li>182968*****</li>
-	                        <li>03月23日</li>
-	                    </ul><ul>
-	                        <li>面议</li>
-	                        <li>￥预算面议</li>
-	                        <li>80.00㎡</li>
-	                        <li>周小东</li>
-	                        <li>159618*****</li>
-	                        <li>03月23日</li>
-	                    </ul><ul>
-	                        <li>面议</li>
-	                        <li>￥10-15万</li>
-	                        <li>137.00㎡</li>
-	                        <li>黄先生</li>
-	                        <li>159277*****</li>
-	                        <li>03月23日</li>
-	                    </ul><ul>
-	                        <li>面议</li>
-	                        <li>￥8-10万</li>
-	                        <li>191.00㎡</li>
-	                        <li>胡女士</li>
-	                        <li>181086*****</li>
-	                        <li>03月23日</li>
-	                    </ul>            </div>
+	            <div class="form" style="border:none;">
+	            	<div id="applyTable" style="display:none;"></div>
+	            </div>
 	            <div class="navhl mt20"><span>所有装修效果图</span>
-	                <a href="../14178_case/index.html" class="navhl_more">查看全部95份装修效果图 >></a>
+	                <a href="" class="navhl_more">查看全部装修效果图 >></a>
 	            </div>
 	            <!--图片列表  开始-->
 	            <div class="piclist">
-	                <ul>
-	                    <li>
-	                            <div class="piclist_img">
-	                                <a href="../../xiaoguotu/t32428/index.html">
-	                                    <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-06-14/5940d43e0acb2.jpg@!300_200_jz" width="325" height="210"
-	                                         alt="中德英伦联89㎡邦地中海风格三居装修效果图"/>
-	                                </a>
-	                                <div class="piclist_img_a">3张</div>
-	                                <div class="piclist_img_b">
-	                                    <a href="../../baojia/sheji/index.html" target="_blank" title="获取设计方案">获取设计方案</a>
-	                                    <span>|</span>
-	                                    <a href="../../yusuan/index.html" target="_blank" title="获取报价">获取报价</a>
-	                                </div>
-	
-	                            </div>
-	                            <div class="picont">
-	                                <div class="piclist_txt">
-	                                    <a href="../14178_designer/21065/index.html"
-	                                           title="严国倚">
-	                                            <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-06-14/5940d30ac2afb.jpg@!200_200_jz"
-	                                                 alt="严国倚"></a>
-	                                        <a href="../14178_designer/21065/index.html"
-	                                           class="piclist_txt_link3">
-	                                            严国倚</a>                                    <a href="../../xiaoguotu/t32428/index.html" title="中德英伦联89㎡邦地中海风格三居装修效果图"
-	                                       class="piclist_txt_link">中德英伦联89㎡邦地中海风格三居装修效果图</a>
-	                                </div>
-	                                <div class="piclist_txt">
-	                                                                        <a href="javascript:;"
-	                                               class="piclist_txt_link2">卧室</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">地中海</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">三居</a>                                </div>
-	                            </div>
-	                        </li><li>
-	                            <div class="piclist_img">
-	                                <a href="../../xiaoguotu/t32172/index.html">
-	                                    <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-06-10/593bbec30f1da.jpg@!300_200_jz" width="325" height="210"
-	                                         alt="云玺468现代简约风格二居装修效果图"/>
-	                                </a>
-	                                <div class="piclist_img_a">2张</div>
-	                                <div class="piclist_img_b">
-	                                    <a href="../../baojia/sheji/index.html" target="_blank" title="获取设计方案">获取设计方案</a>
-	                                    <span>|</span>
-	                                    <a href="../../yusuan/index.html" target="_blank" title="获取报价">获取报价</a>
-	                                </div>
-	
-	                            </div>
-	                            <div class="picont">
-	                                <div class="piclist_txt">
-	                                    <a href="../14178_designer/20956/index.html"
-	                                           title="刘静 ">
-	                                            <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-06-08/5938ea51117b2.jpg@!200_200_jz"
-	                                                 alt="刘静 "></a>
-	                                        <a href="../14178_designer/20956/index.html"
-	                                           class="piclist_txt_link3">
-	                                            刘静</a>                                    <a href="../../xiaoguotu/t32172/index.html" title="云玺468现代简约风格二居装修效果图"
-	                                       class="piclist_txt_link">云玺468现代简约风格二居装修效果图</a>
-	                                </div>
-	                                <div class="piclist_txt">
-	                                                                        <a href="javascript:;"
-	                                               class="piclist_txt_link2">餐厅</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">现代简约</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">二居</a>                                </div>
-	                            </div>
-	                        </li><li>
-	                            <div class="piclist_img">
-	                                <a href="../../xiaoguotu/t32144/index.html">
-	                                    <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-06-09/593a3d18d53fa.jpg@!300_200_jz" width="325" height="210"
-	                                         alt="绿地城现代简约风格二居家装效果图"/>
-	                                </a>
-	                                <div class="piclist_img_a">3张</div>
-	                                <div class="piclist_img_b">
-	                                    <a href="../../baojia/sheji/index.html" target="_blank" title="获取设计方案">获取设计方案</a>
-	                                    <span>|</span>
-	                                    <a href="../../yusuan/index.html" target="_blank" title="获取报价">获取报价</a>
-	                                </div>
-	
-	                            </div>
-	                            <div class="picont">
-	                                <div class="piclist_txt">
-	                                    <a href="../14178_designer/20219/index.html"
-	                                           title="刘中华">
-	                                            <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-04-21/58f9aabaf3772.jpg@!200_200_jz"
-	                                                 alt="刘中华"></a>
-	                                        <a href="../14178_designer/20219/index.html"
-	                                           class="piclist_txt_link3">
-	                                            刘中华</a>                                    <a href="../../xiaoguotu/t32144/index.html" title="绿地城现代简约风格二居家装效果图"
-	                                       class="piclist_txt_link">绿地城现代简约风格二居家装效果图</a>
-	                                </div>
-	                                <div class="piclist_txt">
-	                                                                        <a href="javascript:;"
-	                                               class="piclist_txt_link2">客厅</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">现代简约</a><a href="javascript:;"
-	                                               class="piclist_txt_link2">二居</a>                                </div>
-	                            </div>
-	                        </li>                </ul>
+	                <ul></ul>
 	            </div>
 	                        <!--图片列表  结束-->
 	            <div class="mt2 cl"></div>
 	            <div class="navhl"><span>设计师</span>
-	                <a href="../14178_designer/index.html" class="navhl_more">查看全部31位设计师 >></a>
+	                <a href="" class="navhl_more">查看全部设计师 >></a>
 	            </div>
 	
 	            <!--图文信息混排 开始-->
 	            <div class="colu_tw_b">
-	                <ul>
-	                    <li>
-	                            <a href="../14178_designer/20237/index.html" title="鲁林 ">
-	                                <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-04-21/58f9cc180a0ab.jpg@!100_100_jz" alt="鲁林 "
-	                                     title="鲁林 "/>
-	                            </a>
-	                            <dl>
-	                                <dt>
-	                                    <a href="../14178_designer/20237/index.html" class="colu_tw_btitle fl">鲁林</a>
-	                                </dt>
-	                                <dt>
-	                                <p>装修案例：</p><span>8</span></dt>
-	                                <dt>
-	                                <p style="width: 45px">职称：</p>
-	                                <div class="colu_tw_btxt">资深设计师</div>
-	                                </dt>
-	                            </dl>
-	                        </li><li>
-	                            <a href="../14178_designer/20278/index.html" title="赵悦天">
-	                                <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-04-27/590183e733117.jpg@!100_100_jz" alt="赵悦天"
-	                                     title="赵悦天"/>
-	                            </a>
-	                            <dl>
-	                                <dt>
-	                                    <a href="../14178_designer/20278/index.html" class="colu_tw_btitle fl">赵悦天</a>
-	                                </dt>
-	                                <dt>
-	                                <p>装修案例：</p><span>6</span></dt>
-	                                <dt>
-	                                <p style="width: 45px">职称：</p>
-	                                <div class="colu_tw_btxt">资深设计师</div>
-	                                </dt>
-	                            </dl>
-	                        </li><li>
-	                            <a href="../14178_designer/20214/index.html" title="杨菊">
-	                                <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-04-21/58f9a4a89a9e4.jpg@!100_100_jz" alt="杨菊"
-	                                     title="杨菊"/>
-	                            </a>
-	                            <dl>
-	                                <dt>
-	                                    <a href="../14178_designer/20214/index.html" class="colu_tw_btitle fl">杨菊</a>
-	                                </dt>
-	                                <dt>
-	                                <p>装修案例：</p><span>6</span></dt>
-	                                <dt>
-	                                <p style="width: 45px">职称：</p>
-	                                <div class="colu_tw_btxt">首席设计师</div>
-	                                </dt>
-	                            </dl>
-	                        </li><li>
-	                            <a href="../14178_designer/20304/index.html" title="严丽娟 ">
-	                                <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-04-28/5902990b063b2.jpg@!100_100_jz" alt="严丽娟 "
-	                                     title="严丽娟 "/>
-	                            </a>
-	                            <dl>
-	                                <dt>
-	                                    <a href="../14178_designer/20304/index.html" class="colu_tw_btitle fl">严丽娟</a>
-	                                </dt>
-	                                <dt>
-	                                <p>装修案例：</p><span>5</span></dt>
-	                                <dt>
-	                                <p style="width: 45px">职称：</p>
-	                                <div class="colu_tw_btxt">资深设计师</div>
-	                                </dt>
-	                            </dl>
-	                        </li><li>
-	                            <a href="../14178_designer/20382/index.html" title="周林 ">
-	                                <img src="http://img-resize.jiazhuang.com/Uploads/user/2017-05-03/59093f3fecbb7.jpg@!100_100_jz" alt="周林 "
-	                                     title="周林 "/>
-	                            </a>
-	                            <dl>
-	                                <dt>
-	                                    <a href="../14178_designer/20382/index.html" class="colu_tw_btitle fl">周林</a>
-	                                </dt>
-	                                <dt>
-	                                <p>装修案例：</p><span>5</span></dt>
-	                                <dt>
-	                                <p style="width: 45px">职称：</p>
-	                                <div class="colu_tw_btxt">资深设计师</div>
-	                                </dt>
-	                            </dl>
-	                        </li>                </ul>
+	                <ul></ul>
 	            </div>
 	                        <!--图文信息混排 结束-->
 	
@@ -461,51 +162,10 @@
 	            <div class="navhl"><span>问答动态</span></div>
 	                <div class="wd">
 	                    <div class="wd_l_list wdxq_da_ren">
-	                        <ul>
-	                            <li>
-	                                    <div class="welist_r" style="width:900px;">
-	                                        <dl>
-	                                            <dd class="d1">回答该问题<i>2017-11-20</i></dd>
-	                                            <dd class="d5"><h3><a href="../../ask/q131691/index.html" target="_blank">客厅沙发一般多长多宽？</a></h3></dd>
-	                                            <dd class="d3">
-	                                                <div class="d3p30">
-	                                                    <pre>你好，成都一号家居网很高兴为你解答，一般家具城的导购员会帮你选定好家具大小的，建议你到家具城去看看，或摆个较小的L型沙发，摆不下L型的沙发，款式不定，8米左右，又加个饮水机，你选沙发时如果你想在沙发边上还要摆个沙发边柜摆放台灯、电话之类的话，只能摆一字型的三坐沙发，长度在2，可能空间相对较小。...</pre>
-	                                                </div>
-	                                            </dd>
-	                                        </dl>
-	                                    </div>
-	                                    <div class="clear"></div>
-	                                </li><li>
-	                                    <div class="welist_r" style="width:900px;">
-	                                        <dl>
-	                                            <dd class="d1">回答该问题<i>2017-10-26</i></dd>
-	                                            <dd class="d5"><h3><a href="../../ask/q91603/index.html" target="_blank">成都装修公司排名哪家好？</a></h3></dd>
-	                                            <dd class="d3">
-	                                                <div class="d3p30">
-	                                                    <pre>你好，欢迎选择成都一号家居网，即成都面对面装饰公司：
-	公司在2017年已经是第13周年历史了 成都面对面装饰（一号家居馆）占地15000平米，内设实景样板间风格馆、建材生活馆、鲁班精工艺展厅、家具软装生活馆等九大主题展馆，涵盖了从设计、基础装修、主材、家具、家电、软装、家纺等所有项目，从顶面吊顶设计...</pre>
-	                                                </div>
-	                                            </dd>
-	                                        </dl>
-	                                    </div>
-	                                    <div class="clear"></div>
-	                                </li><li>
-	                                    <div class="welist_r" style="width:900px;">
-	                                        <dl>
-	                                            <dd class="d1">回答该问题<i>2017-10-23</i></dd>
-	                                            <dd class="d5"><h3><a href="../../ask/q144599/index.html" target="_blank">橡胶木家具价格如何，贵吗？</a></h3></dd>
-	                                            <dd class="d3">
-	                                                <div class="d3p30">
-	                                                    <pre>　　你好，成都一号家居网(面对面装饰公司)为你解答关于橡胶木家具的价格：
-	　　木质家具之所以有的十分昂贵，有的价格却一般，最主要的原因就是因为其木质原材料的价格。稀珍好木材的价格十分昂贵，所以其所制家具价格也十分贵了。我们的橡胶木家具价格也是一样的，根据其使用的木材材质的好坏，其价格也是有区别的。但...</pre>
-	                                                </div>
-	                                            </dd>
-	                                        </dl>
-	                                    </div>
-	                                    <div class="clear"></div>
-	                                </li>                        </ul>
+	                        <ul></ul>
 	                    </div>
-	                </div>            <div class="navhl"><span>业主点评</span> <a href="javascript:;" class="navhl_more_b">发表我的评论 >> </a></div>
+	                </div>            
+	            <div class="navhl"><span>业主点评</span> <a href="javascript:;" class="navhl_more_b ask">发表我的评论 >> </a></div>
 	            <div class="comment_a">
 	                <div class="comment_al">
 	                    <div class="comment_al_1"><p>暂无</p>好评数</div>
@@ -632,12 +292,6 @@
 	            <a href="javascript:;" class="ico1"></a>
 	            <a href="javascript:;" class="ico2"></a>
 	            <a href="javascript:;" class="ico3"></a>
-	            <!--<a href="javascript:;" class="ico4"></a>-->
-	
-	            <!--<a key="574d6cb4efbfb00a5a3c3f7a" logo_size="83x30" logo_type="realname" rel="nofollow" href="http://www.anquan.org">-->
-	            <!--<script src="http://static.anquan.org/static/outer/js/aq_auth.js"></script>-->
-	            <!--</a>-->
-	
 	            <a key="574d6cb4efbfb00a5a3c3f7a" logo_size="83x30" logo_type="realname" rel="nofollow"
 	               href="https://v.pinpaibao.com.cn/authenticate/cert/?site=www.jiazhuang.com&amp;at=realname"
 	               target="_blank">
@@ -651,32 +305,7 @@
 	</footer><!-- end footer -->
 
 </div><!-- end warp -->
-<div class="login_popup">
-    <div class="main_content log_form">
-        <ul>
-            <li>
-                <em>用户名：</em>
-                <input value="" placeholder="请输入登录手机号/邮箱" name="loginName" type="text">
-            </li>
-            <li>
-                <em>密码：</em>
-                <input placeholder="请输入密码" name="loginPwd" type="password">
-            </li>
-        </ul>
-        <p class="small_tip">
-            <input checked="checked" type="checkbox">
-            <span>记住我</span>
-            <a href="http://user.jiazhuang.com/findpwd/">忘记登录密码？</a>
-        </p>
 
-        <p class="loading_sub">
-            <input id="loginBtn" value="登录" type="button">
-        </p>
-
-        <p style="width:406px; text-align:center; line-height: 35px"><a href="http://user.jiazhuang.com/register" rel="nofollow">还没有账号？立即注册</a>
-        </p>
-    </div>
-</div>
 
 <div class="floating_ck" style="">
 	<dl>
@@ -688,164 +317,188 @@
         </dd>
 	</dl>
 </div>
-
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/all_layer.js"></script>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/jquery.cookie.js"></script>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Common/jquery.lazyload.js"></script>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/bottom_left.js"></script><script>
-    (function (window, document, $) {
-        if ($('#link_2').length < 1 && $('#link_1').length < 1) {
-            $('.friend_link').hide();
-        } else if (location.host.match('www')) {
-            //网站首页只显示友链
-            $('#link_2').remove();
-            $('#link_content_2').remove();
-            if ($('#link_1').length < 1) {
-                $('.friend_link').hide();
-            } else {
-                $('#link_1').addClass('on');
-                $('#link_content_1').show();
-            }
-        } else if (location.pathname == '/') {
-            //分站首页显示友链和热门城市
-            if ($('#link_1').length > 0) {
-                $('#link_1').addClass('on');
-                $('#link_content_1').show();
-                //监听切换
-                $('#link_1,#link_2').on('mouseover', function () {
-                    if ($(this).attr('id') == 'link_1') {
-                        $('#link_1').addClass('on');
-                        $('#link_content_1').show();
-                        $('#link_2').removeClass('on');
-                        $('#link_content_2').hide();
-                    } else {
-                        $('#link_2').addClass('on');
-                        $('#link_content_2').show();
-                        $('#link_1').removeClass('on');
-                        $('#link_content_1').hide();
-                    }
-                });
-            } else if ($('#link_2').length > 0) {
-                //没有友链的时候只显示热门城市
-                $('#link_content_2').show();
-                $('#link_2').addClass('on');
-            } else {
-                $('.friend_link').hide();
-            }
-        } else if (location.search) {
-            $('.friend_link').hide();
-        } else if (!location.host.match('www') && location.pathname == "/company/") {
-            //2017/12/29 如果&&淼淼
-            //分站首页显示友链和热门城市
-            if ($('#link_1').length > 0) {
-                $('#link_1').addClass('on');
-                $('#link_content_1').show();
-                //监听切换
-                $('#link_1,#link_2').on('mouseover', function () {
-                    if ($(this).attr('id') == 'link_1') {
-                        $('#link_1').addClass('on');
-                        $('#link_content_1').show();
-                        $('#link_2').removeClass('on');
-                        $('#link_content_2').hide();
-                    } else {
-                        $('#link_2').addClass('on');
-                        $('#link_content_2').show();
-                        $('#link_1').removeClass('on');
-                        $('#link_content_1').hide();
-                    }
-                });
-            } else if ($('#link_2').length > 0) {
-                //没有友链的时候只显示热门城市
-                $('#link_content_2').show();
-                $('#link_2').addClass('on');
-            } else {
-                $('.friend_link').hide();
-            }
-            $('#link_content_2').find('a').each(function () {
-                var href = $(this).attr('href') + '/company/';
-                $(this).attr('href', href);
-                var text = $(this).text() + '公司';
-                $(this).text(text);
-            });
-        } else {
-            //只显示友链
-            $('#link_2').remove();
-            $('#link_content_2').remove();
-            if ($('#link_1').length < 1) {
-                $('.friend_link').hide();
-            } else {
-                $('#link_1').addClass('on');
-                $('#link_content_1').show();
-            }
-        }
-    })(window, document, jQuery);
-</script>
+<<script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script>
-    function home_login() {
-        layer.open({
-            title: '欢迎登录',
-            type: 1,
-            offset: 'auto',
-            area: ['435px', '320px'],
-            shadeClose: true, //点击遮罩关闭
-            content: $('.login_popup')
-        });
-    }
-    //弹出一个页面层
-    $('a[link="topLogin"]').on('click', function () {
-        home_login();
-    });
-    $('#loginBtn').click(function () {
-        var name = $('[name="loginName"]').val();
-        if (name.length < 8) {
-            layer.alert('请输入正确的登录账号!', {
-                title: '登录提示', time: 1500, end: function () {
-                    $('[name="loginName"]').focus();
-                }
-            });
-            return;
-        }
-        var pwd = $('[name="loginPwd"]').val();
-        if (pwd.length < 6) {
-            layer.alert('请输入登录密码!', {
-                title: '登录提示', time: 1500, end: function () {
-                    $('[name="loginPwd"]').focus();
-                }
-            });
-            return;
-        }
-        var data = {};
-        data.telphone = name;
-        console.log(name)
-        data.password = pwd;
-        console.log(pwd)
-        $.ajax({
-            type: 'post',
-            url: '<%= basePath%>user/login',
-            data: data,
-            dataType: 'json',
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.alert(result.msg, {
-                        title: '登录提示', time: 1500,
-                        end: function () {
-                            window.location.reload();
-                        }
-                    });
-                } else {
-                	console.log(result.msg)
-                    layer.alert(result.msg, {time: 1500});
-                }
-            }
-        })
-    });
-    $('a[link="topLogout"]').on('click', function () {
-        $.post('/public/ajaxLogout/', {}, function (result) {
-            if (result.url) {
-                window.location.reload();
-            }
-        }, 'json');
-    });
+	/** 装修申请初始化  **/
+	function initDecorApply(){
+		var tableWidth = $('.main_content_r .form').width();
+		layui.use("table",function(){
+			var table = layui.table;
+			table.render({
+				id: "dec-apply-table",
+				elem:"#applyTable",
+				url:"<%=basePath%>decoration/decorationApplyLis",
+				where:{"queryAll":false},
+				width: tableWidth,
+				response:{dataName:'body'},
+				cols:[[
+						{field:'type', title: '装修类型', align:"center", width:'16%', templet: function(d){
+							if(d.type == '0'){
+								return '面议';
+							}else if(d.type == '1'){
+								return '半包';
+							}else if(d.type == '2'){
+								return '全包';
+							}
+							return '[无效数据]';
+						}},
+						{field:'budgetAmount', title: '装修预算', align:"center", width:'16%', templet: function(d){
+							if(d.budgetAmount == '-1'){
+								return '面议';
+							}else if(d.budgetAmount == '0'){
+								return '￥三万以下';
+							}else if(d.budgetAmount == '1'){
+								return '￥3~5万';
+							}else if(d.budgetAmount == '2'){
+								return '￥5~8万';
+							}else if(d.budgetAmount == '3'){
+								return '￥8~10万';
+							}else if(d.budgetAmount == '4'){
+								return '￥10~12万';
+							}else if(d.budgetAmount == '5'){
+								return '￥12~15万';
+							}else if(d.budgetAmount == '6'){
+								return '￥15~30万';
+							}else if(d.budgetAmount == '7'){
+								return '￥30万以上';
+							}else{
+								return '[无效数据]';
+							}
+						}},
+						{field:'area', title: '项目大小', align:"center", width:'18%', templet : function(d){
+							return d.area + '&nbsp;㎡';
+						}},
+						{field:'userName', title: '业主姓名', align:"center", width:'16%', templet :function(d){
+							var name = d.userName;
+							if(d.sex){
+								name = d.userName.substring(0,1);
+								name += (d.sex == 0? '先生' : '女士');
+							}
+							return name;
+						}},
+						{field:'telphone', title: '联系方式', align:"center", width:'17%'},
+						{field:'publishTime', title: '发布时间', align:"center", width:'17%'}
+				     ]],
+				  done:function(res,curr,count){
+					  
+				  }
+			});
+		});
+		
+	}
+	
+	/** 装修效果初始化  **/
+	function initDecorEffect(){
+		var pageObj={};
+		pageObj.pageSize = 3;
+		$.ajax({
+			url:"<%=basePath%>decoration/queryDecoEffect",
+			data : pageObj,
+			success:function(r){
+				var data = r.body;
+				if(r.code == '0'){
+					var html ='';
+					if(data.length != 0){
+						for(var i =0 ; i <data.length ; i++){
+							html+= 
+						'<li><div class="piclist_img">'
+		                        +'<a href=""><img src="<%=filePath%>/'+data[i].effectSrc+'" width="325" height="210" alt="'+data[i].title+'"/></a>'
+		                        +'<div class="piclist_img_a">'+data[i].imgCount+'张</div>'
+		                        +'<div class="piclist_img_b"><a href="" target="_blank" title="获取设计方案">获取设计方案</a></div>'
+		                    +'</div>'
+		                    +'<div class="picont"><div class="piclist_txt">'
+		                        +'<a href="" title="'+data[i].designerName+'"><img src="<%=filePath%>/'+data.designerHeader+'" alt="data[i].designerName"></a>'
+		                        +'<a href="" class="piclist_txt_link3">'+data[i].designerName+'</a>'
+								+'<a href="" title="'+data[i].title+'" class="piclist_txt_link">'+data[i].title+'</a></div>'
+		                        +'<div class="piclist_txt">';
+		                        for(var j=0 ; j<data[i].decorationEffectKeys.length; j++){
+			                        html+='<a href="javascript:;" class="piclist_txt_link2">'+data[i].decorationEffectKeys[j].keyWord+'</a>';
+		                        }
+							html+='</div></div></li>';
+						}
+					}else{
+						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
+					}
+					$('.piclist>ul').html(html);
+				}
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	}
+	
+	/** 设计师列表初始化  **/
+	function initDesignerLis(){
+		var pageObj={};
+		pageObj.pageSize = 5;
+		$.ajax({
+			url:"<%=basePath%>user/queryDesigner",
+			data:pageObj,
+			success:function(r){
+				var data = r.body;
+				if(r.code == '0'){
+					var html="";
+					if(data.length != 0){
+						for(var i=0; i<data.length; i++){
+							html+=
+								'<li><a href="<%=basePath%>user/showDesigner/'+data[i].userId+'" title="'+data[i].userName+'">'
+							+'<img src="<%=filePath%>/'+data[i].headerImg+'" alt="'+data[i].userName+' " title="'+data[i].userName+'"/></a>'
+							+'<dl><dt><a href="<%=basePath%>user/designerInfo/'+data[i].userId+'" class="colu_tw_btitle fl">'+data[i].userName+'</a></dt>'
+							+'<dt><p>装修案例：</p><span>'+data[i].designNumber+'</span></dt><dt><p style="width: 45px">职称：</p>'
+							+'<div class="colu_tw_btxt">'+data[i].positionalTitles+'</div></dt></dl></li>';
+						}
+					}else{
+						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
+					}
+				}
+				$('.colu_tw_b>ul').html(html);
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	}
+	
+	/** 问答动态初始化  **/
+	function initQuestion(){
+		$.ajax({
+			url:"<%=basePath%>question/queryQuestionAndAnswer",
+			data:{"start":0,"end":4},
+			success:function(r){
+				if(r.code == '0'){
+					var data = r.body;
+					console.log(data)
+					var html;
+					if(data.length != 0){
+						for(var i=0 ;i<data.length; i++){
+							html+=
+								'<li><div class="welist_r" style="width:900px;"><dl>'
+								+'<dd class="d1">问题详情<i>'+data[i].createTime+'</i></dd>'
+								+'<dd class="d5"><h3><a href="javascript:void(0)" target="_blank">'+data[i].question+'</a></h3></dd>'
+								+'<dd class="d3"><div class="d3p30"><pre>'+data[i].answerContent
+								+'</pre></div></dd></dl></div><div class="clear"></div></li>';
+						}
+					}else{
+						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
+					}
+					$('.wd_l_list>ul').html(html);
+				}
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	}
+	
+	$(function(){
+		initDecorApply();
+		initDecorEffect();
+		initDesignerLis();
+		initQuestion();
+	});
+
+   
 </script>
 <script type="text/javascript">
     $(window).on('scroll resize', function () {
@@ -856,58 +509,10 @@
             $('.return').hide();
         }
     });
-    $('a[id="changeCity"]').click(function () {
-        $.cookie('jia_wdefaultID', null, {domain: '.jiazhuang.com', path: '/'});
-        window.location.href = 'http://www.jiazhuang.com';
-    });
 
-    $(function () {
-        $("img.lazy").lazyload({
-            threshold: 400,
-            effect: "fadeIn",
-            placeholder: 'http://static.jiazhuang.com/Public/M/images/xgt-1px.png'
-        });
-        var url = window.location.search; //获取?号和问号后的参数
-        var str = url.substring(1, 9); //截取从某处开始的字符串
-        if (str == 'url_from' || str == 'from_url') {
-            var tg = url.substring(10); //截取从某处开始的字符串
-            $.cookie('jia_wformurl', tg, {expires: 7, path: '/', domain: '.jiazhuang.com'});
-        }
-    });
 </script>
-
-<div style="display: none">
-    <script src="https://s19.cnzz.com/z_stat.php?id=1262030803&web_id=1262030803" language="JavaScript"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function () {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?096893ddd36b321cb75b03e01d837165";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-    <script>
-        (function () {
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = "https://zz.bdstatic.com/linksubmit/push.js";
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-    </script>
-
-</div>
 </body>
 </html>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/scroll_top.js"></script>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/bidding.js"></script>
-<script type="text/javascript" src="http://static.jiazhuang.com/Public/Home/version_2/js/all_layer.js"></script>
 <script type="text/javascript">
     window.onload = function () {
         var oDiv = document.getElementById("tab");

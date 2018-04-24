@@ -123,3 +123,79 @@ $(function(){
 		
 	}
 	
+	var MyUtil={};
+	MyUtil.upload = function (options,callback){
+        // 上传方法
+		$.upload({
+            // 上传地址
+            url: 'upload', 
+            // 文件域名字
+            fileName: 'uploadFile', 
+            // 其他表单数据
+            // 上传完成后, 返回json, text
+            dataType: 'json',
+            // 上传之前回调,return true表示可继续上传
+           
+            // 上传之后回调
+            onComplate: function(data) {
+            	var url;
+            	if(data.code == '0'){
+            		console.log("上传成功");
+            		url = data.body.path;
+            		if(options.show){
+            			$(options.target).attr("src",data.body.path);
+            		}
+            		$(options.target).attr("data-url",data.body.path);
+            		$(options.target).attr("data-id",data.body.id);
+            	}else{
+            		layer.msg(data.msg);
+            	}
+            	if(callback){
+            		callback(url);
+            	}
+            }
+        });
+	}
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+function getCookie(c_name)
+{
+	if (document.cookie.length>0)
+	{
+		c_start=document.cookie.indexOf(c_name + "=");
+		if (c_start!=-1)
+		{ 
+			c_start=c_start + c_name.length+1 ;
+			c_end=document.cookie.indexOf(";",c_start);
+			if (c_end==-1){
+				c_end=document.cookie.length;
+			}
+			
+			return unescape(document.cookie.substring(c_start,c_end));
+		} 
+	}
+	return ""
+}
+
+function removeCookie(c_name)
+{
+	if (document.cookie.length>0)
+	{
+		c_start=document.cookie.indexOf(c_name + "=")
+		if (c_start!=-1)
+		{ 
+			c_start=c_start + c_name.length+1 
+			c_end=document.cookie.indexOf(";",c_start)
+		if (c_end==-1) c_end=document.cookie.length
+			return unescape(document.cookie.substring(c_start,c_end))
+		} 
+	}
+	return ""
+}
