@@ -45,8 +45,8 @@
 					cont = data.data;
 					var menuHtml="";
 					if(cont.length ==0){
-						menuHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
-						
+						menuHtml='<p style="color:#5f5e5e;margin-top:10px;text-align:center;">暂无数据</p>';
+						$('ul.expe-content').html('<p style="color:#5f5e5e;margin-top:20px;text-align:center;">暂无数据</p>');
 					}else{
 						var dataLis = cont;
 						for(var i=0 ; i<dataLis.length ; i++){
@@ -83,7 +83,7 @@
 					var da = data.data;
 					var contHtml="";
 					if(!da){
-						contHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
+						contHtml='<p style="color:#5f5e5e;margin-top:20px;text-align:center;">暂无数据</p>';
 					}else{
 						contHtml=
 							'<li ><div class="title"><h4>'+da.title+'</h4></div>'

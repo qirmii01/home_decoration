@@ -45,13 +45,13 @@
 					cont = data.data;
 					var menuHtml="";
 					if(cont.length ==0){
-						menuHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
-						
+						menuHtml='<p style="color:#5f5e5e;margin-top:10px;text-align:center;">暂无数据</p>';
+						$('ul.acti-content').html('<p style="color:#5f5e5e;margin-top:20px;text-align:center;">暂无数据</p>');
 					}else{
 						var dataLis = cont;
 						for(var i=0 ; i<dataLis.length ; i++){
 							menuHtml+=
-								'<li class="menu-title" title="'+dataLis[i].title+'" data-id="'+dataLis[i].id+'"><a href="javascript:show(\''+dataLis[i].id+'\');">'+dataLis[i].title;
+								'<li class="menu-title" title="'+dataLis[i].titile+'" data-id="'+dataLis[i].id+'"><a href="javascript:show(\''+dataLis[i].id+'\');">'+dataLis[i].titile;
 								if(dataLis[i].status == '0'){
 									menuHtml+='&nbsp;（展示中）</a></li>';
 								}else{
@@ -83,10 +83,10 @@
 					var da = data.data;
 					var contHtml="";
 					if(!da){
-						contHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
+						contHtml='<p style="color:#5f5e5e;margin-top:20px;text-align:center;">暂无数据</p>';
 					}else{
 						contHtml=
-							'<li ><div class="title"><h4>'+da.title+'</h4></div>'
+							'<li ><div class="title"><h4>'+da.titile+'</h4></div>'
 							+'<div class="corr"><span>发布时间：'+millisDateFormat(da.createTime,"yyyy年mm月dd日")+'</span></div>'
 							+'<div class="art-content">'+da.content+'</div></li>';
 					}

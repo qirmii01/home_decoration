@@ -153,9 +153,7 @@ public class AdminServiceImpl implements AdminService {
 	public Result queryPreferentialActivities(){
 		List<SysPreferentialActivities> preferentialActivitiesLis = 
 				sysPreferentialActivitiesMapper.selectPreferentialActivities();
-		Result result = new Result();
-		result.setData(preferentialActivitiesLis);
-		return result;
+		return new Result(preferentialActivitiesLis);
 	}
 	
 	@Override

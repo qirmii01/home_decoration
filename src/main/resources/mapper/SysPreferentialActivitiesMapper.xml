@@ -157,7 +157,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="selectPreferentialActivities" resultMap="ResultMapWithBLOBs">
+  <select id="selectPreferentialActivities" resultType="com.hd.domain.SysPreferentialActivities">
   	SELECT
   		<include refid="Base_Column_List" />
   	FROM

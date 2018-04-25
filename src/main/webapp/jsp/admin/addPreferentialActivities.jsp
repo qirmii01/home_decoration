@@ -48,16 +48,16 @@
 			$('#submit').click(function(){
 				var title = $('#acti-title').val();
 				var content=layedit.getContent(index);
-				if(title.trim() == ''){
+				if(/^\s*$/.test(title)){
 					layer.msg("标题不能为空");
 					return ;
 				}
-				if(content.trim() == ''){
+				if(/^\s*$/.test(content)){
 					layer.msg("内容不能为空");
 					return;
 				}
 				var activities={};
-				activities.title =title;
+				activities.titile =title;
 				activities.content = content;
 				$.ajax({
 					url:"<%=basePath%>admin/addPreferentialActivities",
@@ -79,8 +79,6 @@
 				});
 			});
 		});
-		
-		
 	</script>
 </body>
 </html>
