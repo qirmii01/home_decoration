@@ -100,12 +100,21 @@ public class AdminController {
 	}
 	
 	/**
-	 * 公司活动管理页面
+	 * 公司活动列表
 	 * @return
 	 */
 	@RequestMapping("preferentialActivities")
 	public String preferentialActivities(){
 		return "jsp/admin/preferentialActivities";
+	}
+	
+	/**
+	 * 添加公司活动
+	 * @return
+	 */
+	@RequestMapping("addactivities")
+	public String addPreferentialActivity(){
+		return "jsp/admin/addPreferentialActivities";
 	}
 	
 	/**
@@ -182,10 +191,17 @@ public class AdminController {
 		return result;
 	}
 	
-	@RequestMapping("queryPreferentialActivities")
+	@RequestMapping("queryPreferentialActivitiesList")
 	@ResponseBody
 	public Result queryPreferentialActivities(){
-		Result result = adminService.queryValidPreferentialActivities();
+		Result result = adminService.queryPreferentialActivities();
+		return result;
+	}
+	
+	@RequestMapping("queryPreferentialActivity")
+	@ResponseBody
+	public Result queryPreferentialActivities(String id){
+		Result result = adminService.queryPreferentialActivity(id);
 		return result;
 	}
 	

@@ -150,14 +150,23 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Result queryValidPreferentialActivities(){
+	public Result queryPreferentialActivities(){
 		List<SysPreferentialActivities> preferentialActivitiesLis = 
-				sysPreferentialActivitiesMapper.selectValidPreferentialActivities();
+				sysPreferentialActivitiesMapper.selectPreferentialActivities();
 		Result result = new Result();
 		result.setData(preferentialActivitiesLis);
 		return result;
 	}
 	
+	@Override
+	public Result queryPreferentialActivity(String id) {
+		SysPreferentialActivities sysPreferentialActivities = sysPreferentialActivitiesMapper.selectByPrimaryKey(id);
+		if(sysPreferentialActivities == null){
+			return Result.buildErrorResult("未查询到相关数据");
+		}
+		return new Result(sysPreferentialActivities);
+	}
+
 	@Override
 	public Result addPreferentialActivities(
 			SysPreferentialActivities sysPreferentialActivities) {

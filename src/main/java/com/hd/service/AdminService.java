@@ -64,7 +64,14 @@ public interface AdminService {
 	 * 查询优惠活动列表
 	 * @return
 	 */
-	public Result queryValidPreferentialActivities();
+	public Result queryPreferentialActivities();
+	
+	/**
+	 * 查询优惠活动
+	 * @param id 活动id
+	 * @return
+	 */
+	public Result queryPreferentialActivity(String id);
 	
 	/**
 	 * 添加优惠活动

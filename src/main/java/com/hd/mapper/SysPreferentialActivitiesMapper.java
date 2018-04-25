@@ -51,5 +51,5 @@ public interface SysPreferentialActivitiesMapper {
      * 查询所有有效的活动表数据
      * @return
      */
-    List<SysPreferentialActivities> selectValidPreferentialActivities();
+    List<SysPreferentialActivities> selectPreferentialActivities();
 }

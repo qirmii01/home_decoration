@@ -18,6 +18,7 @@
 	.expe-content{width:800px;}
 	.expe-content .title{text-align:center;font-size:18px;}
 	.expe-content .corr{text-align:right;margin-bottom:10px;}
+	.expe-content .corr span{margin-right:66px;}
 	.art-content{padding:0 58px;}
 </style>
 </head>
@@ -52,7 +53,7 @@
 							menuHtml+=
 								'<li class="menu-title" title="'+dataLis[i].title+'" data-id="'+dataLis[i].id+'"><a href="javascript:show(\''+dataLis[i].id+'\');">'+dataLis[i].title;
 								if(dataLis[i].status == '0'){
-									menuHtml+='&nbsp;（展示）</a></li>';
+									menuHtml+='&nbsp;（展示中）</a></li>';
 								}else{
 									menuHtml+='&nbsp;（撤销）</a></li>';
 								}
@@ -68,7 +69,6 @@
 	
 	$(function(){
 		init();
-		
 	})
 	
 	function show(id){

@@ -157,14 +157,12 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="selectValidPreferentialActivities" resultMap="ResultMapWithBLOBs">
+  <select id="selectPreferentialActivities" resultMap="ResultMapWithBLOBs">
   	SELECT
   		<include refid="Base_Column_List" />
-	    ,
-	    <include refid="Blob_Column_List" />
   	FROM
   		sys_preferential_activities
-  	WHERE
-  		status = '0'
+  	ORDER BY
+  		create_time DESC
   </select>
 </mapper>
