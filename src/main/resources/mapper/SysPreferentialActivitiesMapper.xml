@@ -159,7 +159,9 @@
   
   <select id="selectPreferentialActivities" resultType="com.hd.domain.SysPreferentialActivities">
   	SELECT
-  		<include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
   	FROM
   		sys_preferential_activities
   	ORDER BY
