@@ -101,6 +101,15 @@ public class AdminController {
 	}
 	
 	/**
+	 * 装修申请审核页面
+	 * @return
+	 */
+	@RequestMapping("decorationApplyCheckPage")
+	public String decorationApplyCheck(){
+		return "jsp/admin/decorationApplyCheck";
+	}
+	
+	/**
 	 * 查询公司基本信息
 	 * @return
 	 */
@@ -194,5 +203,19 @@ public class AdminController {
 	public String upload(HttpServletRequest request){
 		Result result = adminService.fileUpload(request);
 		return JSON.toJSONString(result);
+	}
+	
+	@RequestMapping("queryDecorApplyCheckLis")
+	@ResponseBody
+	public Result queryDecorApplyCheckLis(DecorationApply formData){
+		Result result = adminService.queryDecorApplyCheckLis(formData);
+		return result;
+	}
+	
+	@RequestMapping("decorationApplyCheck")
+	@ResponseBody
+	public Result decorationApplyCheck(String id,String status){
+		Result result = adminService.decorationApplyCheck(id, status);
+		return result;
 	}
 }

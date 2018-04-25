@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hd.domain.ApplyAttachment;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.PageObj;
@@ -43,7 +44,7 @@ public class DecorationController extends BaseController{
 	}
 	
 	/**
-	 * 用户装修申请查询
+	 * 用户装修申请查询decorationApply
 	 * @param decorationApply 装修申请对象
 	 * @return
 	 */
@@ -52,6 +53,15 @@ public class DecorationController extends BaseController{
 	public Result queryUserDecoration(DecorationApply decorationApply){
 		Result result = decorationService.queryDecorationApply(decorationApply);
 		return result;
+	}
+	
+	/**
+	 * 装修申请页面
+	 * @return
+	 */
+	@RequestMapping("decorationApplyPage")
+	public String decorationApplyPage(){
+		return "jsp/user/decorationApply";
 	}
 	
 	/**
@@ -75,6 +85,17 @@ public class DecorationController extends BaseController{
 	@ResponseBody
 	public Result updateDecorationApply(DecorationApply decorationApply){
 		Result result = decorationService.updateDecorationApply(decorationApply);
+		return result;
+	}
+	
+	/**
+	 * 添加装修申请附件
+	 * @param applyAttachment
+	 * @return
+	 */
+	@RequestMapping("addAttachment")
+	public Result addAttachment(ApplyAttachment applyAttachment){
+		Result result = decorationService.addAttachment(applyAttachment);
 		return result;
 	}
 	

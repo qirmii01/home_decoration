@@ -10,7 +10,8 @@
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="${basePath}/plugins/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="<%=basePath%>/plugins/layui/css/layui.css" media="all">
+	<link href="<%=basePath%>css/admin.css" rel="stylesheet">
 	<style>
 		body{overflow-y: scroll;}
 		.accountTable{
@@ -41,8 +42,9 @@
 		<form class="layui-form" action="#">
 			<select id="status">
 				<option value="">请选择</option>
-				<option value="0">正常</option>
-				<option value="1">禁用</option>
+				<option value="0">待审核</option>
+				<option value="1">审核通过</option>
+				<option value="2">审核失败</option>
 			</select>
 		</form>
 	</div>
@@ -57,14 +59,16 @@
 
 
 <script type="text/html" id="operationBar">
-	<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="through">通过</button>
-	<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="notThrough">不通过</button>
+	{{# if(d.status==='0'){}}
+		<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="through">通过</button>
+		<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="notThrough">不通过</button>
+	{{#  } }}
 </script>
 
 
 
-<script src="${basePath}/plugins/layui/layui.js"></script>
-<script src="${basePath}/js/moment.js"></script>
+<script src="<%=basePath%>/plugins/layui/layui.js"></script>
+<script src="<%=basePath%>/js/moment.js"></script>
 <script>
     layui.use(['table','element','form'],function(){
         var table = layui.table,
@@ -76,7 +80,7 @@
         //方法级渲染
         table.render({
             elem: '#accountTable'
-            ,url: '${basePath}/admin/queryDesignerCheckInfo'
+            ,url: '<%=basePath%>/admin/queryDesignerCheckInfo'
             ,cols: [[
                 {field:'designerName',width:'10%', title: '设计师名称'}
                 ,{field:'telphone',width:'10%', title: '电话号码'}

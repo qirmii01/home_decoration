@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-	<div class="box">
+	<div class="admin-box">
 		<div class="title"><h2>装修经验</h2></div>
 		<div class="content">
 			<div class="line">
@@ -66,7 +66,7 @@
 				method:"POST",
 				success:function(r){
 					if(r.code =='0'){
-						layer.msg(r.body);
+						layer.msg(r.data);
 						$('#expe-title').val("");
 						$('#expeCont').val("");
 					}else{
@@ -120,7 +120,7 @@
 				data:{"pageIndex":pageIndex,"limit":5},
 				success:function(data){
 					if(data.code =='0'){
-						cont = data.body;
+						cont = data.data;
 						var menuHtml="";
 						var contHtml="";
 						if(cont.length ==0){

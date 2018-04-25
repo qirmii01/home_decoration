@@ -39,7 +39,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.hd.mapper" targetProject="hd/src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-        <table schema="mybatis" tableName="decoration_effect_key" domainObjectName="DecorationEffectKey"
+        <table schema="mybatis" tableName="apply_attachment" domainObjectName="ApplyAttachment"
                enableSelectByExample="false"
                enableDeleteByExample="false"
                enableCountByExample="false"

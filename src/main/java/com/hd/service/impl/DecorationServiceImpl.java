@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hd.domain.ApplyAttachment;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffect;
 import com.hd.domain.DecorationEffectDTO;
@@ -41,7 +42,11 @@ public class DecorationServiceImpl implements DecorationService {
 	@Override
 	public Result queryDecorationApply(DecorationApply decorationApply) {
 		List<DecorationApply> decorationApplies = decorationApplyMapper
-				.queryDecorationApply(decorationApply.getUserId());
+				.queryDecorationApplyBySelective(decorationApply);
+		if(decorationApplies.size()!=0 && "0".equals(decorationApply.getStatus()) && decorationApplies.size() != 1){
+			return Result.buildErrorResult("系统错误");
+		}
+		
 		return new Result(decorationApplies);
 	}
 
@@ -70,7 +75,7 @@ public class DecorationServiceImpl implements DecorationService {
 		if(i <= 0){
 			return Result.buildErrorResult("数据插入失败");
 		}
-		return new Result("装修预约成功");
+		return new Result(decorationApply.getId());
 	}
 
 	@Override
@@ -92,6 +97,21 @@ public class DecorationServiceImpl implements DecorationService {
 			return Result.buildErrorResult("数据更新失败");
 		}
 		return new Result("数据更新成功");
+	}
+	
+	@Override
+	public Result addAttachment(ApplyAttachment formData) {
+		if(StringUtil.isEmpty(formData.getApplyId())){
+			return Result.buildErrorResult("装修申请id不能为空");
+		}
+		
+		if(StringUtil.isEmpty(formData.getSourceId())){
+			return Result.buildErrorResult("资源路径不能为空");
+		}
+		
+		formData.setId(sequence.getCommonID());
+		formData.setCreateTime(new Date());
+		return new Result("添加成功");
 	}
 
 	@Override

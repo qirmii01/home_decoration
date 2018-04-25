@@ -53,9 +53,15 @@ public interface DecorationApplyMapper {
     
     /**
      * 查询用户的装修申�?
-     * @param userId 用户id
+     * @param decorationApply
      * @return
      */
-    List<DecorationApply> queryDecorationApply(String userId);
+    List<DecorationApply> queryDecorationApplyBySelective(DecorationApply decorationApply);
     
+    /**
+     * 查询装修申请审核列表
+     * @param decorationApply
+     * @return
+     */
+    List<DecorationApply> queryDecorationApplyCheckLis(DecorationApply decorationApply);
 }

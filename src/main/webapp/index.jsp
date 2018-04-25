@@ -5,30 +5,16 @@
 <link rel="stylesheet" href="<%=basePath%>plugins/layui/css/layui.css">
 <div class="al1l w">
 	<a href="javascript:;">
-    <img src="http://img.jiazhuang.com/Uploads/user/2018-03-14/5aa87c954d0b1.png" alt="" class="banner_img" style="width: 1220px;max-height: 300px;"/></a>
+    <img src="<%=filePath%>${sessionScope.baseInfo.bannerPath}" alt="" class="banner_img" style="width: 1220px;max-height: 300px;"/></a>
 	<div class="home_main w">
 	    <!--站内导航CSS 结束-->
 	    <div class="contentpage w1">
 	        <div class="cont_r fl">
 	    <div class="companyinfo">
 	        <div class="companyinfo_a">
-	            <img src="http://img-resize.jiazhuang.com/Uploads/news/2017-08-23/599d31ab7a64c.png@!200_200_jz">
+	            <img src="<%=filePath%>${sessionScope.baseInfo.logoPath}">
 	            <span class="name">透明家装</span>
 	            <i class="jzicon6"></i>
-	        </div>
-	        <div class="companyinfo_b">
-	            <dl>
-	                <dt>126</dt>
-	                <dd>口碑值</dd>
-	            </dl>
-	            <dl>
-	                <dt>95%</dt>
-	                <dd>好评率</dd>
-	            </dl>
-	            <dl>
-	                <dt>11</dt>
-	                <dd>预约</dd>
-	            </dl>
 	        </div>
 	        <div class="companyinfo_c">
 	            <ul>
@@ -57,26 +43,21 @@
 	                <li>
 	                    <div class="fl">联系电话：</div>
 	                    <span>
-	                        400-889-7706
+	                        ${sessionScope.baseInfo.phone}
 	                        </span></li>
 	                <li>
 	                    <div class="fl">服务区域：</div>
-	                    <span>郫县,成华区,高新,锦江区,金牛区,龙泉驿区,青羊区,青白江区,双流县,天府新区,武侯区,温江区,新都区,新津县</span></li>
+	                    <span>${sessionScope.baseInfo.serviceArea}</span></li>
 	                <li>
 	                    <div class="fl">注册资金：</div>
 	                    <span>100万</span></li>
 	                <li>
 	                    <div class="fl">公司地址：</div>
-	                    <span>东三环路五段外侧辅道悦来街59号大观茗筑</span></li>
+	                    <span>${sessionScope.baseInfo.address}</span></li>
 	
 	            </ul>
 	        </div>
 	    </div>
-		<div class="companyinfo activity mt20" style="display: none">
-					     <h3>装修公司最新优惠活动<a>查看更多>></a></h3>
-						 <span>2016年开年钜惠</span>
-						 <p>后期问题多多多多，人生第一次装修学费交了后期问题多多多多，人生第一次装修学费交了后</p>
-					</div>
 	    <div class="freeapply">
 	        <input type="text" name="chenghu" value="您的称呼" data-value="您的称呼" placeholder="您的称呼" class="search_txt"/>
 	        <input type="text" name="mobile" value="手机号码（必填）" data-value="手机号码（必填）" placeholder="手机号码（必填）" class="search_txt"/>
@@ -125,13 +106,13 @@
 	                <div class="path1">
 	                    <div class="fl w650">
 	                        <div class="jzwicon34"></div>
-	                        <p><em>透明家装：</em>通过家装网平台预约的业主，独享本品牌智能装修报价及家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
+	                        <p><em>透明家装：</em>通过透明家装网平台预约的业主，独享本品牌智能装修报价及透明家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
 	                    </div>
 	                </div>
 	            </div>
 	            <div class="path2 mt20">
 	                <h2>最近量房申请</h2>
-	                <div class="plan"><a class="navhl_more_b" href="../../baojia/index.html">我也要免费申请 </a>
+	                <div class="plan"><a class="navhl_more_b" href="<%=basePath%>decoration/decorationApplyPage">我也要免费申请 </a>
 	                    <span><a href="<%=basePath%>decoration/allApply" target="_blank">查看所有申请 &gt;&gt;</a></span>
 	                    <div></div>
 	                </div>
@@ -140,7 +121,7 @@
 	            	<div id="applyTable" style="display:none;"></div>
 	            </div>
 	            <div class="navhl mt20"><span>所有装修效果图</span>
-	                <a href="" class="navhl_more">查看全部装修效果图 >></a>
+	                <a href="" class="navhl_more">查看全部装修效果图 &gt;&gt;</a>
 	            </div>
 	            <!--图片列表  开始-->
 	            <div class="piclist">
@@ -149,7 +130,7 @@
 	                        <!--图片列表  结束-->
 	            <div class="mt2 cl"></div>
 	            <div class="navhl"><span>设计师</span>
-	                <a href="" class="navhl_more">查看全部设计师 >></a>
+	                <a href="" class="navhl_more">查看全部设计师 &gt;&gt;</a>
 	            </div>
 	
 	            <!--图文信息混排 开始-->
@@ -221,91 +202,9 @@
 	        </div>
 	    </div>
 	</div>
-
-	<div class="friend_link">
-	    <div class="box">
-	        <div class="link">
-	            <div class="title">
-	                <ul>
-	                                        <li id="link_2">热门城市</li>                </ul>
-	            </div>
-	
-	            <div class="list" id="link_content_2" style="display:none;">
-	                                        <a href="http://xm.jiazhuang.com" target="_blank">厦门装修</a>|                        <a href="http://bj.jiazhuang.com" target="_blank">北京装修</a>|                        <a href="http://tj.jiazhuang.com" target="_blank">天津装修</a>|                        <a href="http://sh.jiazhuang.com" target="_blank">上海装修</a>|                        <a href="http://cq.jiazhuang.com" target="_blank">重庆装修</a>|                        <a href="http://sjz.jiazhuang.com" target="_blank">石家庄装修</a>|                        <a href="http://km.jiazhuang.com" target="_blank">昆明装修</a>|                        <a href="http://sz.jiazhuang.com" target="_blank">深圳装修</a>|                        <a href="http://nj.jiazhuang.com" target="_blank">南京装修</a>|                        <a href="http://suzhou.jiazhuang.com" target="_blank">苏州装修</a>|                        <a href="http://hz.jiazhuang.com" target="_blank">杭州装修</a>|                        <a href="http://fz.jiazhuang.com" target="_blank">福州装修</a>|                        <a href="http://cd.jiazhuang.com" target="_blank">成都装修</a>|                        <a href="http://wh.jiazhuang.com" target="_blank">武汉装修</a>|                        <a href="http://cs.jiazhuang.com" target="_blank">长沙装修</a>|                        <a href="http://chchu.jiazhuang.com" target="_blank">长春装修</a>|                        <a href="http://dg.jiazhuang.com" target="_blank">东莞装修</a>|                        <a href="http://guangzhou.jiazhuang.com" target="_blank">广州装修</a>|                        <a href="http://guiyang.jiazhuang.com" target="_blank">贵阳装修</a>|                        <a href="http://hefei.jiazhuang.com" target="_blank">合肥装修</a>|                        <a href="http://nanning.jiazhuang.com" target="_blank">南宁装修</a>|                        <a href="http://ningbo.jiazhuang.com" target="_blank">宁波装修</a>|                        <a href="http://qingdao.jiazhuang.com" target="_blank">青岛装修</a>|                        <a href="http://shenyang.jiazhuang.com" target="_blank">沈阳装修</a>|                        <a href="http://taiyuan.jiazhuang.com" target="_blank">太原装修</a>|                        <a href="http://xa.jiazhuang.com" target="_blank">西安装修</a>|                        <a href="http://zhengzhou.jiazhuang.com" target="_blank">郑州装修</a>|                        <a href="http://zhongshan.jiazhuang.com" target="_blank">中山装修</a>|            </div>
-	
-	        </div>
-	        <div class="weibo">
-	
-	            <div class="wb_pub">
-	                <span class="t1">微信公众号</span>
-	                <p><img src="http://static.jiazhuang.com/Public/Home/version_2/images/pub_bg.jpg" width="96" height="96"/></p>
-	            </div>
-	
-	            <div class="wb_pub">
-	                <span class="t1">家装网APP下载</span>
-	                <p><img src="http://static.jiazhuang.com/Public/Home/version_2/images/pub_app.jpg" width="96" height="96"/></p>
-	            </div>
-	
-	            <div class="wb_tel">
-	                <span>联系客服</span>
-	                <ul>
-	                    <li>周一至周日：08:00-22:00</li>
-	                    <li>全国统一服务热线：</li>
-	                    <li>400-889-7706</li>
-	                </ul>
-	                <div class="ser_btn">
-	                    <blockquote>
-	                        <p><a href="http://wpa.qq.com/msgrd?v=3&uin=2010749522&site=qq&menu=yes" target="_blank"
-	                              class="btn">在线咨询</a></p>
-	                    </blockquote>
-	                </div>
-	            </div>
-	
-	        </div>
-	    </div>
-	</div><!-- end friend_link -->
-
-	<footer class="footer">
-	
-	    <!-- end box -->
-	
-	    <div class="box">
-	        <div class="icon">
-	            <div class="list">
-	                <a href="../../about/index.html" target="_blank" rel="nofollow"><i class="icon1"></i>公司介绍<em></em></a>
-	                <a href="../../dongtai/index.html" target="_blank" rel="nofollow"><i class="icon2"></i>企业动态<em></em></a>
-	                <a href="../../contact/index.html" target="_blank" rel="nofollow"><i class="icon3"></i>联系我们<em></em></a>
-	                <a href="../../join/index.html" target="_blank" rel="nofollow"><i class="icon4"></i>加入我们<em></em></a>
-	                <a href="../../fukuan/index.html" target="_blank" rel="nofollow"><i class="icon5"></i>付款方式<em></em></a>
-	                <a href="../../agreement/index.html" target="_blank" rel="nofollow"><i class="icon6"></i>用户协议<em></em></a>
-	                <a href="../../sitemap/index.html" target="_blank" rel="nofollow"><i class="icon7"></i>网站地图</a>
-	            </div>
-	        </div>
-	        <div class="copyright">
-	            <ul>
-	                <li>免责声明：本网站部分内容由用户自行上传，如权利人发现存在误传其作品情形，请及时与本站联系</li>
-	                <li>家装网 保留所有权利 ©2005- 2017 jiazhuang.com</li>
-	                <li>厦门大加盈网络科技有限公司 <a href="http://www.miitbeian.gov.cn">闽ICP备16003468号-2</a></li>
-	            </ul>
-	        </div>
-	        <div class="icpico">
-	            <a href="javascript:;" class="ico1"></a>
-	            <a href="javascript:;" class="ico2"></a>
-	            <a href="javascript:;" class="ico3"></a>
-	            <a key="574d6cb4efbfb00a5a3c3f7a" logo_size="83x30" logo_type="realname" rel="nofollow"
-	               href="https://v.pinpaibao.com.cn/authenticate/cert/?site=www.jiazhuang.com&amp;at=realname"
-	               target="_blank">
-	                <b id="aqLogoOPVTR" style="display: none;"></b>
-	                <img src="http://static.anquan.org/static/outer/image/sm_83x30.png?id=www.jiazhuang.com?t=6" alt="安全联盟认证"
-	                     width="83" height="30" style="border: none;">
-	            </a>
-	        </div>
-	    </div><!-- end box -->
-	
-	</footer><!-- end footer -->
-
 </div><!-- end warp -->
 
+<%@include file="jsp/common/footer.jsp"%>
 
 <div class="floating_ck" style="">
 	<dl>
@@ -317,7 +216,7 @@
         </dd>
 	</dl>
 </div>
-<<script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
+<script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script>
 	/** 装修申请初始化  **/
 	function initDecorApply(){
@@ -330,7 +229,7 @@
 				url:"<%=basePath%>decoration/decorationApplyLis",
 				where:{"queryAll":false},
 				width: tableWidth,
-				response:{dataName:'body'},
+				response:{dataName:'data'},
 				cols:[[
 						{field:'type', title: '装修类型', align:"center", width:'16%', templet: function(d){
 							if(d.type == '0'){
@@ -395,7 +294,7 @@
 			url:"<%=basePath%>decoration/queryDecoEffect",
 			data : pageObj,
 			success:function(r){
-				var data = r.body;
+				var data = r.data;
 				if(r.code == '0'){
 					var html ='';
 					if(data.length != 0){
@@ -436,7 +335,8 @@
 			url:"<%=basePath%>user/queryDesigner",
 			data:pageObj,
 			success:function(r){
-				var data = r.body;
+				var data = r.data;
+				console.log(data)
 				if(r.code == '0'){
 					var html="";
 					if(data.length != 0){
@@ -467,7 +367,7 @@
 			data:{"start":0,"end":4},
 			success:function(r){
 				if(r.code == '0'){
-					var data = r.body;
+					var data = r.data;
 					console.log(data)
 					var html;
 					if(data.length != 0){
@@ -486,6 +386,7 @@
 				}
 			},
 			error:function(err){
+				$('.wd_l_list>ul').html('<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>');
 				console.log(err);
 			}
 		});

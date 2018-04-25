@@ -25,7 +25,7 @@ String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <header class="reg-header">
     <div class="w1">
         <div class="header-logo fl"><a href="<%=basePath%>"><img src="<%=basePath%>images/reg_logo.png"></a><em>欢迎成为透明家装用户</em></div>
-        <div class="header-item fr">已有账号？<a href="<%=basePath%>/user/login?login=1" target="_blank">请登录&gt;</a></div>
+        <div class="header-item fr">已有账号？<a href="<%=basePath%>/user?login=1" target="_blank">请登录&gt;</a></div>
     </div>
 </header>
 <!--头部 end-->
@@ -189,9 +189,9 @@ String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		data:{"telphone":$('#username').val()},
 			success:function(data){
 				if(data.code == '0'){
-					if(data.body+"" == 'false'){
+					if(data.data+"" == 'false'){
 						$("#username").next().addClass("Validform_right").removeClass("Validform_wrong").text("");
-					}else if(data.body+"" == 'true'){
+					}else if(data.data+"" == 'true'){
 						$("#username").next().addClass("Validform_wrong").removeClass("Validform_right").text("该账号已注册");
 					}
 				}
@@ -245,7 +245,7 @@ String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 if (data.code == '0') {
                     layer.confirm("注册成功，是否去完善个人信息？",{btn:["是，完善个人信息","否，进入网站主页"]},function(index){
                     	layer.close(index);
-                    	location.href="<%=basePath%>user/personalCenter/"+data.body.id;
+                    	location.href="<%=basePath%>user/personalCenter/"+data.data.id;
                     },function(index){
                     	location.href="<%=basePath%>user";
                     	layer.close(index);

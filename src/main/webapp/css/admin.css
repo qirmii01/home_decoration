@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
-.box .title h2{font-size:20px;margin-top:16px;text-align:center;}
+body{min-width:auto;}
+.admin-box .title h2{font-size:20px;margin-top:16px;text-align:center;}
 .line{overflow:hidden;margin-top:20px;}
 .line input,.line textarea{float:left;}
 .line .search_txt{float:none;margin-top:0;}
@@ -8,6 +9,9 @@
 .btns input{width:68px;height:26px;background:#009688;color:#DDD;}
 .btns input:hover{border:1px solid #186;background:#11ba67;color:#FFF;}
 .autoArea{width:880px;line-height:18px; }
+.bt-1-hv:hover{color:#EEE;background:#798979;box-shadow: 0 0 3px 0 #1c1818}
+.bott-line{padding-bottom:8px;border-bottom:1px solid rgba(128, 128, 128, 0.52);}
+.content{paddging:5px 10px;}
 
 .a{width:466px;margin:0 auto;}
 .a .line span{margin:0 20px 0 50px ;float:left;}
@@ -15,4 +19,3 @@
 .b span:first-child{margin-right:20px;float:left;}
 .b .line,.btns .line{width:980px;margin:10px auto;}
 .b .line .upload-bt{margin:5px 0 0 30px;}
-.b .upload-bt>input:hover{color:#343030;background:#798979;box-shadow: 0 0 3px 0 #1c1818}

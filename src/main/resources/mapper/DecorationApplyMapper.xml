@@ -244,13 +244,118 @@
     </if>
   </select>
   
-  <select id="queryDecorationApply" resultMap="BaseResultMap">
+  <resultMap type="com.hd.domain.DecorationApply" id="FullMap">
+  	<id column="id" property="id"/>
+  	<result column="type" property="type"/>
+  	<result column="budget_amount" property="budgetAmount"/>
+  	<result column="area" property="area"/>
+  	<result column="status" property="status"/>
+  	<result column="comment_rating" property="commentRating"/>
+  	<result column="create_time" property="createTime"/>
+  	<result column="check_time" property="checkTime"/>
+  	<result column="refuse_time" property="refuseTime"/>
+  	<result column="accept_id" property="acceptId"/>
+  	<result column="accept_time" property="acceptTime"/>
+  	<result column="user_id" property="userId"/>
+  	<result column="finish_time" property="finishTime"/>
+  	<collection property="applyAttachments" column="id" select="queryAttachment"></collection>
+  </resultMap>
+  <select id="queryAttachment" resultType="com.hd.domain.ApplyAttachment">
+  	SELECT
+  		`is`.id sourceId,
+  		`is`.path sourcePath
+	FROM
+  		apply_attachment aa,
+  		img_source `is`
+  	WHERE
+  		`is`.id = aa.source_id
+  		AND
+  		apply_id = #{applyId}
+  </select>
+  
+  <select id="queryDecorationApplyBySelective" resultMap="FullMap">
   	SELECT 
     <include refid="Base_Column_List" />
     FROM
     	decoration_apply
     WHERE
-    	user_id = #{userId}
+    	1=1
+    	<if test="type != null">
+    	AND
+        type = #{type,jdbcType=CHAR}
+      </if>
+      <if test="budgetAmount != null">
+      	AND
+        budget_amount = #{budgetAmount,jdbcType=CHAR}
+      </if>
+      <if test="area != null">
+      	AND
+        area = #{area,jdbcType=DECIMAL}
+      </if>
+      <if test="status != null">
+     	AND
+        status = #{status,jdbcType=CHAR}
+      </if>
+      <if test="commentRating != null">
+      	AND
+        comment_rating = #{commentRating,jdbcType=CHAR}
+      </if>
+      <if test="createTime != null">
+      	AND
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="checkTime != null">
+      	AND
+        check_time = #{checkTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="refuseTime != null">
+      	AND
+        refuse_time = #{refuseTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="acceptId != null">
+      	AND
+        accept_id = #{acceptId,jdbcType=VARCHAR}
+      </if>
+      <if test="acceptTime != null">
+      	AND
+        accept_time = #{acceptTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="userId != null">
+      	AND
+        user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="finishTime != null">
+      	AND
+        finish_time = #{finishTime,jdbcType=TIMESTAMP}
+      </if>
   </select>
   
+  <select id="queryDecorationApplyCheckLis" resultType="com.hd.domain.DecorationApply">
+  	SELECT
+  		DISTINCT
+  		da.id id,
+  		u.telphone telphone,
+  		da.budget_amount budgetAmount,
+  		da.type type,
+  		da.area area,
+  		da.user_id userId,
+  		da.create_time createTime,
+  		IF(aa.id IS NULL,0,1) hasAttachment
+  	FROM
+  		decoration_apply da
+  		LEFT JOIN
+  			user u
+  			ON
+  				u.id = da.user_id
+  		LEFT JOIN
+  			apply_attachment aa
+  			ON
+  				aa.apply_id = da.id
+  	WHERE
+  		u.status = '0'
+  		AND
+  		da.status = '0'
+  	LIMIT
+  		#{page},#{limit}
+  </select>
 </mapper>

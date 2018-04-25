@@ -40,6 +40,10 @@ public class Result {
 		return new Result(code, msg);
 	}
 	
+	public static Result buildSuccessResult(){
+		return new Result(SUCCESS,"");
+	}
+	
 	public static Result buildErrorResult(String msg){
 		return new Result(FAIL, msg);
 	}

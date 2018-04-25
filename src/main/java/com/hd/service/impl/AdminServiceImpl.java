@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hd.domain.DecorationApply;
 import com.hd.domain.DesignerCheckInfo;
 import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.ImgSource;
@@ -18,6 +19,7 @@ import com.hd.domain.SysExperienceList;
 import com.hd.domain.SysMenuListInfo;
 import com.hd.domain.SysPreferentialActivities;
 import com.hd.domain.User;
+import com.hd.mapper.DecorationApplyMapper;
 import com.hd.mapper.DesignerMapper;
 import com.hd.mapper.ImgSourceMapper;
 import com.hd.mapper.SysCompanyMapper;
@@ -58,6 +60,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private ImgSourceMapper imgSourceMapper;
+	
+	@Autowired
+	private DecorationApplyMapper decorationApplyMapper;
 	
 	@Override
 	public Result queryAllCompanyInfo(){
@@ -237,6 +242,27 @@ public class AdminServiceImpl implements AdminService {
 			return Result.buildErrorResult("数据插入失败");
 		}
 		return new Result(imgSource);
+	}
+
+	@Override
+	public Result queryDecorApplyCheckLis(DecorationApply formData) {
+		List<DecorationApply> decorationApplies = decorationApplyMapper.queryDecorationApplyCheckLis(formData);
+		return new Result(decorationApplies);
+	}
+
+	@Override
+	public Result decorationApplyCheck(String applyId, String status) {
+		if(StringUtil.isEmpty(applyId) || StringUtil.isEmpty(status)){
+			return Result.buildErrorResult("参数不能为空");
+		}
+		DecorationApply record = new DecorationApply();
+		record.setId(applyId);
+		record.setStatus(status);
+		int i = decorationApplyMapper.updateByPrimaryKeySelective(record);
+		if(i<=0){
+			return Result.buildErrorResult("数据更新失败");
+		}
+		return Result.buildSuccessResult();
 	}
 
 }

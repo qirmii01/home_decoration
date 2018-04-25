@@ -1,5 +1,6 @@
 package com.hd.service;
 
+import com.hd.domain.ApplyAttachment;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.PageObj;
@@ -43,6 +44,13 @@ public interface DecorationService {
 	 * @return
 	 */
 	public Result queryDecorationEffectLis(PageObj pageObj);
+	
+	/**
+	 * 添加装修申请附件
+	 * @param formData 表单数据
+	 * @return
+	 */
+	public Result addAttachment(ApplyAttachment formData);
 	
 	/**
 	 * 添加装修效果相关信息

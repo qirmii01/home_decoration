@@ -10,8 +10,7 @@ h1, h2, h3, h4, h5, h6{font-size: 100%;}
 h1, h2, h3, h4, h5, h6, b, em, i{font-weight: normal;font-style: normal;}
 ul, ol, li{list-style: none;}
 img{border: none;vertical-align: middle;}
-select{appearance:none;-moz-appearance:none;-webkit-appearance:none; }
-input, textarea, select{border: none;outline: none;font-family: "Microsoft YaHei";}
+input, textarea, select{font-family: "Microsoft YaHei";}
 a{color: #666;text-decoration: none;outline: none; text-decoration:none;}
 a:hover{color: #2ea7e0;text-decoration: none;}
 table{border-spacing: 0;border-collapse: collapse;}

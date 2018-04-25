@@ -9,9 +9,12 @@
 <link href="<%=basePath%>css/admin.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<%=basePath%>js/jquery.upload.js"></script>
 <script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
+<style type="text/css">
+	input{border:none;outline:none;}
+</style>
 </head>
 <body>
-	<div class="box">
+	<div class="admin-box">
 		<div class="title"><h2>基本信息</h2></div>
 		<div class="content">
 			<div class="a">
@@ -42,31 +45,31 @@
 						<span>公司介绍:</span><textarea id="companyIntroduce" class="search_txt autoArea"></textarea>
 					</label>
 				</div>		
-				<div class="line">
+				<div class="line bott-line">
 					<label>
 						<span>主页banner图:</span>
 						<span class="img bannerImg"><img ></span>
 					</label>
 					<div class="upload-bt">
-						<input type="button" id="bannerImg" value="上传图片">
+						<input type="button" class="bt-1-hv" id="bannerImg" value="上传图片">
 					</div>
 				</div>
-				<div class="line">
+				<div class="line bott-line">
 					<label>
 						<span>公司logo:</span>
 						<span class="img logoImg"><img></span>
 					</label>
 					<div class="upload-bt">
-						<input type="button" id="logoImg" value="上传图片">
+						<input type="button" class="bt-1-hv" id="logoImg" value="上传图片">
 					</div>
 				</div>		
-				<div class="line">
+				<div class="line bott-line">
 					<label>
 						<span>公司营业执照:</span>
 						<span class="img qualificationsImg"><img ></span>
 					</label>
 					<div class="upload-bt">
-						<input type="button" id="qualificationsImg" value="上传图片">
+						<input type="button" class="bt-1-hv" id="qualificationsImg" value="上传图片">
 					</div>
 				</div>
 			</div>
@@ -87,17 +90,11 @@
 			$.ajax({
 				url:"<%=basePath%>admin/queryBaseInfo",
 				success:function(a){
-					data = a.body;
+					data = a.data;
 					setParams(data);
 				}
 			})
 		}
-		
-		//textarea 高度自适应
-		$(".autoArea").height($(".autoArea")[0].scrollHeight);
-		$(".autoArea").on("keyup keydown", function(){
-		    $(this).height(this.scrollHeight);
-		})
 		
 		function setParams(data){
 			$('#name').val(data.name);
@@ -114,6 +111,12 @@
 			if(data.qualificationsImg){
 				$('.qualificationsImg>img').attr("src","<%=filePath %>/"+data.qualifPath);
 			}
+			
+			//textarea 高度自适应
+			$(".autoArea").height($(".autoArea")[0].scrollHeight);
+			$(".autoArea").on("keyup keydown", function(){
+			    $(this).height(this.scrollHeight);
+			})
 		}
 		
 		$('#cancel').click(function(){
@@ -221,7 +224,7 @@
 				success:function(data){
 					if(data.code == '0'){
 						updateData(true);
-						layer.msg(data.body);
+						layer.msg(data.data);
 					}else{
 						layer.msg(data.msg);
 					}

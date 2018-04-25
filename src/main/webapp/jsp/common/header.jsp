@@ -64,8 +64,8 @@
 	                <div class="fl">公司首页</div>
             	</a>
             </li>
-            <li><a href="../14178_case/index.html"   >设计方案</a></li><li><a href="../14178_designer/index.html"   >设计团队</a></li><li><a href="../14178_info/index.html"   >公司介绍</a></li><li><a href="../14178_news/index.html"   >装修经验</a></li><li><a href="../14178_promotion/index.html"   >优惠活动</a></li>            </ul>
-        <div class="navtag"><a href="javascript:;" onclick="helpDesign('http://www.jiazhuang.com/layer_design/?t=5&po=13&id=14178','立即申请预约')">立即申请预约</a></div>
+            <li><a href="../14178_case/index.html"   >设计方案</a></li><li><a href="../14178_designer/index.html"> 设计团队</a></li><li><a href="../14178_info/index.html"   >公司介绍</a></li><li><a href="../14178_news/index.html"   >装修经验</a></li><li><a href="../14178_promotion/index.html"   >优惠活动</a></li>            </ul>
+        <div class="navtag"><a href="<%=basePath%>decoration/decorationApplyPage">立即申请预约</a></div>
     </div>
 </nav>
 <!--导航 结束-->
@@ -85,14 +85,14 @@
         <p class="small_tip">
             <input checked="checked" type="checkbox">
             <span>记住我</span>
-            <a href="http://user.jiazhuang.com/findpwd/">忘记登录密码？</a>
+            <a href="javascript:void(0)">忘记登录密码？</a>
         </p>
 
         <p class="loading_sub">
             <input id="loginBtn" value="登录" type="button">
         </p>
 
-        <p style="width:406px; text-align:center; line-height: 35px"><a href="http://user.jiazhuang.com/register" rel="nofollow">还没有账号？立即注册</a>
+        <p style="width:406px; text-align:center; line-height: 35px"><a href="user/registerPage" rel="nofollow">还没有账号？立即注册</a>
         </p>
     </div>
 </div>
@@ -124,6 +124,10 @@
 	        			$('#loginBtn').click();
 	        		}
 	        	});
+	        },
+	        end:function(){
+	        	var loc =location.href;
+	        	location.href = loc.substring(0,loc.indexOf("?"));
 	        }
 	    });
 	}
@@ -184,7 +188,7 @@
 	$('a[link="topLogout"]').on('click', function () {
 	    $.post('<%= basePath%>user/logOut', {}, function (result) {
 	        if (result.code=='0') {
-	            window.location.reload();
+	            window.location.href = '<%=basePath%>';
 	        }
 	    }, 'json');
 	});

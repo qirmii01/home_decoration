@@ -2,7 +2,12 @@ package com.hd.service;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.hd.domain.*;
+import com.hd.domain.DecorationApply;
+import com.hd.domain.DesignerCheckInfo;
+import com.hd.domain.Result;
+import com.hd.domain.SysCompanyWithBLOBs;
+import com.hd.domain.SysExperienceList;
+import com.hd.domain.SysPreferentialActivities;
 
 /**
  * 管理员服务接口
@@ -96,4 +101,19 @@ public interface AdminService {
 	 * @return
 	 */
 	public Result fileUpload(HttpServletRequest request);
+	
+	/**
+	 * 查询装修申请审核列表
+	 * @param formData 表单数据
+	 * @return
+	 */
+	public Result queryDecorApplyCheckLis(DecorationApply formData);
+	
+	/**
+	 * 装修申请审核
+	 * @param applyId 申请id
+	 * @param status 审核状态
+	 * @return
+	 */
+	public Result decorationApplyCheck(String applyId, String status);
 }
