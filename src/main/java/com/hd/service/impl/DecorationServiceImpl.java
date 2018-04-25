@@ -59,6 +59,9 @@ public class DecorationServiceImpl implements DecorationService {
 
 	@Override
 	public Result addDecorationApply(DecorationApply decorationApply) {
+		if(StringUtil.isEmpty(decorationApply.getUserId())){
+			return Result.buildErrorResult("用户名不能为空");
+		}
 		if(StringUtil.isEmpty(decorationApply.getType())){
 			return Result.buildErrorResult("请选择装修类型");
 		}

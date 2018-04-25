@@ -355,6 +355,22 @@
   		u.status = '0'
   		AND
   		da.status = '0'
+  		<if test="userId != null">
+  			AND
+  			da.user_id =#{userId}
+  		</if>
+  		<if test="budgetAmount != null">
+  			AND
+  			da.budget_amount = #{budgetAmount}
+  		</if>
+  		<if test="type != null">
+  			AND
+  			da.type = #{type}
+  		</if>
+  		<if test="area != null">
+  			AND
+  			da.area = #{area}
+  		</if>
   	LIMIT
   		#{page},#{limit}
   </select>

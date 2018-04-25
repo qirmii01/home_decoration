@@ -95,7 +95,7 @@ public class UserController {
 		return result;
 	}
 	
-	 @ResponseBody
+	@ResponseBody
 	@RequestMapping(value="/getVerificationCode")
 	public String saveCheck(HttpServletRequest request,HttpServletResponse response){
     	response.setContentType("image/jpeg");
@@ -170,12 +170,4 @@ public class UserController {
 	}
 	
 	
-	
-	@RequestMapping("checkDesigner")
-	@ResponseBody
-	public Result checkDesigner(){
-		
-		
-		return null;
-	}
 }

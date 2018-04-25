@@ -12,6 +12,7 @@ import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.PageObj;
 import com.hd.domain.Result;
+import com.hd.domain.User;
 import com.hd.service.DecorationService;
 
 /**
@@ -72,6 +73,8 @@ public class DecorationController extends BaseController{
 	@RequestMapping("addDecorationApply")
 	@ResponseBody
 	public Result addDecorationApply(DecorationApply decorationApply){
+		String userId = ((User)super.getSessionInfo(request, "userInfo")).getId();
+		decorationApply.setUserId(userId);
 		Result result = decorationService.addDecorationApply(decorationApply);
 		return result;
 	}

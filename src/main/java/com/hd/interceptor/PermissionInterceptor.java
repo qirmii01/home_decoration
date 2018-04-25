@@ -21,16 +21,18 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
             HttpServletResponse response, Object o)throws Exception {
 		String req = request.getServletPath();
         Object userInfo = request.getSession().getAttribute("userInfo");
-        //登录	登出	主页	不用过滤权限
-		if(!req.startsWith("/admin")){
-			return true;
-		}else{
-			if(userInfo==null){
-				response.sendRedirect("adminIndex.jsp");
-				return false;
-			}
-			return true;
-		}
+        
+//        //登录	登出	主页	不用过滤权限
+//		if(!req.startsWith("/admin")){
+//			return true;
+//		}else{
+//			if(userInfo==null){
+//				response.sendRedirect("adminIndex.jsp");
+//				return false;
+//			}
+//			return true;
+//		}
+        return true;
 	}
 	
 	@Override

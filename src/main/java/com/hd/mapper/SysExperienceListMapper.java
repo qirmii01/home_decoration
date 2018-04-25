@@ -55,5 +55,5 @@ public interface SysExperienceListMapper {
      * @param limit 查询条数
      * @return
      */
-    List<SysExperienceList> selectValidExperienceList(@Param("start")int start, @Param("limit")int limit);
+    List<SysExperienceList> selectExperienceList(@Param("start")int start, @Param("limit")int limit);
 }

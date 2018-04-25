@@ -11,7 +11,7 @@ body{min-width:auto;}
 .autoArea{width:880px;line-height:18px; }
 .bt-1-hv:hover{color:#EEE;background:#798979;box-shadow: 0 0 3px 0 #1c1818}
 .bott-line{padding-bottom:8px;border-bottom:1px solid rgba(128, 128, 128, 0.52);}
-.content{paddging:5px 10px;}
+.content{padding:5px 10px;}
 
 .a{width:466px;margin:0 auto;}
 .a .line span{margin:0 20px 0 50px ;float:left;}
@@ -19,3 +19,19 @@ body{min-width:auto;}
 .b span:first-child{margin-right:20px;float:left;}
 .b .line,.btns .line{width:980px;margin:10px auto;}
 .b .line .upload-bt{margin:5px 0 0 30px;}
+
+#admin{background:#1384ca; /* 一些不支持背景渐变的浏览器 */  
+    background:-moz-linear-gradient(top, #0369a9, #30a1e5);  
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#0369a9), to(#30a1e5));  
+    background:-o-linear-gradient(top, #0369a9, #30a1e5);
+    padding-top:80px;}
+#admin .admin-box{background:url(../images/admin-bg.jpg);width:1000px;height:585px;overflow:hidden;margin: 0 auto;}
+#admin .admin-box .po{margin-top:225px;margin-left:466px;width:270px;height:75px;}
+#admin .admin-box .fl{margin-left: 5px;}
+#admin .admin-box .fl:first-child{width:170px;height:inherit;}
+#admin .fl span{display:inline-block;}
+#admin .fl span:first-child{margin:10px 0 10px 0;}
+#admin .fl span input{height:22px;width:150px;}
+#admin .fl #submit{display:inline-block;width:78px;height:69px;opacity:0;margin-left:10px;border:1px solid rgba(255,255,255,0);border-radius:10px;}
+#admin .fl #submit:hover{cursor:pointer;opacity:0.5;}
+#admin .fl #submit:active{opacity:0.2;}

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DesignerCheckInfo;
 import com.hd.domain.DesignerWithBLOBs;
+import com.hd.domain.ImageObj;
 import com.hd.domain.ImgSource;
 import com.hd.domain.Result;
 import com.hd.domain.SysCompanyWithBLOBs;
@@ -107,13 +108,22 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Result queryValidExperienceLis(int pageIndex, int limit) {
+	public Result queryExperienceLis(int pageIndex, int limit) {
 		if(pageIndex <= 0 || limit <=0){
 			return Result.buildErrorResult("非法参数参数");
 		}
 		List<SysExperienceList> experienceLis = sysExperienceListMapper
-				.selectValidExperienceList((pageIndex-1)*limit, limit);
+				.selectExperienceList((pageIndex-1)*limit, limit);
 		return new Result(experienceLis);
+	}
+	
+	@Override
+	public Result queryExperience(String id) {
+		SysExperienceList sysExperienceList = sysExperienceListMapper.selectByPrimaryKey(id);
+		if(sysExperienceList == null){
+			return Result.buildErrorResult("未查询到相关数据");
+		}
+		return new Result(sysExperienceList);
 	}
 
 	@Override
@@ -265,4 +275,20 @@ public class AdminServiceImpl implements AdminService {
 		return Result.buildSuccessResult();
 	}
 
+	@Override
+	public Result uploadImage(HttpServletRequest request) {
+		String path;
+		try {
+			path =fileUtil.fileUpload(request);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			return Result.buildErrorResult("图片上传错误");
+		} catch (IOException e) {
+			e.printStackTrace();
+			return Result.buildErrorResult("图片上传错误");
+		}
+		ImageObj iamgeObj = new ImageObj();
+		iamgeObj.setSrc(path);
+		return new Result(iamgeObj);
+	}
 }

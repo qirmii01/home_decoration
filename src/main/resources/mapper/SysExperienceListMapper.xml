@@ -157,19 +157,18 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="selectValidExperienceList" resultType="com.hd.domain.SysExperienceList">
+  <select id="selectExperienceList" resultType="com.hd.domain.SysExperienceList">
   	SELECT
   		id id, 
   		title title, 
-  		date_format(create_time,'%Y-%m-%d') createTime,
+  		date_format(create_time,'%Y-%m-%d') createTimeStr,
   		content content
   	FROM
   		sys_experience_list
-  	WHERE
-  		status = '0'
   	ORDER BY
   		create_time DESC
   	LIMIT
   		#{start}, #{limit}
   </select>
+  
 </mapper>

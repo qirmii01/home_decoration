@@ -31,7 +31,7 @@ public class AdminController {
 	 */
 	@RequestMapping("")
 	public String goIn(){
-		return "adminIndex";
+		return "jsp/admin/adminLogin";
 	}
 	/**
 	 * 管理员登录
@@ -40,16 +40,24 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping("login")
-	public String login(String userName, String password){
+	@ResponseBody
+	public Result login(String userName, String password){
 		if(StringUtil.isNotEmpty(userName) && userName.equals("admin") 
 				&& StringUtil.isNotEmpty(password) && password.equals("123456")){
 			HttpSession session = request.getSession();
 			session.setAttribute("userInfo", "admin");
 			session.setMaxInactiveInterval(30*60);
-			return "jsp/management";
+			return Result.buildResult(Result.SUCCESS, "登录成功");
 		}
-		request.setAttribute("msg", "账号或密码错误");
-		return "adminIndex";
+		return Result.buildErrorResult("账号或密码错误");
+	}
+	
+	@RequestMapping("adminLogout")
+	@ResponseBody
+	public Result logout(){
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return Result.buildSuccessResult();
 	}
 	
 	/**
@@ -74,12 +82,21 @@ public class AdminController {
 	}
 	
 	/**
-	 * 公司装修经验管理页面
+	 * 添加公司装修经验管理页面
 	 * @return
 	 */
-	@RequestMapping("experienceInfo")
+	@RequestMapping("addExperience")
 	public String experienceInfo(){
-		return "jsp/admin/experience";
+		return "jsp/admin/addExperience";
+	}
+	
+	/**
+	 * 公司装修经验列表
+	 * @return
+	 */
+	@RequestMapping("experienceList")
+	public String experienceList(){
+		return "jsp/admin/experienceList";
 	}
 	
 	/**
@@ -140,7 +157,14 @@ public class AdminController {
 	@RequestMapping("queryExperienceLis")
 	@ResponseBody
 	public Result queryExperienceLis(@RequestParam("pageIndex")int pageIndex, @RequestParam("limit")int limit){
-		Result result = adminService.queryValidExperienceLis(pageIndex, limit);
+		Result result = adminService.queryExperienceLis(pageIndex, limit);
+		return result;
+	}
+	
+	@RequestMapping("queryExperience")
+	@ResponseBody
+	public Result queryExperience(@RequestParam("id")String id){
+		Result result = adminService.queryExperience(id);
 		return result;
 	}
 	
@@ -216,6 +240,13 @@ public class AdminController {
 	@ResponseBody
 	public Result decorationApplyCheck(String id,String status){
 		Result result = adminService.decorationApplyCheck(id, status);
+		return result;
+	}
+	
+	@RequestMapping("uploadImage")
+	@ResponseBody
+	public Result uploadImage(HttpServletRequest request){
+		Result result = adminService.uploadImage(request);
 		return result;
 	}
 }

@@ -27,7 +27,7 @@
                         <img src="http://m.zhengjinfan.cn/images/0.jpg" class="layui-nav-img"> ADMIN
                     </a>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
+                <li class="layui-nav-item"><a id="logout" href="javascript:;"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a></li>
             </ul>
         </div>
 
@@ -107,6 +107,13 @@
 			}
 		})
 		
+		$("#logout").click(function(){
+			$.get("<%=basePath%>admin/adminLogout",function(){
+				layer.msg("退出成功",{time:2000},function(){
+					location.href="<%=basePath%>admin";
+				})
+			})
+		});
 	</script>
 </body>
 </html>

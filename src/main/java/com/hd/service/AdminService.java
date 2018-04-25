@@ -39,7 +39,14 @@ public interface AdminService {
 	 * @param limit 每次查询条数
 	 * @return
 	 */
-	public Result queryValidExperienceLis(int pageIndex, int limit);
+	public Result queryExperienceLis(int pageIndex, int limit);
+	
+	/**
+	 * 查询装修经验
+	 * @param id 经验id
+	 * @return
+	 */
+	public Result queryExperience(String id);
 	
 	/**
 	 * 添加装修经验
@@ -116,4 +123,11 @@ public interface AdminService {
 	 * @return
 	 */
 	public Result decorationApplyCheck(String applyId, String status);
+	
+	/**
+	 * layuiedit上传图片
+	 * @param request
+	 * @return
+	 */
+	public Result uploadImage(HttpServletRequest request);
 }

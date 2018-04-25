@@ -199,3 +199,40 @@ function removeCookie(c_name)
 	}
 	return ""
 }
+
+//毫秒时间按格式转化
+function millisDateFormat(millis,format){
+	if(!(typeof millis) == 'number' || !format){
+		return;
+	}
+	var d = new Date(millis);
+	if(!d) return;
+	
+	var year = d.getFullYear();
+	var month = d.getMonth()+1;
+	var date = d.getDate();
+	var hour = d.getHours();
+	var minutes = d.getMinutes();
+	var seconds = d.getSeconds();
+	
+	format = format.trim();
+	if(/-/.test(format)){
+		if(format.length > 11){
+			return year+"-"+month+"-"+date+" "+hour+":"+minutes+":"+seconds;
+		}else{
+			return year+"-"+month+"-"+date;
+		}
+	}else if(/年/.test(format)){
+		if(format.length > 11){
+			return year+"年"+month+"月"+date+"日"+hour+"点"+minutes+"分"+seconds+"秒";
+		}else{
+			return year+"年"+month+"月"+date+"日";
+		}
+	}else if(/\//.test(format)){
+		if(format.length > 11){
+			return year+"/"+month+"/"+date+" "+hour+"/"+minutes+"/"+seconds;
+		}else{
+			return year+"/"+month+"/"+date;
+		}
+	}
+}
