@@ -41,8 +41,9 @@
 		<form class="layui-form" action="#">
 			<select id="status">
 				<option value="">请选择</option>
-				<option value="0">正常</option>
-				<option value="1">禁用</option>
+				<option value="0">待审核</option>
+				<option value="1">审核通过</option>
+				<option value="2">审核失败</option>
 			</select>
 		</form>
 	</div>
@@ -57,8 +58,10 @@
 
 
 <script type="text/html" id="operationBar">
-	<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="through">通过</button>
-	<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="notThrough">不通过</button>
+	{{# if(d.status==='0'){}}
+		<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="through">通过</button>
+		<button class="layui-btn layui-btn-radius layui-btn-xs" lay-event="notThrough">不通过</button>
+	{{#  } }}
 </script>
 
 
