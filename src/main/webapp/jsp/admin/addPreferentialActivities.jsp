@@ -57,7 +57,7 @@
 					return;
 				}
 				var activities={};
-				activities.title =title;
+				activities.titile =title;
 				activities.content = content;
 				$.ajax({
 					url:"<%=basePath%>admin/addPreferentialActivities",
