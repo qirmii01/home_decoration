@@ -13,6 +13,7 @@
 <style type="text/css">
 	.line{margin:0 auto;width:980px;margin-bottom:10px;}
 	.line:first-child{margin-top:20px;}
+	#expe-title{margin-left:10px;}
 </style>
 </head>
 <body>
@@ -46,7 +47,7 @@
 			
 			$('#submit').click(function(){
 				var title = $('#expe-title').val();
-				var content=$('#expeCont').val();
+				var content=layedit.getContent(index);
 				if(title.trim() == ''){
 					layer.msg("标题不能为空");
 					return ;
@@ -64,9 +65,10 @@
 					method:"POST",
 					success:function(r){
 						if(r.code =='0'){
-							layer.msg(r.data);
-							$('#expe-title').val("");
-							$('#expeCont').val("");
+							layer.msg(r.data,{time:1500},function(){
+								location.reload();
+							});
+							
 						}else{
 							layer.msg(r.msg);
 						}
@@ -77,114 +79,6 @@
 				});
 			});
 		});
-		
-		
-	</script>
-	
-	<script type="text/javascript">
-		var cont="";
-		
-		$('#submit').click(function(){
-			var title = $('#expe-title').val();
-			var content=$('#expeCont').val();
-			if(title.trim() == ''){
-				layer.msg("标题不能为空");
-				return ;
-			}
-			if(content.trim() == ''){
-				layer.msg("内容不能为空");
-				return;
-			}
-			var experienceList={};
-			experienceList.title =title;
-			experienceList.content = content;
-			$.ajax({
-				url:"<%=basePath%>admin/addExperience",
-				data:experienceList,
-				method:"POST",
-				success:function(r){
-					if(r.code =='0'){
-						layer.msg(r.data);
-						$('#expe-title').val("");
-						$('#expeCont').val("");
-					}else{
-						layer.msg(r.msg);
-					}
-				},
-				error:function(err){
-					console.log(err);
-				}
-			});
-		});
-		
-		$('.autoArea').focus(function(){
-			
-		
-		})
-		
-		function addCont(){
-			var e = window.event;
-			var code = e.keyCode;
-			console.log(code)
-			cont = $('.autoArea').val();
-			cont = cont ? cont :"";
-			if(code == 9){
-				 if (e.preventDefault) { e.preventDefault(); }
-	            else { e.returnValue = false; }
-				cont +="&nbsp;&nbsp;&nbsp;&nbsp;";
-			}
-		}
-		
-		$('#addImg').click(function(){
-			MyUtil.upload({"target":""},function(result){
-				console.log("url"+result)
-				var content=$('#expeCont').val();
-				if(result){
-					content+='\n<img src="<%=filePath%>/'+result+'" class="article-img"/>';
-				}
-				$('#expeCont').html(content);
-			});
-		})
-		
-		$(function(){
-			init();
-		})
-		
-		var pageIndex = 1;
-		var cont;
-		function init(){
-			$.ajax({
-				url:"<%=basePath%>admin/queryExperienceLis",
-				data:{"pageIndex":pageIndex,"limit":5},
-				success:function(data){
-					if(data.code =='0'){
-						cont = data.data;
-						var menuHtml="";
-						var contHtml="";
-						if(cont.length ==0){
-							menuHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
-							contHtml='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
-						}else{
-							var dataLis = cont;
-							for(var i=0 ; i<dataLis.length ; i++){
-								menuHtml+=
-									'<li class="menu-title" data-id="'+dataLis[i].id+'">'+dataLis[i].title+'</li>';
-									
-							}
-							contHtml=
-								'<li ><div class="title"><h4>'+dataLis[0].title+'</h4></div>'
-								+'<div class="corr"><span>发布时间：'+dataLis[0].createTimeStr+'</span></div>'
-								+'<div class="art-content">'+dataLis[0].content+'</div></li>';
-						}
-						$('.expe-menu>ul.menu-detail').html(menuHtml);
-						$('.expe-list>ul.expe-content').html(contHtml);
-					}else{
-						layer.msg(data.msg);
-					}
-				}
-				
-			});
-		}
 		
 		
 	</script>

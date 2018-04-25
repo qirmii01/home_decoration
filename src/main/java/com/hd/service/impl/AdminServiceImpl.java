@@ -108,12 +108,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Result queryExperienceLis(int pageIndex, int limit) {
-		if(pageIndex <= 0 || limit <=0){
-			return Result.buildErrorResult("非法参数参数");
-		}
+	public Result queryExperienceLis() {
 		List<SysExperienceList> experienceLis = sysExperienceListMapper
-				.selectExperienceList((pageIndex-1)*limit, limit);
+				.selectExperienceList();
 		return new Result(experienceLis);
 	}
 	
@@ -288,7 +285,8 @@ public class AdminServiceImpl implements AdminService {
 			return Result.buildErrorResult("图片上传错误");
 		}
 		ImageObj iamgeObj = new ImageObj();
-		iamgeObj.setSrc(path);
+		String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+		iamgeObj.setSrc(filePath+path);
 		return new Result(iamgeObj);
 	}
 }

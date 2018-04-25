@@ -85,7 +85,7 @@ public class AdminController {
 	 * 添加公司装修经验管理页面
 	 * @return
 	 */
-	@RequestMapping("addExperience")
+	@RequestMapping("addExperiencePage")
 	public String experienceInfo(){
 		return "jsp/admin/addExperience";
 	}
@@ -94,7 +94,7 @@ public class AdminController {
 	 * 公司装修经验列表
 	 * @return
 	 */
-	@RequestMapping("experienceList")
+	@RequestMapping("experienceListPage")
 	public String experienceList(){
 		return "jsp/admin/experienceList";
 	}
@@ -156,8 +156,8 @@ public class AdminController {
 	
 	@RequestMapping("queryExperienceLis")
 	@ResponseBody
-	public Result queryExperienceLis(@RequestParam("pageIndex")int pageIndex, @RequestParam("limit")int limit){
-		Result result = adminService.queryExperienceLis(pageIndex, limit);
+	public Result queryExperienceLis(){
+		Result result = adminService.queryExperienceLis();
 		return result;
 	}
 	

@@ -35,11 +35,9 @@ public interface AdminService {
 	
 	/**
 	 * 查询装修经验列表
-	 * @param pageIndex 第几页
-	 * @param limit 每次查询条数
 	 * @return
 	 */
-	public Result queryExperienceLis(int pageIndex, int limit);
+	public Result queryExperienceLis();
 	
 	/**
 	 * 查询装修经验

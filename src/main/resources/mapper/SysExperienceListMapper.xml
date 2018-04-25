@@ -160,15 +160,12 @@
   <select id="selectExperienceList" resultType="com.hd.domain.SysExperienceList">
   	SELECT
   		id id, 
-  		title title, 
-  		date_format(create_time,'%Y-%m-%d') createTimeStr,
-  		content content
+  		title title,
+  		status status
   	FROM
   		sys_experience_list
   	ORDER BY
   		create_time DESC
-  	LIMIT
-  		#{start}, #{limit}
   </select>
   
 </mapper>
