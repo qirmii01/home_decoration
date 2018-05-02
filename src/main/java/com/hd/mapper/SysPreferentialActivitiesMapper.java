@@ -2,6 +2,9 @@ package com.hd.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.hd.domain.BasePage;
 import com.hd.domain.SysPreferentialActivities;
 
 public interface SysPreferentialActivitiesMapper {
@@ -52,4 +55,12 @@ public interface SysPreferentialActivitiesMapper {
      * @return
      */
     List<SysPreferentialActivities> selectPreferentialActivities();
+    
+    /**
+     * 统计所有的装修效果记录
+     * @return
+     */
+    int countActivities();
+    
+    List<SysPreferentialActivities> selectActivityLis(@Param("basePage")BasePage basePage,@Param("status")String status);
 }

@@ -104,12 +104,18 @@
 			$('#serviceArea').val(data.serviceArea);
 			if(data.bannerImg){
 				$('.bannerImg>img').attr("src","<%=filePath %>/"+data.bannerPath);
+			}else{
+				$('.bannerImg>img').attr("src","");
 			}
 			if(data.logoImg){
 				$('.logoImg>img').attr("src","<%=filePath %>/"+data.logoPath);
+			}else{
+				$('.logoImg>img').attr("src","");
 			}
 			if(data.qualificationsImg){
 				$('.qualificationsImg>img').attr("src","<%=filePath %>/"+data.qualifPath);
+			}else{
+				$('.qualificationsImg>img').attr("src","");
 			}
 			
 			//textarea 高度自适应
@@ -244,15 +250,15 @@
 		
 		$('#logoImg').click(function(){
 			
-			MyUtil.upload({"target":".logoImg img","show":true});
+			MyUtil.upload({"url":"<%=basePath%>/admin/upload","target":".logoImg img","show":true});
 		});
 		
 		$('#bannerImg').click(function(){
-			MyUtil.upload({"target":".bannerImg img","show":true});
+			MyUtil.upload({"url":"<%=basePath%>/admin/upload","target":".bannerImg img","show":true});
 		});
 		
 		$('#qualificationsImg').click(function(){
-			MyUtil.upload({"target":".qualificationsImg img","show":true});
+			MyUtil.upload({"url":"<%=basePath%>/admin/upload","target":".qualificationsImg img","show":true});
 		});
 		
 	</script>

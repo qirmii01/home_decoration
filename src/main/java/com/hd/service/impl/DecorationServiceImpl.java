@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hd.domain.ApplyAttachment;
+import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffect;
 import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.DecorationEffectImg;
 import com.hd.domain.DecorationEffectKey;
-import com.hd.domain.PageObj;
 import com.hd.domain.Result;
 import com.hd.mapper.DecorationApplyMapper;
 import com.hd.mapper.DecorationEffectImgMapper;
@@ -118,11 +118,9 @@ public class DecorationServiceImpl implements DecorationService {
 	}
 
 	@Override
-	public Result queryDecorationEffectLis(PageObj pageObj) {
-		int start = pageObj.getCurrentPage()*pageObj.getPageSize();
-		int end = (pageObj.getCurrentPage()+1)*pageObj.getPageSize();
+	public Result queryDecorationEffectLis(BasePage basePage) {
 		List<HashMap<String, Object>> decorationEffects = decorationEffectMapper
-				.queryDecorationEffectLis(start, end);
+				.queryDecorationEffectLis(basePage);
 		if(decorationEffects.isEmpty()){
 			return new Result("无数据");
 		}

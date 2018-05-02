@@ -2,73 +2,117 @@
     pageEncoding="UTF-8"%>
 <%@include file="../common/header.jsp"%>
 <link href="<%=basePath%>plugins/layui/css/layui.css" rel="stylesheet">
+<script type="text/javascript" src="<%=basePath%>js/jquery.upload.js"></script>
 <style>
-	
+	.layui-input{width:auto;display:inline-block;}
+	.layui-btn{color:#FFF;}
+	input[type="radio"]{display:none;}
+	#telphone{display:inline-block;width:170px;padding-left:10px;border:1px solid #FFF;border-radius: 2px;height:38px;line-height: 1.3;background:rgba(210,210,210,.6)}
+	.locat{height:30px;line-height:30px;padding-left:16px;}
+	#my-content{border-top:1px solid #123;overflow:hidden;}
+	.per-left{min-height:450px;}
+	.per-content{padding:5px 16px;width:1100px;}
+	.oper{margin-right:75px;}
+	.oper a:first-child{margin-right:8px;}
+	.avatar{line-height:100px;text-align:center;position:relative;}
 </style>
 <div class="locat"><span><a href="<%=basePath%>">首页</a></span>&nbsp;&gt;&nbsp;<span>个人中心</span></div>
 <div id="my-content">
-	<div class="per-left">
-		<ul>
-			<li><a class="t1" href="javascript:void(0);">个人信息</a></li>
+	<div class="per-left fl layui-bg-black">
+		<ul class="layui-nav layui-nav-tree">
+			<li class="layui-nav-item layui-this"><a class="t1" href="javascript:void(0);">个人信息</a></li>
 			<c:if test="${sessionScope.userInfo.type ==0}">
-				<li><a class="t2 apply-open" href="javascript:void(0);">我的装修申请</a></li>
+				<li class="layui-nav-item"><a class="t-apply" href="javascript:void(0);">我的装修申请</a></li>
 			</c:if>
 			<c:if test="${sessionScope.userInfo.type ==1}">
-				<li><a class="t2" href="javascript:void(0);">我的设计</a></li>
-				<li><a class="t3" href="javascript:void(0);">装修申请列表</a></li>
+				<li class="layui-nav-item"><a class="t-design" href="javascript:void(0);">我的设计</a></li>
+				<li class="layui-nav-item"><a class="t-apply-list" href="javascript:void(0);">装修申请列表</a></li>
 			</c:if>
+			<li class="layui-nav-item"><a class="t-m" href="javascript:void(0);">我的消息</a></li>
 		</ul>
 	</div>
-	<div class="per-content"></div>
+	<div class="per-content fl"></div>
 </div>
+<%@include file="../common/footer.jsp"%>
 <script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script type="text/javascript">
+	$('.layui-nav-item').click(function(){
+		$('.layui-nav-item').each(function(){
+			$(this).removeClass("layui-this");
+		});
+		$(this).addClass("layui-this");
+	});
+	
 	$('.per-left li .t1').click(function(){
+		$('.per-content').html("");
 		var html = '';
-		html+='<div class="oper"><a href="javascript:void(0);">编辑</a><a href="javascript:void(0);">保存</a></div>'
-		+'<div><span>电话：</span><p id="telphone">${sessionScope.userInfo.telphone}</p></div>'
-		+'<div><span>用户名：</span><input type="text" id="userName" disabled="disabled" value="${sessionScope.userInfo.userName}"></div>'
-		+'<div class="avatar"><span>我的头像：</span><img id="avatartImg" alt="我的头像" data-id="${sessionScope.userInfo.avatar}" src="<%=filePath%>/${sessionScope.userInfo.avatarPath}"><input id="upload" type="hidden" value="上传头像"></div>'
-		+'<div><span>性别：</span><label><input disabled="disabled" type="radio" ';
-		<c:if test="${sessionScope.userInfo.sex == 0}">
-			html+='checked="check"';
-		</c:if>
-		html+=' name="sex" id="sex-boy" value="0">男</label><label><input disabled="disabled" type="radio"';
-		<c:if test="${sessionScope.userInfo.sex == 1}">
-		html+='checked="check"';
-		</c:if>
-		html+='name="sex" id="sex-girl" value="1">女</label><input type="hidden" id="userId" value="${sessionScope.userInfo.id}"></div>';
+		html+='<div class="oper fr"><a href="javascript:void(0);" class="layui-btn layui-btn-sm" style="color:#FFF;">编辑</a><a href="javascript:void(0);" class="layui-btn layui-btn-sm" style="color:#FFF;">保存</a></div>'
+		+'<div class="layui-form-item"><span class="layui-form-label">电话：</span><p id="telphone">${sessionScope.userInfo.telphone}</p>'
+		+'<div class="layui-form-item"><span class="layui-form-label">用户名：</span><input type="text" class="layui-input" id="userName" disabled="disabled" value="${sessionScope.userInfo.userName}"></div>'
+		+'<div class="avatar layui-form-item colu_tw_b"><span class="layui-form-label">我的头像：</span><a href="javascript:void(0);" id="upload"><img id="avatartImg" data-id="${sessionScope.userInfo.avatar}" '
+		if('${sessionScope.userInfo.avatarPath}'){
+			html+=' alt="我的头像" src="<%=filePath%>/${sessionScope.userInfo.avatarPath}"';
+		}else{
+			html+=' alt="点击上传头像"';
+		}
+		html+='></a></div><div class="layui-form-item"><span class="layui-form-label">性别：</span><div class="layui-input-block"><input type="radio" name="sex" value="0" title="男">'
+		+'<div class="layui-unselect layui-form-radio';
+		if("${sessionScope.userInfo.sex}"=="0"){
+			html +=' layui-form-radioed"><i class="layui-anim layui-icon"></i>';
+		}else{
+			html+= '"><i class="layui-anim layui-icon"></i>';
+		}
+		html+='<div>男</div></div><input type="radio" name="sex" value="1" title="女">'
+		+'<div class="layui-unselect layui-form-radio';
+		if("${sessionScope.userInfo.sex}"=="1"){
+			html+=' layui-form-radioed"><i class="layui-anim layui-icon"></i>';
+		}else{
+			html+='"><i class="layui-anim layui-icon"></i>';
+		}
+		html+='<div>女</div></div></div></div></div>';
 		$('.per-content').html(html);
+		$('.layui-form-radio').click(function(){
+			$('.layui-form-radio').each(function(index){
+				if($(this).hasClass("layui-form-radioed")){
+					$(this).removeClass("layui-form-radioed");
+					$(this).find("i").text("");
+				}
+			});
+			$(this).addClass("layui-form-radioed");
+			$(this).find("i").text("");
+		});
 		
 		$('.oper a').click(function(){
 			var index = $(this).index();
 			if(index == 0){
 				$('.per-content input').removeAttr("disabled");
 				$('#upload').attr("type","button");
+				$('#upload').click(function(){
+					MyUtil.upload({"url":"<%=basePath%>admin/upload","show":true,"target":'#upload img'})
+				});
 			}
 			if(index ==1){
 				$('.per-content input').attr("disabled","disabled");
-				$('#upload').attr("type","hidden");
-				
+				$('#upload').unbind("click");
 				var un = $('#userName').val();
 				var avatar= $('#avatartImg').attr("data-id");
-				var sex = $('#sex-boy').prop("checked")?0:1;
+				var sex = $('.layui-form-radioed').prev().val();
 				var update = 0;
 				var user={};
-				if(un != "${sessionScope.userInfo.userName}"){
+				if(un && un != "${sessionScope.userInfo.userName}"){
 					user.userName = un;
 					update = 1;
 				}
-				if(avatar != "${sessionScope.userInfo.avatar}"){
+				if(avatar && avatar != "${sessionScope.userInfo.avatar}"){
 					user.avatar = avatar;
 					update = 1;
 				}
-				if(sex != "${sessionScope.userInfo.sex}"){
+				if(sex && sex != "${sessionScope.userInfo.sex}"){
 					user.sex = sex;
 					update = 1;
 				}
 				if(update){
-					user.id = $("#userId").val();
+					user.id = "${sessionScope.userInfo.id}";
 					$.ajax({
 						url:"<%=basePath%>user/updateUser",
 						method:"POST",
@@ -91,6 +135,7 @@
 	})
 	
 	$('.per-left li .t2').click(function(){
+		$('.per-content').html("");
 		<c:if test="${sessionScope.userInfo.type ==0 }">
 		$.ajax({
 			url:"<%=basePath%>decoration/userDecorationApply",
@@ -159,7 +204,7 @@
 											if(d.status == 0){
 												return "审核中";
 											}else if(d.status == 1){
-												return "已发布，等待设计师接受";
+												return "已发布，等待设计师选择";
 											}if(d.status == 2){
 												return "审核未通过";
 											}if(d.status == 3){

@@ -7,15 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>装修申请</title>
 <style type="text/css">
-.title,.content{width:388px;margin:20px auto;}
-.title{text-align:center;}
+body{min-width:auto;}
+.title,.content{margin-top:20px;}
+.title{text-align:center;width:840px;}
 .title h3{font-size:22px;}
-.content{padding-left:200px;}
+.content{padding-left:310px;width:530px;}
 .content .items{margin-bottom:10px;}
 #upload{margin-left:74px;}
 .btns{padding-left:74px;margin-top:16px;}
 .btns input{width:65px;}
 .btns input:first-child{margin-right:24px;}
+.atts:hover{cursor:pointer;}
+.atts{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -61,11 +64,18 @@
     <script type="text/javascript">
     	$('#upload').click(function(){
     		var la=$('.show li:last');
-    		if(la.attr("data-id")){
+    		if(la.attr("data-id") || !la[0]){
 	    		$('.show ul').append('<li class="atts"></li>')
     		}
-	    	MyUtil.upload({"target":'.show li:last'},function(url){
+	    	MyUtil.upload({"url":"<%=basePath%>/admin/upload","target":'.show li:last'},function(url){
+	    		var id= $('.show li:last').attr("data-id");
+	    		var url = $('.show li:last').attr("data-url");
 	    		
+	    		console.log(url)
+	    		if(id){
+	    			$('.show li:last').text("文件id："+id);
+	    			$('.show li:last').attr("onclick","see(\""+id+"\")");
+	    		}
 	    	})
     	});
     	var d;
@@ -184,6 +194,16 @@
 		$('#cancel').click(function(){
     		parent.location.reload();
     	});
+		
+		function see(id){
+			$.get("<%=basePath%>user/seeSource",{"id":id},function(d){
+				if(d.code!='0'){
+					layer.msg(d.msg);
+				}else{
+					window.open("<%=filePath%>"+d.data.path);
+				}
+			});
+		}
     </script>
 </body>
 </html>

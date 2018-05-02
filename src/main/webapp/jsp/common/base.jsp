@@ -9,6 +9,6 @@ String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="<%=basePath%>css/index.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="<%=basePath%>js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/common.js"></script>
-<script type="text/javascript" src="<%=basePath%>plugins/layui/layer.js"></script>
+<script type="text/javascript" src="<%=basePath%>plugins/layui/lay/modules/layer.js"></script>
 <link rel="stylesheet" href="<%=basePath%>plugins/layui/css/modules/layer/default/layer.css">
 <link rel="shortcut icon" href="<%=basePath%>images/webico.ico" type="image/x-icon">

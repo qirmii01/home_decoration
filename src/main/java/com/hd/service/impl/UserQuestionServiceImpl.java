@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.Question;
 import com.hd.domain.QuestionAndAnswerVO;
 import com.hd.domain.QuestionAnswer;
@@ -27,11 +28,8 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 	Sequence sequence;
 	
 	@Override
-	public Result queryQuestions(int pageIndex, int limit) {
-		if(pageIndex<0){
-			return Result.buildErrorResult("记录查询参数错误");
-		}
-		List<QuestionAndAnswerVO> questionAndAnswerVO = questionMapper.queryQuestionAndAnswer((pageIndex-1)*limit,limit);
+	public Result queryQuestions(BasePage basePage) {
+		List<QuestionAndAnswerVO> questionAndAnswerVO = questionMapper.queryQuestionAndAnswer(basePage);
 		return new Result(questionAndAnswerVO);
 	}
 

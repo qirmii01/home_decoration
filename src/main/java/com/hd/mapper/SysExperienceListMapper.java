@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.SysExperienceList;
 
 public interface SysExperienceListMapper {
@@ -50,8 +51,16 @@ public interface SysExperienceListMapper {
 	int updateByPrimaryKey(SysExperienceList record);
 
     /**
-     * 查询有效的经验列表数据
+     * 查询经验列表数据
      * @return
      */
     List<SysExperienceList> selectExperienceList();
+    
+    /**
+     * 统计所有的装修效果记录
+     * @return
+     */
+    int countExperience();
+    
+    List<SysExperienceList> selectExperienceLis(@Param("basePage")BasePage basePage,@Param("status")String status);
 }

@@ -6,77 +6,10 @@
 <div class="al1l w">
 	<a href="javascript:;">
     <img src="<%=filePath%>${sessionScope.baseInfo.bannerPath}" alt="" class="banner_img" style="width: 1220px;max-height: 300px;"/></a>
-	<div class="home_main w">
+	<div class="home_main w" style="margin-top: 10px;">
 	    <!--站内导航CSS 结束-->
 	    <div class="contentpage w1">
-	        <div class="cont_r fl">
-	    <div class="companyinfo">
-	        <div class="companyinfo_a">
-	            <img src="<%=filePath%>${sessionScope.baseInfo.logoPath}">
-	            <span class="name">透明家装</span>
-	            <i class="jzicon6"></i>
-	        </div>
-	        <div class="companyinfo_c">
-	            <ul>
-	                <li>
-	                    <div class="fl">公司营业执照认证：</div> <div class="jzicon7"></div>
-	                </li>
-	                <li>
-	                    <div class="fl">家装网保障协议商户：</div>
-	                    <div class="jzicon8"></div>
-	                </li>
-	                <li>
-	                    <div class="fl">支持免费量房：</div>
-	                    <div class="jzicon9"></div>
-	                </li>
-	                <li>
-	                    <div class="fl">支持先行赔付：</div>
-	                                            <div class="jzicon10_">赔</div>                </li>
-	                <li>
-	                    <div class="fl">支持满意后付款：</div>
-	                    <div class="jzicon11"></div>
-	                </li>
-	            </ul>
-	        </div>
-	        <div class="companyinfo_d">
-	            <ul>
-	                <li>
-	                    <div class="fl">联系电话：</div>
-	                    <span>
-	                        ${sessionScope.baseInfo.phone}
-	                        </span></li>
-	                <li>
-	                    <div class="fl">服务区域：</div>
-	                    <span>${sessionScope.baseInfo.serviceArea}</span></li>
-	                <li>
-	                    <div class="fl">注册资金：</div>
-	                    <span>100万</span></li>
-	                <li>
-	                    <div class="fl">公司地址：</div>
-	                    <span>${sessionScope.baseInfo.address}</span></li>
-	
-	            </ul>
-	        </div>
-	    </div>
-	    <div class="freeapply">
-	        <input type="text" name="chenghu" value="您的称呼" data-value="您的称呼" placeholder="您的称呼" class="search_txt"/>
-	        <input type="text" name="mobile" value="手机号码（必填）" data-value="手机号码（必填）" placeholder="手机号码（必填）" class="search_txt"/>
-	        <input type="hidden" name="conID" value="14178">
-	        <input type="hidden" name="siteID" value="17">
-	        <input type="hidden" name="position" value="15" placeholder="申请位置">
-	        <input type="hidden" name="b_type" value="1"  placeholder="免费设计">
-	        <a href="javascript:;" id="bidBtn" class="freeapply_btn">立即免费申请</a>
-	        <dl>
-	            <dt>申请装修步骤</dt>
-	            <dd>第一步：填写申请</dd>
-	            <dd>第二步：装修公司免费量房和设计</dd>
-	            <dd>第三步：装修公司报价</dd>
-	            <dd>承诺：以上服务绝对不收取任何费用。</dd>
-	        </dl>
-	    </div>
-	</div>
-	
-	<!--左边CSS 结束-->
+	        <%@include file="jsp/common/leftInfo.jsp"%>
 	        <div class="cont_l fr main_content_r ">
 	            <div class="navhl_c">
 	                <div class="path">
@@ -112,7 +45,7 @@
 	            </div>
 	            <div class="path2 mt20">
 	                <h2>最近量房申请</h2>
-	                <div class="plan"><a class="navhl_more_b" href="<%=basePath%>decoration/decorationApplyPage">我也要免费申请 </a>
+	                <div class="plan"><a class="navhl_more_b" href="javascript:void(0)e">我也要免费申请 </a>
 	                    <span><a href="<%=basePath%>decoration/allApply" target="_blank">查看所有申请 &gt;&gt;</a></span>
 	                    <div></div>
 	                </div>
@@ -121,7 +54,7 @@
 	            	<div id="applyTable" style="display:none;"></div>
 	            </div>
 	            <div class="navhl mt20"><span>所有装修效果图</span>
-	                <a href="" class="navhl_more">查看全部装修效果图 &gt;&gt;</a>
+	                <a href="<%=basePath%>user/showAllEffect" class="navhl_more">查看全部装修效果图 &gt;&gt;</a>
 	            </div>
 	            <!--图片列表  开始-->
 	            <div class="piclist">
@@ -130,7 +63,7 @@
 	                        <!--图片列表  结束-->
 	            <div class="mt2 cl"></div>
 	            <div class="navhl"><span>设计师</span>
-	                <a href="" class="navhl_more">查看全部设计师 &gt;&gt;</a>
+	                <a href="<%=basePath%>user/showAllDesigner" class="navhl_more">查看全部设计师 &gt;&gt;</a>
 	            </div>
 	
 	            <!--图文信息混排 开始-->
@@ -269,9 +202,17 @@
 						}},
 						{field:'userName', title: '业主姓名', align:"center", width:'16%', templet :function(d){
 							var name = d.userName;
+							if(!name){
+								return "[暂无]";
+							}
 							if(d.sex){
 								name = d.userName.substring(0,1);
-								name += (d.sex == 0? '先生' : '女士');
+								if(d.sex == 0){
+									name+='先生';
+								}
+								if(d.sex == 0){
+									name+='女士';
+								}
 							}
 							return name;
 						}},
@@ -288,16 +229,14 @@
 	
 	/** 装修效果初始化  **/
 	function initDecorEffect(){
-		var pageObj={};
-		pageObj.pageSize = 3;
 		$.ajax({
 			url:"<%=basePath%>decoration/queryDecoEffect",
-			data : pageObj,
+			data : {"page":1,"limit":3},
 			success:function(r){
 				var data = r.data;
 				if(r.code == '0'){
 					var html ='';
-					if(data.length != 0){
+					if(data.length != 0 && data!='无数据'){
 						for(var i =0 ; i <data.length ; i++){
 							html+= 
 						'<li><div class="piclist_img">'
@@ -310,8 +249,10 @@
 		                        +'<a href="" class="piclist_txt_link3">'+data[i].designerName+'</a>'
 								+'<a href="" title="'+data[i].title+'" class="piclist_txt_link">'+data[i].title+'</a></div>'
 		                        +'<div class="piclist_txt">';
-		                        for(var j=0 ; j<data[i].decorationEffectKeys.length; j++){
-			                        html+='<a href="javascript:;" class="piclist_txt_link2">'+data[i].decorationEffectKeys[j].keyWord+'</a>';
+		                        if(data[i].decorationEffectKeys){
+			                        for(var j=0 ; j<data[i].decorationEffectKeys.length; j++){
+				                        html+='<a href="javascript:;" class="piclist_txt_link2">'+data[i].decorationEffectKeys[j].keyWord+'</a>';
+			                        }
 		                        }
 							html+='</div></div></li>';
 						}
@@ -329,24 +270,24 @@
 	
 	/** 设计师列表初始化  **/
 	function initDesignerLis(){
-		var pageObj={};
-		pageObj.pageSize = 5;
 		$.ajax({
 			url:"<%=basePath%>user/queryDesigner",
-			data:pageObj,
+			data:{"page":1,"limit":5},
 			success:function(r){
 				var data = r.data;
-				console.log(data)
 				if(r.code == '0'){
 					var html="";
 					if(data.length != 0){
 						for(var i=0; i<data.length; i++){
 							html+=
-								'<li><a href="<%=basePath%>user/showDesigner/'+data[i].userId+'" title="'+data[i].userName+'">'
-							+'<img src="<%=filePath%>/'+data[i].headerImg+'" alt="'+data[i].userName+' " title="'+data[i].userName+'"/></a>'
-							+'<dl><dt><a href="<%=basePath%>user/designerInfo/'+data[i].userId+'" class="colu_tw_btitle fl">'+data[i].userName+'</a></dt>'
-							+'<dt><p>装修案例：</p><span>'+data[i].designNumber+'</span></dt><dt><p style="width: 45px">职称：</p>'
-							+'<div class="colu_tw_btxt">'+data[i].positionalTitles+'</div></dt></dl></li>';
+								'<li><a href="<%=basePath%>user/showDesigner/'+data[i].userId+'" title="'+data[i].userName+'"><img';
+								if(data[i].headerImg){
+									html+= (' src="<%=filePath%>/'+ data[i].headerImg + '"');
+								}
+							html+= 'alt="'+data[i].userName+' " title="'+data[i].userName+'"/></a>'
+								+'<dl><dt><a href="<%=basePath%>user/designerInfo/'+data[i].userId+'" class="colu_tw_btitle fl">'+data[i].userName+'</a></dt>'
+								+'<dt><p>装修案例：</p><span>'+data[i].designNumber+'</span></dt><dt><p style="width: 45px">职称：</p>'
+								+'<div class="colu_tw_btxt">'+data[i].positionalTitles+'</div></dt></dl></li>';
 						}
 					}else{
 						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
@@ -364,7 +305,7 @@
 	function initQuestion(){
 		$.ajax({
 			url:"<%=basePath%>question/queryQuestionAndAnswer",
-			data:{"start":0,"end":4},
+			data:{"page":1,"limit":4},
 			success:function(r){
 				if(r.code == '0'){
 					var data = r.data;
@@ -447,4 +388,16 @@
                     5)
         }
     }
+    
+    $('.navhl_more_b').click(function(){
+    	layer.open({
+			type:2,
+			title:"装修申请",
+			area:["840px","316px"],
+			scrollbar: false,
+			content:'<%=basePath%>decoration/decorationApplyPage'
+		});
+    })
+    
+    $('.nav>ul>li').eq(0).find("a").addClass("navxd");
 </script>

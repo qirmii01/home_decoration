@@ -1,9 +1,9 @@
 package com.hd.service;
 
 import com.hd.domain.ApplyAttachment;
+import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
-import com.hd.domain.PageObj;
 import com.hd.domain.Result;
 
 /**
@@ -40,10 +40,10 @@ public interface DecorationService {
 	
 	/**
 	 * 查询装修效果列表
-	 * @param queryAll 是否查询所有
+	 * @param basePage 查询参数
 	 * @return
 	 */
-	public Result queryDecorationEffectLis(PageObj pageObj);
+	public Result queryDecorationEffectLis(BasePage basePage);
 	
 	/**
 	 * 添加装修申请附件

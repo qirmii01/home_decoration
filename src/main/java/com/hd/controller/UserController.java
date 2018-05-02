@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hd.domain.PageObj;
+import com.hd.domain.BasePage;
+import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.Result;
 import com.hd.domain.User;
 import com.hd.service.AdminService;
@@ -157,6 +158,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("updateUser")
+	@ResponseBody
 	public Result updateUser(User user){
 		Result result = userService.updateUser(user);
 		return result;
@@ -164,10 +166,120 @@ public class UserController {
 	
 	@RequestMapping("queryDesigner")
 	@ResponseBody
-	public Result queryDesigner(PageObj pageObj, boolean queryAllInfo ){
-		Result result = userService.queryDesigner(queryAllInfo, pageObj);
+	public Result queryDesigner(BasePage basePage){
+		Result result = userService.queryDesigner(basePage);
 		return result;
 	}
 	
+	@RequestMapping("addDesignerPage")
+	public String addDesignerPage(){
+		return "jsp/user/designerApply";
+	}
+	
+	@RequestMapping("addDesigner")
+	@ResponseBody
+	public Result addDesigner(DesignerWithBLOBs designerInfo,String telphone){
+		Result result = userService.addDesignerCheckInfo(designerInfo, telphone);
+		return result;
+	}
+	
+	@RequestMapping("designerDetailInfo/{designerId}")
+	public String designerDetailInfoPage(@PathVariable("designerId")String designerId){
+		DesignerWithBLOBs designerWithBLOBs = userService.queryDesignerDetailInfo(designerId);
+		request.setAttribute("designerInfo", designerWithBLOBs);
+		return "jsp/user/designerDetailInfo";
+	}
+	
+	@RequestMapping("showAllEffect")
+	public String showAllEffect(){
+		return "jsp/user/showAllEffect";
+	}
+	
+	@RequestMapping("showAllApply")
+	public String showAllApply(){
+		return "jsp/user/showAllApply";
+	}
+	
+	@RequestMapping("showAllDesigner")
+	public String showAllDesigner(){
+		return "jsp/user/showAllDesigner";
+	}
+	
+	@RequestMapping("showAllDecorExperience")
+	public String showAllDecorExperience(){
+		return "jsp/user/showAllDecorExperience";
+	}
+	
+	@RequestMapping("showAllPerferActivities")
+	public String showAllPerferActivities(){
+		return "jsp/user/showAllPerferActivities";
+	}
+	
+	@RequestMapping("companyInfo")
+	public String companyInfo(){
+		return "jsp/user/companyInfo";
+	}
+	
+	@RequestMapping("countDecorationEffect")
+	@ResponseBody
+	public Result countDecorEffect(){
+		Result result = userService.countAllDecorEffect();
+		return result;
+	}
+	
+	@RequestMapping("countDesigner")
+	@ResponseBody
+	public Result countDesigner(){
+		Result result = userService.countDesigner();
+		return result;
+	}
+	
+	@RequestMapping("countExperience")
+	@ResponseBody
+	public Result countExperience(){
+		Result result = userService.countExperience();
+		return result;
+	}
+	
+	@RequestMapping("countActivities")
+	@ResponseBody
+	public Result countActivities(){
+		Result result = userService.countActivities();
+		return result;
+	}
+	
+	@RequestMapping("seeSource")
+	@ResponseBody
+	public Result seeSource(String id){
+		return userService.seeSource(id);
+	}
+	
+	@RequestMapping("queryExperience")
+	@ResponseBody
+	public Result queryExperience(String id){
+		Result result = userService.queryExperience(id);
+		return result;
+	}
+	
+	@RequestMapping("queryActivity")
+	@ResponseBody
+	public Result queryActivity(String id){
+		Result result = userService.queryActivity(id);
+		return result;
+	}
+	
+	@RequestMapping("queryExperienceLis")
+	@ResponseBody
+	public Result queryExperienceLis(BasePage basePage){
+		Result result = userService.queryExperienceLis(basePage);
+		return result;
+	}
+	
+	@RequestMapping("queryActivityLis")
+	@ResponseBody
+	public Result queryActivityLis(BasePage basePage){
+		Result result = userService.queryActivityLis(basePage);
+		return result;
+	}
 	
 }

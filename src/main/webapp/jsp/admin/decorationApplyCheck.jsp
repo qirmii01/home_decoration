@@ -15,7 +15,7 @@
 	.hei{height:28px;line-height:28px;}
 	.layui-btn:hover{color:#FFF;}
 	.apply-search{margin-top:20px;}
-	.layui-inline{width:192px;}
+	.layui-inline{width:191px;}
 	.layui-inline:last-child{width:auto;}
 </style>
 </head>
@@ -82,7 +82,7 @@
 								</form>
 							</div>
 					装修面积：	<div class="layui-inline"><input class="layui-input" type="number" id="area" autocomplete="off"></div>
-					<div class="layui-inline"><button class="layui-btn layui-btn-radius" data-type="reload" id="apply-search">搜索</button></div>
+					<div class="layui-inline"><button class="layui-btn" data-type="reload" id="apply-search">搜索</button></div>
 				</div>
 			</div>
 			<div id="appl-check-table"></div>

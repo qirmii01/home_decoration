@@ -5,28 +5,7 @@ import java.util.Scanner;
 public class test {
 	public static final String a ="%s我是啊";
 	public static void main(String[] args) {
-		System.out.println(String.format(a, "哈哈哈哈"));
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("input five nubmer");
-		int[] input = new int[]{1,2,3,4,5};
-		int i=0;
-		while(i<5){
-			System.out.println("第"+(i+1)+"个数");
-			int a =  sc.nextInt();
-			boolean flag =true;
-			for (int j = 0; j < input.length; j++) {
-				if(input[j] == a){
-					System.out.println("true");
-					i++;
-					flag = false;
-					break;
-				}
-			}
-			if(flag){
-				System.out.println("error");
-			}
-		}
+		System.out.println("13574355195".substring(5, 11));
 	}
 	
 	class Test{

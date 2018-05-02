@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.Designer;
 import com.hd.domain.DesignerInfo;
 import com.hd.domain.DesignerWithBLOBs;
@@ -53,18 +54,22 @@ public interface DesignerMapper {
 
 	/**
 	 * 查询设计师信信息
-	 * @param start 查询记录开始数
-	 * @param end 查询记录结束数
-	 * @param queryAllInfo 是否查询所有信息
+	 * @param basePage 参数对象
 	 * @return
 	 */
-    List<DesignerInfo> queryDesigner(@Param("start")int start,@Param("end")int end, @Param("queryAllInfo")boolean queryAllInfo);
+    List<DesignerInfo> queryDesigner(BasePage basePage);
     
     /**
      * 通过用户id和状态查询设计师信息
-     * @param userId 用户id
+     * @param designerId 设计师id
      * @param status 状态
      * @return
      */
-    List<DesignerWithBLOBs> queryDesignerInfo(@Param("userId") String userId, @Param("status") String status);
+    List<DesignerWithBLOBs> queryDesignerInfo(@Param("designerId") String designerId, @Param("status") String status);
+    
+    /**
+     * 统计设计师数量
+     * @return
+     */
+    int countDesigner();
 }

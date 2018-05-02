@@ -160,7 +160,13 @@
 		de.id
   	ORDER BY
   		de.create_time DESC
-	LIMIT #{start}, #{end}
+	LIMIT #{page}, #{limit}
   </select>
   
+  <select id="countAllDecorEffect" resultType="java.lang.Integer">
+  	SELECT
+  		COUNT(0)
+  	FROM
+  		decoration_effect
+  </select>
 </mapper>

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hd.domain.ApplyAttachment;
+import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
-import com.hd.domain.PageObj;
 import com.hd.domain.Result;
 import com.hd.domain.User;
 import com.hd.service.DecorationService;
@@ -104,13 +104,13 @@ public class DecorationController extends BaseController{
 	
 	/**
 	 * 查询主页装修效果展示信息
-	 * @param queryAll 是否查询所有
+	 * @param basePage 参数对象
 	 * @return
 	 */
 	@RequestMapping("queryDecoEffect")
 	@ResponseBody
-	public Result queryDecoEffect(PageObj pageObj){
-		Result result = decorationService.queryDecorationEffectLis(pageObj);
+	public Result queryDecoEffect(BasePage basePage){
+		Result result = decorationService.queryDecorationEffectLis(basePage);
 		return result;
 	}
 	

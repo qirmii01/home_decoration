@@ -128,7 +128,7 @@ MyUtil.upload = function (options,callback){
     // 上传方法
 	$.upload({
         // 上传地址
-        url: 'upload',
+        url: options.url,
         // 文件域名字
         fileName: 'uploadFile',
         // 其他表单数据
@@ -138,20 +138,21 @@ MyUtil.upload = function (options,callback){
 
         // 上传之后回调
         onComplate: function(data) {
-        	var url;
+        	var url,id;
         	if(data.code == '0'){
         		console.log("上传成功");
-        		url = data.body.path;
+        		url = data.data.path;
+        		id = data.data.id;
         		if(options.show){
-        			$(options.target).attr("src",data.body.path);
+        			$(options.target).attr("src",data.data.path);
         		}
-        		$(options.target).attr("data-url",data.body.path);
-        		$(options.target).attr("data-id",data.body.id);
+        		$(options.target).attr("data-url",data.data.path);
+        		$(options.target).attr("data-id",data.data.id);
         	}else{
         		layer.msg(data.msg);
         	}
         	if(callback){
-        		callback(url);
+        		callback(url,id);
         	}
         }
     });

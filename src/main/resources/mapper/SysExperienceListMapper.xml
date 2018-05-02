@@ -161,11 +161,37 @@
   	SELECT
   		id id, 
   		title title,
-  		status status
+  		status status,
+  		create_time createTime
   	FROM
   		sys_experience_list
   	ORDER BY
   		create_time DESC
   </select>
   
+  <select id="selectExperienceLis" resultMap="ResultMapWithBLOBs">
+    SELECT 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM
+    	sys_experience_list
+    WHERE
+    	1=1
+    	<if test="status != null">
+    		AND
+    		status = #{status}
+    	</if>
+    ORDER BY
+  		create_time DESC
+    LIMIT 
+    	#{basePage.page},#{basePage.limit}
+  </select>
+  
+  <select id="countExperience" resultType="java.lang.Integer">
+  	SELECT
+  		COUNT(0)
+  	FROM
+  		sys_experience_list
+  </select>
 </mapper>

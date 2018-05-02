@@ -21,9 +21,7 @@ public class DesignerInfo extends Designer {
 	
 	private String designNumber;
 
-	private Integer dataCount;
-	
-	private List<DesignerStyleInfo> designerStyles;
+	private List<DecorationEffectImg> showImgs;
 
 	public String getHeaderImg() {
 		return headerImg;
@@ -73,20 +71,11 @@ public class DesignerInfo extends Designer {
 		this.designNumber = designNumber;
 	}
 
-	public Integer getDataCount() {
-		return dataCount;
+	public List<DecorationEffectImg> getShowImgs() {
+		return showImgs;
 	}
 
-	public void setDataCount(Integer dataCount) {
-		this.dataCount = dataCount;
+	public void setShowImgs(List<DecorationEffectImg> showImgs) {
+		this.showImgs = showImgs;
 	}
-
-	public List<DesignerStyleInfo> getDesignerStyles() {
-		return designerStyles;
-	}
-
-	public void setDesignerStyles(List<DesignerStyleInfo> designerStyles) {
-		this.designerStyles = designerStyles;
-	}
-
 }

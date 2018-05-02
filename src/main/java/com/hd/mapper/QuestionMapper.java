@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.Question;
 import com.hd.domain.QuestionAndAnswerVO;
 
@@ -52,10 +53,9 @@ public interface QuestionMapper {
 
 	/**
      * 查询主页问题问答信息
-     * @param start 开始查询记录
-     * @param limit 每页数量
+     * @param basePage 分页对象
      * @return
      */
-    List<QuestionAndAnswerVO> queryQuestionAndAnswer(@Param("start")int start,@Param("limit")int limit);
+    List<QuestionAndAnswerVO> queryQuestionAndAnswer(BasePage basePage);
     
 }

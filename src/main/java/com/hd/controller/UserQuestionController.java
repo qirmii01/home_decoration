@@ -3,9 +3,9 @@ package com.hd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.Question;
 import com.hd.domain.QuestionAnswer;
 import com.hd.domain.Result;
@@ -25,8 +25,8 @@ public class UserQuestionController {
 	 */
 	@RequestMapping("queryQuestionAndAnswer")
 	@ResponseBody
-	public Result queryQuestionAndAnswer(@RequestParam("pageIndex")int pageIndex, @RequestParam("limit")int limit){
-		return userQuestionService.queryQuestions(pageIndex, limit);
+	public Result queryQuestionAndAnswer(BasePage basePage){
+		return userQuestionService.queryQuestions(basePage);
 	}
 	
 	/**

@@ -6,14 +6,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hd.domain.Designer;
-import com.hd.domain.DesignerCheckInfo;
+import com.hd.domain.BasePage;
 import com.hd.domain.DesignerInfo;
 import com.hd.domain.DesignerWithBLOBs;
-import com.hd.domain.PageObj;
+import com.hd.domain.ImgSource;
 import com.hd.domain.Result;
+import com.hd.domain.SysExperienceList;
+import com.hd.domain.SysPreferentialActivities;
 import com.hd.domain.User;
+import com.hd.mapper.DecorationEffectMapper;
 import com.hd.mapper.DesignerMapper;
+import com.hd.mapper.ImgSourceMapper;
+import com.hd.mapper.SysExperienceListMapper;
+import com.hd.mapper.SysPreferentialActivitiesMapper;
 import com.hd.mapper.UserMapper;
 import com.hd.service.UserService;
 import com.hd.util.MD5Utility;
@@ -29,6 +34,18 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	Sequence sequence;
+	
+	@Autowired
+	ImgSourceMapper imgSourceMapper;
+	
+	@Autowired
+	DecorationEffectMapper decorationEffectMapper;
+	
+	@Autowired
+	SysExperienceListMapper sysExperienceListMapper;
+	
+	@Autowired
+	SysPreferentialActivitiesMapper sysPreferentialActivitiesMapper;
 	
 	@Override
 	public Result queryUser(User user) {
@@ -133,24 +150,38 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public Result queryDesigner(boolean queryAllInfo, PageObj pageObj) {
-		int start = pageObj.getCurrentPage()*pageObj.getPageSize();
-		int end = (pageObj.getCurrentPage()+1)*pageObj.getPageSize();
-		List<DesignerInfo> designerInfos = designerMapper.queryDesigner(start, end, queryAllInfo);
-		return new Result(designerInfos);
+	public Result queryDesigner(BasePage basePage) {
+		List<DesignerInfo> designerInfos = designerMapper.queryDesigner(basePage);
+		int count = designerMapper.countDesigner();
+		return new Result(designerInfos, count);
 	}
 
 
 	@Override
-	public Result addDesignerCheckInfo(DesignerWithBLOBs designerInfo, String telphone, String userName) {
+	public Result addDesignerCheckInfo(DesignerWithBLOBs designerInfo, String telphone) {
+		if(StringUtil.isEmpty(telphone)){
+			return Result.buildErrorResult("手机号不能为空");
+		}
+		User u1 = new User();
+		u1.setTelphone(telphone);
+		List<User> u_r1  = userMapper.selectUserBySelective(u1);
+		
+		if(!u_r1.isEmpty()){
+			return Result.buildErrorResult("该手机号已注册");
+			
+		}
 		if(StringUtil.isEmpty(designerInfo.getServiceAddress())){
 			return Result.buildErrorResult("服务地址不能为空");
 		}
-		if(StringUtil.isEmpty(userName)){
-			return Result.buildErrorResult("姓名不能为空");
-		}
 		
 		String userId = sequence.getCommonID();
+		String password;
+		try {
+			password = MD5Utility.getDigest(telphone.substring(5, 11));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.buildErrorResult("系统错误");
+		}
 		/*
 		 * 插入用户信息表信息
 		 */
@@ -159,7 +190,7 @@ public class UserServiceImpl implements UserService {
 		user.setCreateTime(new Date());
 		user.setTelphone(telphone);
 		user.setType("1");
-		user.setUserName(userName);
+		user.setPassword(password);
 		int i = userMapper.insertSelective(user);
 		if(i<=0){
 			return Result.buildErrorResult("数据插入失败");
@@ -197,5 +228,67 @@ public class UserServiceImpl implements UserService {
 			return Result.buildErrorResult("数据更新失败");
 		}
 		return new Result("数据更新成功");
+	}
+
+	@Override
+	public Result countAllDecorEffect() {
+		int count = decorationEffectMapper.countAllDecorEffect();
+		return new Result(count);
+	}
+
+	@Override
+	public Result seeSource(String id) {
+		ImgSource imgSource = imgSourceMapper.selectByPrimaryKey(id);
+		return new Result(imgSource);
+	}
+
+	@Override
+	public Result countDesigner() {
+		int count = designerMapper.countDesigner();
+		return new Result(count);
+	}
+
+	@Override
+	public Result countExperience() {
+		int count = sysExperienceListMapper.countExperience();
+		return new Result(count);
+	}
+
+	@Override
+	public Result countActivities() {
+		int count = sysPreferentialActivitiesMapper.countActivities();
+		return new Result(count);
+	}
+
+	@Override
+	public Result queryExperienceLis(BasePage basePage) {
+		List<SysExperienceList> sysExperienceLists=sysExperienceListMapper.selectExperienceLis(basePage,"0");// 0-正常
+		return new Result(sysExperienceLists);
+	}
+
+	@Override
+	public Result queryActivityLis(BasePage basePage) {
+		List<SysPreferentialActivities> sysPreferentialActivities=sysPreferentialActivitiesMapper.selectActivityLis(basePage,"0");// 0-正常
+		return new Result(sysPreferentialActivities);
+	}
+
+
+	@Override
+	public Result queryExperience(String id) {
+		SysExperienceList sysExperienceList = sysExperienceListMapper.selectByPrimaryKey(id);
+		return new Result(sysExperienceList);
+	}
+
+
+	@Override
+	public Result queryActivity(String id) {
+		SysPreferentialActivities sysPreferentialActivities = sysPreferentialActivitiesMapper.selectByPrimaryKey(id);
+		return new Result(sysPreferentialActivities);
+	}
+
+	@Override
+	public DesignerWithBLOBs queryDesignerDetailInfo(String designerId) {
+		designerMapper.queryDesignerInfo(designerId, "0");
+		return null;
 	}
 }

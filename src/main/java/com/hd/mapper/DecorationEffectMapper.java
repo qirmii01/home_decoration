@@ -3,9 +3,9 @@ package com.hd.mapper;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
+import com.hd.domain.BasePage;
 import com.hd.domain.DecorationEffect;
+import com.hd.domain.Result;
 
 public interface DecorationEffectMapper {
     /**
@@ -46,9 +46,14 @@ public interface DecorationEffectMapper {
 
     /**
      * 查询装修效果列表
-     * @param start 查询记录开始条数
-     * @param end 查询记录结束条数
+     * @param basePage 查询记录参数
      * @return
      */
-    List<HashMap<String, Object>> queryDecorationEffectLis(@Param("start")int start, @Param("end")int end);
+    List<HashMap<String, Object>> queryDecorationEffectLis(BasePage basePage);
+    
+    /**
+     * 统计所有的装修效果记录
+     * @return
+     */
+    int countAllDecorEffect();
 }

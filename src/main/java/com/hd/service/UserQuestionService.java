@@ -1,5 +1,6 @@
 package com.hd.service;
 
+import com.hd.domain.BasePage;
 import com.hd.domain.Question;
 import com.hd.domain.QuestionAnswer;
 import com.hd.domain.Result;
@@ -7,11 +8,10 @@ import com.hd.domain.Result;
 public interface UserQuestionService {
 	/**
 	 * 查询问答信息
-	 * @param pageIndex 页码
-	 * @param limit 查询记录条数 
+	 * @param basePage 分页对象
 	 * @return
 	 */
-	public Result queryQuestions(int pageIndex , int limit);
+	public Result queryQuestions(BasePage basePage);
 	
 	/**
 	 * 添加问题

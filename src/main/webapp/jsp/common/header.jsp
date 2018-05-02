@@ -1,27 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="base.jsp"%>
+<title>透明家装</title>
 <header class="home_top">
     <div class="top_t w">
         <div class="w1">
             <div class="top_t_i fl">
                 <span class="icon_person"></span>
                 <a href="<%= basePath%>" title="首页" target="_blank">首页</a>
-                <a href="../../shejishi/index.html" title="设计师" target="_blank">设计师</a>
-                <a href="../../xiaoguotu/index.html" title="装修效果图" target="_blank">装修效果图</a>
-                <a href="../../zxxt/index.html" title="装修学堂" target="_blank">装修学堂</a>
+                <a href="<%= basePath%>user/showAllDesigner" title="设计师" target="_blank">设计师</a>
+                <a href="<%= basePath%>user/showAllEffect" title="装修效果图" target="_blank">装修效果图</a>
+                <a href="<%= basePath%>user/showExceperience" title="装修学堂" target="_blank">装修学堂</a>
             </div>
             <div class="top_t_z fr">
             	<c:choose>
             		<c:when test="${!empty sessionScope.userInfo}">
 	                	<a href="<%=basePath%>user/personalCenter/${sessionScope.userInfo.id}" title="点击进入个人中心">${!empty sessionScope.userInfo.userName ? sessionScope.userInfo.userName:sessionScope.userInfo.telphone}&nbsp;用户，欢迎登陆</a><span class="line">|</span>
-	                	<a link="topLogout" rel="nofollow">注销</a>
+	                	<a link="topLogout" rel="nofollow">注销</a><span class="line">|</span>
             		</c:when>
             		<c:otherwise>
 		                <a link="topLogin" rel="nofollow">登录</a><span class="line">|</span>
-		                <a link="register" href="user/registerPage" target="_blank" rel="nofollow">注册</a>
+		                <a link="register" href="<%=basePath%>user/registerPage" target="_blank" rel="nofollow">注册</a><span class="line">|</span>
             		</c:otherwise>
             	</c:choose>
+           		<a link="designerApply" href="<%=basePath%>user/addDesignerPage" rel="nofollow">设计师申请</a><span class="line">|</span>
             </div>
         </div>
     </div>
@@ -31,7 +33,7 @@
 	<div class="w1" style="height:inherit;">
      <div class="logo_lf">
          <a href="<%=basePath%>" class="logo">
-             <img id="logoImg" src="<%=filePath%>/${sessionScope.baseInfo.logoPath}" alt="${sessionScope.baseInfo.phone}" width="80" class="company_logo">
+             <img id="logoImg" src="<%=filePath%>/${sessionScope.baseInfo.logoPath}" alt="${sessionScope.baseInfo.name}" width="80" class="company_logo">
          </a>
          <h1 id="companyName">${sessionScope.baseInfo.name}</h1>
          <span>一个让你放心的家装网</span>
@@ -59,13 +61,18 @@
     <div class="nav">
         <ul>
             <li>
-                <a href="index.html" class="navxd" >
+                <a href="<%=basePath%>">
 	                <div class="jzicon5"></div>
 	                <div class="fl">公司首页</div>
             	</a>
             </li>
-            <li><a href="../14178_case/index.html"   >设计方案</a></li><li><a href="../14178_designer/index.html"> 设计团队</a></li><li><a href="../14178_info/index.html"   >公司介绍</a></li><li><a href="../14178_news/index.html"   >装修经验</a></li><li><a href="../14178_promotion/index.html"   >优惠活动</a></li>            </ul>
-        <div class="navtag"><a href="<%=basePath%>decoration/decorationApplyPage">立即申请预约</a></div>
+            <li><a href="<%=basePath%>user/showAllEffect">设计方案</a></li>
+            <li><a href="<%=basePath%>user/showAllDesigner"> 设计团队</a></li>
+            <li><a href="<%=basePath%>user/companyInfo">公司介绍</a></li>
+            <li><a href="<%=basePath%>user/showAllDecorExperience">装修经验</a></li>
+            <li><a href="<%=basePath%>user/showAllPerferActivities">优惠活动</a></li>
+        </ul>
+        <div class="navtag"><a href="javascript:void(0)">立即申请预约</a></div>
     </div>
 </nav>
 <!--导航 结束-->
@@ -92,7 +99,7 @@
             <input id="loginBtn" value="登录" type="button">
         </p>
 
-        <p style="width:406px; text-align:center; line-height: 35px"><a href="user/registerPage" rel="nofollow">还没有账号？立即注册</a>
+        <p style="width:406px; text-align:center; line-height: 35px"><a href="<%=basePath%>user/registerPage" rel="nofollow">还没有账号？立即注册</a>
         </p>
     </div>
 </div>
@@ -119,7 +126,6 @@
 	        success:function(){
 	        	$('.login_popup').keydown(function(e){
 	        		var code = e.keyCode;
-	        		console.log(code)
 	        		if(e.keyCode==13){
 	        			$('#loginBtn').click();
 	        		}
@@ -127,7 +133,9 @@
 	        },
 	        end:function(){
 	        	var loc =location.href;
-	        	location.href = loc.substring(0,loc.indexOf("?"));
+	        	if(loc.indexOf("?") != -1){
+		        	location.href = loc.substring(0,loc.indexOf("?"));
+	        	}
 	        }
 	    });
 	}
@@ -193,5 +201,13 @@
 	    }, 'json');
 	});
 	
+	$('.navtag>a').click(function(){
+		layer.open({
+			type:2,
+			title:"装修申请",
+			area:["840px","316px"],
+			scrollbar: false,
+			content:'<%=basePath%>decoration/decorationApplyPage'
+		});
+	});
 </script>
-

@@ -179,6 +179,6 @@
 				qa.question_id = q.id
   	ORDER BY
   		q.create_time
-  	LIMIT #{start}, #{limit}
+  	LIMIT #{page}, #{limit}
   </select>
 </mapper>

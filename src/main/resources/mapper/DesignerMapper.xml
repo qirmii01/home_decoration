@@ -239,13 +239,12 @@
   	<result column="caseExample" property="designNumber" />
   	<result column="headerImg" property="headerImg" />
   	<result column="dataCount" property="dataCount" />
-  	<collection column="id" property="designerStyles" select="queryStyle" />
+  	<collection column="userId" property="designerStyles" select="queryStyle" />
+  	<collection column="userId" property="showImgs" select="queryShowImgs"></collection>
   </resultMap>
   
   <select id="queryDesigner" resultMap="designerInfo">
   	SELECT
-	<choose>
-	<when test="queryAllInfo">
 		d.id id,
 		u.id userId,
 		u.user_name userName,
@@ -257,43 +256,7 @@
 		d.record record,
 		u.positional_titles positionalTitle,
 		u.case_example caseExample,
-		`is`.path headerImg,
-		(
-			SELECT 
-				COUNT(*) 
-			FROM 
-				designer d 
-				LEFT JOIN 
-					user u 
-				ON u.id = d.user_id
-			WHERE
-				u.status = '0'/*用户正常*/
-				AND
-				d.status = '1'/*审核通过*/
-		) dataCount
-	</when>
-	<otherwise>
-		d.id id,
-		d.user_id userId,
-		u.positional_titles positionalTitle,
-		u.case_example caseExample,
-		u.user_name userName,
-		`is`.path headerImg,
-		(
-			SELECT 
-				COUNT(*) 
-			FROM 
-				designer d 
-				LEFT JOIN 
-					user u 
-				ON u.id = d.user_id
-			WHERE
-				u.status = '0'/*用户正常*/
-				AND
-				d.status = '1'/*审核通过*/
-		) dataCount
-	</otherwise>
-	</choose>
+		`is`.path headerImg
   	FROM
   		designer d
   		LEFT JOIN
@@ -312,9 +275,7 @@
   				`is`.id = u.avatar
   	WHERE
   		d.status = '1' /*审核通过*/
-  	GROUP BY
-  		d.id
-	LIMIT #{start}, #{end}
+	LIMIT #{page}, #{limit}
   </select>
   
    <select id="queryStyle" resultType="com.hd.domain.DesignerStyleInfo">
@@ -330,19 +291,88 @@
   		ds.designer_id = #{designerId}
   </select>
   
-  <select id="queryDesignerInfo" resultMap="ResultMapWithBLOBs">
-      SELECT
-  	<include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+  <select id="queryShowImgs" resultType="com.hd.domain.DecorationEffectImg">
+  	SELECT
+  		dei.title title,
+  		iso.path imgPath
+  	FROM
+  		decoration_effect_img dei,
+  		decoration_apply da,
+  		img_source iso
+  	WHERE
+  		dei.apply_id = da.id
+  		AND
+  		dei.img = iso.id
+  		AND
+  		da.accept_id = #{userId}
+  </select>
+  <resultMap type="com.hd.domain.DesignerWithBLOBs" id="designerDetailInfo">
+  	<id column="id" property="id" />
+  	<result column="userId" property="userId" />
+  	<result column="name" property="userName"/>
+  	<result column="service_address" property="serviceAddress" />
+  	<result column="design_amount_low" property="designAmountLow" />
+  	<result column="design_amount_high" property="designAmountHigh" />
+  	<result column="engage_time" property="engageTime" />
+  	<result column="introduce" property="introduce" />
+  	<result column="record" property="record" />
+  	<result column="avatarPath" property="avatarPath" />
+  	<result column="caseExample" property="caseExample" />
+  	<collection column="userId" property="designerStyles" select="queryDesignerStyle" />
+  </resultMap>
+  <select id="queryDesignerStyle" resultType="com.hd.domain.DesignerStyle">
+  	SELECT
+  		dns.id styleId,
+  		dns.`name` styleName
+  	FROM
+  		designer_style drs,
+  		decoration_style dns
+  	WHERE
+  		drs.style_id = dns.id
+  		AND
+  		drs.designer_id = #{designerId}
+  </select>
+  
+  <select id="queryDesignerInfo" resultMap="designerDetailInfo">
+    SELECT
+    	d.id id,
+  		u.name name,
+  		iso.path avatarPath,
+  		u.case_example caseExample,
+  		d.user_id userId,
+  		d.service_address serviceAddress,
+  		d.design_amount_low designAmountLow,
+		d.design_amount_high designAmountHigh,
+		d.engage_time engageTime,
+		d.introduce introduce,
+		d.record record
     FROM
-    	designer
+    	designer d,
+    	user u
+    	LEFT JOIN
+    		img_source iso
+    		ON
+    			iso.id = u.avatar
     WHERE
-    	user_id = #{userId}
-
-      <if test="status!=null and status!=''">
+    	d.user_id = u.id
+    	AND
+    	d.user_id = #{designerId}
+      <if test="status!=null">
           AND status = #{status}
       </if>
-
+  </select>
+  
+  <select id="countDesigner" resultType="java.lang.Integer">
+	SELECT 
+		COUNT(0) 
+	FROM 
+		designer d 
+		LEFT JOIN 
+			user u 
+		ON u.id = d.user_id
+	WHERE
+		u.status = '0'/*用户正常*/
+		AND
+		d.status = '1'/*审核通过*/  
   </select>
 </mapper>
