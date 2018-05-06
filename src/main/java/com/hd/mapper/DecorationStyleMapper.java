@@ -1,5 +1,7 @@
 package com.hd.mapper;
 
+import java.util.List;
+
 import com.hd.domain.DecorationStyle;
 
 public interface DecorationStyleMapper {
@@ -38,5 +40,10 @@ public interface DecorationStyleMapper {
 	 * @mbggenerated
 	 */
 	int updateByPrimaryKey(DecorationStyle record);
-
+	
+	/**
+	 * 查询所有装修风格内容
+	 * @return
+	 */
+	List<DecorationStyle> queryAll();
 }

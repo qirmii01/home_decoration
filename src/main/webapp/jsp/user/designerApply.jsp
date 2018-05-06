@@ -1,44 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="../common/base.jsp"%>
 <style>
 	.par{postion:relative;}
 	.addAttach{position:absolute;top:0;right:0;}
 </style>
+<%@include file="../common/header.jsp"%>
+<link href="<%=basePath%>plugins/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="<%=basePath%>js/jquery.upload.js"></script>
+<style>
+.locat{height:30px;line-height:30px;padding-left:16px;border-bottom: 1px solid #123;}
+.apply-cont{width:624px;margin:10px auto;padding:0 200px;}
+.apply-cont .layui-form-label{width:100px;}
+.apply-cont .layui-input-block{margin-left:130px;}
+h4{margin:20px auto;font-size: 22px;text-align: center;}
+.addAttach{z-index:1;}
+</style>
 <div class="designer-apply">
 	<div class="locat"><span><a href="<%=basePath%>">首页</a></span>&nbsp;&gt;&nbsp;<span>设计师申请</span></div>
 	<div class="apply-cont">
+		<h4>设计师申请信息</h4>
 		<form class="layui-form" action="<%=basePath%>user/designerApply">
 	    	<div class="layui-form-item">
-				<label class="layui-form-label">手机号</label>
+				<label class="layui-form-label">手机号：</label>
 				<div class="layui-input-block">
 					<input type="text" name="telphone" required="" lay-verify="required|phone" placeholder="请输入常用手机号" autocomplete="off" class="layui-input">
 				</div>
 		    </div>
 		
 		    <div class="layui-form-item">
-		    	<label class="layui-form-label">从事设计时间</label>
+		    	<label class="layui-form-label">从事设计时间：</label>
 		    	<div class="layui-input-block">
-		        	<input type="number" name="engageTime" required="" lay-verify="required|number" placeholder="从事设计的时间" autocomplete="off" class="layui-input">
+		        	<input type="number" name="engageTime" required="" lay-verify="required|number" placeholder="从事设计的时间(单位:年)" autocomplete="off" class="layui-input">
 		    	</div>
 		    </div>
 		
 		    <div class="layui-form-item">
-		    	<label class="layui-form-label">最低设计费用</label>
+		    	<label class="layui-form-label">最低设计费用：</label>
 		    	<div class="layui-input-block">
-		        	<input type="number" name="designAmountLow" required="" lay-verify="required|number" placeholder="最低设计费用" autocomplete="off" class="layui-input">
+		        	<input type="number" name="designAmountLow" required="" lay-verify="required|number" placeholder="最低设计费用(单位:元/㎡)" autocomplete="off" class="layui-input">
 		    	</div>
 		    </div>
 		
 		    <div class="layui-form-item">
-		    	<label class="layui-form-label">最高设计费用</label>
+		    	<label class="layui-form-label">最高设计费用：</label>
 		    	<div class="layui-input-block">
-		        	<input type="number" name="designAmountHigh" required="" lay-verify="required|number" placeholder="最高设计费用" autocomplete="off" class="layui-input">
+		        	<input type="number" name="designAmountHigh" required="" lay-verify="required|number" placeholder="最高设计费用(单位:元/㎡)" autocomplete="off" class="layui-input">
 		    	</div>
 		    </div>
 		
 		    <div class="layui-form-item">
-		      <label class="layui-form-label">设计师职称</label>
+		      <label class="layui-form-label">设计师职称：</label>
 		        <div class="layui-input-block">
 		            <select name="positionalTitle" lay-verify="required">
 		              <option value=""></option>
@@ -66,23 +77,23 @@
 		    </div>
 		
 		    <div class="layui-form-item layui-form-text">
-		      <label class="layui-form-label">服务区域</label>
+		      <label class="layui-form-label">服务区域：</label>
 		      <div class="layui-input-block">
-		        <textarea name="serviceAddress" placeholder="请输入内容" class="layui-textarea"></textarea>
+		        <textarea name="serviceAddress" placeholder="多个服务地区则以 ',' 隔开" class="layui-textarea"></textarea>
 		      </div>
 		    </div>
 		
 		    <div class="layui-form-item layui-form-text">
-		      <label class="layui-form-label">自我介绍</label>
+		      <label class="layui-form-label">自我介绍：</label>
 		      <div class="layui-input-block">
 		        <textarea name="introduce" placeholder="请输入内容" oninput="autosize(this)" class="layui-textarea"></textarea>
 		      </div>
 		    </div>
 		
 		    <div class="layui-form-item layui-form-text">
-		      <label class="layui-form-label">其他记录(比如获奖)</label>
+		      <label class="layui-form-label">其他记录(比如获奖)：</label>
 		      <div class="layui-input-block par">
-		      	<button class="layui-btn layui-btn-xs addAttach">添加附件</button>
+		      	<span class="layui-btn layui-btn-xs addAttach">添加附件</span>
 		        <textarea name="record" placeholder="请输入内容" oninput="autosize(this)" class="layui-textarea textarea-attach"></textarea>
 		      </div>
 		    </div>
@@ -100,16 +111,37 @@
 <script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script type="text/javascript">
 	layui.use("form",function(){
+		var form = layui.form;
 		form.on('submit(formSub)', function(data){
 			var fields =data.field;
-			console.log(fields)
+			$.ajax({
+				url:"${basePath}user/addDesigner",
+				data:fields,
+				method:"POST",
+				success:function(data){
+					if(data.code != '0'){
+						layer.msg(data.msg);
+					}else{
+						layer.confirm("申请成功，您的登录账号为你的申请手机号，密码为手机号后六位，设计师审核结果将发送至你的消息(登录之后可以看在个人中心中查看消息)。",{btn:['进入个人中心','进入网站首页'],btn2:function(){
+							location.href="${basePath}";
+						}},function(){
+							location.href="${basePath}user/personalCenter/"+data.data;
+						})
+					}
+				},
+				error:function(err){
+					layer.msg("系统异常");
+				}
+			});
+			return false;
 		});
 	})
 	
 	$('.addAttach').click(function(){
 		var cont = $('.textarea-attach').val();
 		MyUtil.upload({url:"<%=basePath%>admin/upload"},function(url,id){
-			cont+='/n&nbsp;&nbsp;&nbsp;附件('+id+')地址:&nbsp;<%=filePath%>'+url;
+			cont+=' 附件('+id+')地址: <%=filePath%>'+url;
+			$('.textarea-attach').val(cont);
 		});
 	});
 	

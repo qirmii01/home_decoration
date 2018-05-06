@@ -114,10 +114,17 @@
   
   <select id="queryKeyByEffectId" resultMap="BaseResultMap">
   	SELECT
-		<include refid="Base_Column_List" />
+  		dek.id id,
+  		dek.effect_id effectId,
+  		dek.key_word keyWord,
+		ds.name keyWordName
     FROM
-    	decoration_effect_key
+    	decoration_effect_key dek
+    	LEFT JOIN
+    		decoration_style ds
+    		ON
+    			dek.key_word = ds.id
     WHERE
-    	effect_id = #{effectId}
+    	dek.effect_id = #{effectId}
   </select>
 </mapper>

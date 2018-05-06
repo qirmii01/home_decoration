@@ -49,7 +49,7 @@ body{min-width:auto;}
         <div class="items">
             <span>装修面积：</span>
             <input type="text" id="area">
-            <span>单位：㎡</span>
+            <span>单位：平方米</span>
         </div>
         <div class="items">
             <input type="button" id="upload" value="点击上传附件">

@@ -63,7 +63,7 @@ $('.nav>ul>li').eq(4).find("a").addClass("navxd");
 	})
 	
 	function show(id){
-		$("#layPage").html('<button class="layui-btn" onclick="<%=basePath%>user/showAllDecorExperience">返回装修经验列表</button>');
+		$("#layPage").html('<button class="layui-btn" onclick="javascript:location.reload()">返回装修经验列表</button>');
 		
 		$.ajax({
 			url:"queryExperience",

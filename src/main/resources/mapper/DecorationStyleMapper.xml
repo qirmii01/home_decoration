@@ -89,4 +89,11 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+ 	SELECT 
+    <include refid="Base_Column_List" />
+	FROM
+		decoration_style
+  </select>
 </mapper>

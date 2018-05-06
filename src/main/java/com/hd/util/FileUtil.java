@@ -40,7 +40,6 @@ public class FileUtil {
 			while (iter.hasNext()) {
 				// 取得上传文件
 				MultipartFile file = multiRequest.getFile(iter.next());
-				System.out.println(file.getName().toString());
 				if (file != null) {
 					// 取得当前上传文件的文件名称
 					String myFileName = file.getOriginalFilename();

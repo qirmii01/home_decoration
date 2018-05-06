@@ -28,7 +28,7 @@
                href="javascript:void(0)"
                target="_blank">
                 <b id="aqLogoOPVTR" style="display: none;"></b>
-                <img src="images/security.png" alt="安全联盟认证"
+                <img src="${basePath}images/security.png" alt="安全联盟认证"
                      width="83" height="30" style="border: none;">
             </a>
         </div>

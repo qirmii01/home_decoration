@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hd.domain.ApplyAttachment;
+import com.hd.domain.ApplyAttachmentList;
+import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffectDTO;
@@ -45,7 +46,7 @@ public class DecorationController extends BaseController{
 	}
 	
 	/**
-	 * 用户装修申请查询decorationApply
+	 * 用户装修申请查询
 	 * @param decorationApply 装修申请对象
 	 * @return
 	 */
@@ -97,8 +98,8 @@ public class DecorationController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addAttachment")
-	public Result addAttachment(ApplyAttachment applyAttachment){
-		Result result = decorationService.addAttachment(applyAttachment);
+	public Result addAttachment(ApplyAttachmentList applyAttachments){
+		Result result = decorationService.addAttachment(applyAttachments.getApplyAttachments());
 		return result;
 	}
 	
@@ -131,8 +132,82 @@ public class DecorationController extends BaseController{
 	 * @param formData 装修效果数据对象
 	 * @return
 	 */
+	@RequestMapping("updateDecoEffect")
+	@ResponseBody
 	public Result updateDecoEffect(DecorationEffectDTO formData){
 		Result result = decorationService.updateDecorationEffect(formData);
+		return result;
+	}
+	
+	/**
+	 * 更新装修申请结果记录
+	 * @param formData 装修效果申请记录对象
+	 * @return
+	 */
+	@RequestMapping("applyRecord")
+	@ResponseBody
+	public Result applyRecord(ApplyRecord formData){
+		Result result = decorationService.decorationApplyRecord(formData);
+		return result;
+	}
+	
+	/**
+	 * 查询装修风格名字
+	 * @return
+	 */
+	@RequestMapping("queryStyles")
+	@ResponseBody
+	public Result queryStyles(){
+		Result result = decorationService.queryStyles();
+		return result;
+	}
+	
+	/**
+	 * 查看设计产品
+	 * @param applyId 装修申请id
+	 * @return
+	 */
+	@RequestMapping("queryDesignResult")
+	@ResponseBody
+	public Result queryDesignResult(String applyId){
+		Result result = decorationService.queryDesignResult(applyId);
+		return result;
+	}
+	
+	/**
+	 * 查看我的装修申请
+	 * @return
+	 */
+	@RequestMapping("myApplyLis")
+	@ResponseBody
+	public Result myApplyLis(){
+		String userId = ((User)request.getSession().getAttribute("userInfo")).getId();
+		Result result = decorationService.queryMyApplyLis(userId);
+		return result;
+	}
+	
+	/**
+	 * 选择设计师
+	 * @param applyId 装修申请id
+	 * @return
+	 */
+	@RequestMapping("chooseDesigner")
+	@ResponseBody
+	public Result chooseDesigner(ApplyRecord applyRecord){
+		String userId = ((User)request.getSession().getAttribute("userInfo")).getId();
+		Result result = decorationService.chooseDesigner(applyRecord.getApplyIds(), applyRecord.getDesignerId(), userId);
+		return result;
+	}
+	
+	/**
+	 * 查询装修申请基本信息
+	 * @param decorationApply 装修申请条件
+	 * @return
+	 */
+	@RequestMapping("applyBaseInfo")
+	@ResponseBody
+	public Result applyBaseInfo(DecorationApply decorationApply){
+		Result result = decorationService.queryDecorationApplyBaseInfo(decorationApply);
 		return result;
 	}
 }

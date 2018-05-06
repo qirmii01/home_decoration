@@ -237,3 +237,43 @@ function millisDateFormat(millis,format){
 		}
 	}
 }
+
+MyUtil.docUpload = function(options,callback){
+	var html;
+	var boxId = new Date().getTime();
+	html='<div class="upload-box" id="'+boxId+'">'
+		+'<div class="add-doc layui-form-item"><div style="text-align:center;">'
+		+'<button type="button" class="layui-btn upload">上传文件</button><button type="button" class="layui-btn submit">提交</button>'
+		+'</div></div><div class="doc-menu"><ul class="docList"></ul></div></div>';
+	
+	layer.open({
+		title:"<center>添加文件</center>",
+		area:'888px',
+		type:1,
+		maxHeight:"500px",
+		content:html,
+		success:function(){
+			$('#'+boxId+' .add-doc button.upload').click(function(){
+				if($("#"+boxId+" .docList li").length ==0 || $("#"+boxId+" .docList li:last-child .doc-url").attr("href")){
+					var newline = '<li class="layui-form-item"><label class="layui-form-label">文件名：</label><div class="layui-input-block">'
+						+'<input type="text" name="title" required="" lay-verify="required" placeholder="请输入文件名" autocomplete="off" class="layui-input title-items">'
+						+'<p>文件地址:<a class="doc-url" target="_blank"><a></p></div></li>';
+					$('#'+boxId+' .docList').append(newline);
+				}        
+				
+				MyUtil.upload({
+					url:options.uploadUrl,
+					target:"#"+boxId+" .docList li:last-child input.title-items"
+				},function(url,id){
+					$("#"+boxId+" .docList li:last-child .doc-url").attr("href",options.filePath+url);
+					$("#"+boxId+" .docList li:last-child .doc-url").text(options.filePath+url);
+					$("#"+boxId+" .docList li:last-child .doc-url").attr("title",options.filePath+url);
+				});
+			});
+			
+			if(callback){
+				callback($("#"+boxId));
+			}
+		}
+	});
+}

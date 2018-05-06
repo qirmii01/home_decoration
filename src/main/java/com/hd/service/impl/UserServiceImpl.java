@@ -6,17 +6,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
+import com.hd.domain.DecorationApply;
 import com.hd.domain.DesignerInfo;
 import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.ImgSource;
+import com.hd.domain.Message;
 import com.hd.domain.Result;
 import com.hd.domain.SysExperienceList;
 import com.hd.domain.SysPreferentialActivities;
 import com.hd.domain.User;
+import com.hd.mapper.ApplyRecordMapper;
+import com.hd.mapper.DecorationApplyMapper;
 import com.hd.mapper.DecorationEffectMapper;
 import com.hd.mapper.DesignerMapper;
 import com.hd.mapper.ImgSourceMapper;
+import com.hd.mapper.MessageMapper;
 import com.hd.mapper.SysExperienceListMapper;
 import com.hd.mapper.SysPreferentialActivitiesMapper;
 import com.hd.mapper.UserMapper;
@@ -46,6 +52,15 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	SysPreferentialActivitiesMapper sysPreferentialActivitiesMapper;
+	
+	@Autowired
+	DecorationApplyMapper decorationApplyMapper;
+	
+	@Autowired
+	ApplyRecordMapper applyRecordMapper;
+	
+	@Autowired
+	MessageMapper messageMapper;
 	
 	@Override
 	public Result queryUser(User user) {
@@ -190,6 +205,7 @@ public class UserServiceImpl implements UserService {
 		user.setCreateTime(new Date());
 		user.setTelphone(telphone);
 		user.setType("1");
+		user.setStatus(0);
 		user.setPassword(password);
 		int i = userMapper.insertSelective(user);
 		if(i<=0){
@@ -207,7 +223,7 @@ public class UserServiceImpl implements UserService {
 		if(j<=0){
 			return Result.buildErrorResult("数据插入失败");
 		}
-		return new Result("数据插入成功");
+		return new Result(user);
 	}
 
 	@Override
@@ -223,11 +239,41 @@ public class UserServiceImpl implements UserService {
 			return Result.buildErrorResult("用户id不能为空");
 		}
 		
+		User user = userMapper.selectByPrimaryKey(formData.getId());
+		if(user == null){
+			return Result.buildErrorResult("数据库异常");
+		}
+		
+		try {
+			if(formData.getAvatar() != null && formData.getAvatar().equals(user.getAvatar())
+				&& formData.getAvatarPath() != null && formData.getAvatarPath().equals(user.getAvatarPath())	
+				&& formData.getCaseExample() != null && formData.getCaseExample().equals(user.getCaseExample()) 
+				&& formData.getPositionalTitles() != null && formData.getPositionalTitles().equals(user.getPositionalTitles())
+				&& formData.getSex() != null && formData.getSex().equals(user.getSex())
+				&& formData.getStatus() != null && formData.getStatus().equals(user.getStatus())
+				&& formData.getTelphone() != null && formData.getTelphone().equals(user.getTelphone())
+				&& formData.getType() != null && formData.getType().equals(user.getType())
+				&& formData.getUserName() != null && formData.getUserName().equals(user.getUserName())
+				&& formData.getPassword() != null && MD5Utility.getDigest(formData.getPassword()).equals(user.getPassword())
+				){
+				return Result.buildErrorResult("未作任何改变");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.buildErrorResult("系统异常");
+		}
+		
 		int i = userMapper.updateByPrimaryKeySelective(formData);
 		if(i<=0){
 			return Result.buildErrorResult("数据更新失败");
 		}
-		return new Result("数据更新成功");
+		
+		User u =new User();
+		u.setId(formData.getId());
+		u.setStatus(0);
+		User result = userMapper.selectUserBySelective(u).get(0);
+		
+		return new Result(result);
 	}
 
 	@Override
@@ -287,8 +333,97 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public DesignerWithBLOBs queryDesignerDetailInfo(String designerId) {
-		designerMapper.queryDesignerInfo(designerId, "0");
-		return null;
+	public Result queryDesignerDetailInfo(String designerId) {
+		List<DesignerWithBLOBs> designerWithBLOBs = designerMapper.queryDesignerInfo(designerId, "0");
+		return new Result(designerWithBLOBs);
+	}
+
+	@Override
+	public Result applyDesignLis(BasePage basePage, String designerId) {
+		List<DecorationApply> decorationApplies = decorationApplyMapper.queryApplyDesignLis(basePage, designerId);
+		return new Result(decorationApplies);
+	}
+
+	@Override
+	public Result dealApply(ApplyRecord applyRecord) {
+		if(StringUtil.isEmpty(applyRecord.getApplyId())){
+			return Result.buildErrorResult("装修申请id不能为空");
+		}
+		if(StringUtil.isEmpty(applyRecord.getStatus())){
+			return Result.buildErrorResult("处理状态不能为空");
+		}
+		
+		if(!"1".equals(applyRecord.getStatus()) && !"2".equals(applyRecord.getStatus())){
+			return Result.buildErrorResult("处理状态有误");
+		}
+		
+		ApplyRecord record = new ApplyRecord();
+		record.setApplyId(applyRecord.getApplyId());
+		record.setStatus("0");
+		List<ApplyRecord> applyRecords=applyRecordMapper.selectBySelective(record);
+		if(applyRecords.size() != 1){
+			return Result.buildErrorResult("数据库错误");
+		}
+		
+		int i = applyRecordMapper.updateSelectiveByApplyId(applyRecord);
+		if( i <= 0 ){
+			return Result.buildErrorResult("处理装修申请失败");
+		}
+		
+		if("1".equals(applyRecord.getStatus())){
+			DecorationApply decorationApply = new DecorationApply();
+			decorationApply.setId(applyRecord.getApplyId());
+			decorationApply.setAcceptTime(new Date());
+			decorationApply.setAcceptId(applyRecord.getDesignerId());
+			decorationApply.setStatus("3");
+			int j = decorationApplyMapper.updateByPrimaryKeySelective(decorationApply);
+			if( j<= 0){
+				return Result.buildErrorResult("数据更新失败");
+			}
+		}
+		
+		return Result.buildSuccessResult();
+	}
+
+	@Override
+	public Result myDesignLis(String userId) {
+		List<DecorationApply> decorationApplies = decorationApplyMapper.queryDesignLis(userId);
+		return new Result(decorationApplies);
+	}
+
+	@Override
+	public Result sendMsg(String receiveId, String userId, String content) {
+		if(StringUtil.isEmpty(receiveId)){
+			return Result.buildErrorResult("接收人id不能为空");
+		}
+		if(StringUtil.isEmpty(content)){
+			return Result.buildErrorResult("发送内容不能为空");
+		}
+		
+		Message record =new Message();
+		record.setContent(content);
+		record.setId(sequence.getCommonID());
+		record.setReceiveId(receiveId);
+		record.setSenderId(userId);
+		int i = messageMapper.insert(record);
+		if( i<= 0 ){
+			return Result.buildErrorResult("数据插入失败");
+		}
+		
+		return Result.buildSuccessResult();
+	}
+
+
+	@Override
+	public Result queryMsgList(String userId, BasePage basePage) {
+		List<Message> messages = messageMapper.selectMsgList(userId, basePage);
+		return new Result(messages);
+	}
+
+
+	@Override
+	public Result countMsg(String userId) {
+		int count = messageMapper.countMyMsg(userId);
+		return new Result(count);
 	}
 }

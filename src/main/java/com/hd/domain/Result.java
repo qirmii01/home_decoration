@@ -36,6 +36,11 @@ public class Result {
 		this.count = count;
 	}
 	
+	public Result(Object data, String code){
+		this.data = data;
+		this.code = code;
+	}
+	
 	public static Result buildResult(String code, String msg){
 		return new Result(code, msg);
 	}
@@ -46,6 +51,10 @@ public class Result {
 	
 	public static Result buildErrorResult(String msg){
 		return new Result(FAIL, msg);
+	}
+	
+	public static Result buildErrorResult(Object data){
+		return new Result(data,FAIL);
 	}
 	
 	public Result(String code, String msg){

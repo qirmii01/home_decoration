@@ -1,5 +1,6 @@
 package com.hd.service;
 
+import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.Result;
@@ -120,5 +121,51 @@ public interface UserService {
 	 * @param designerId 设计师id
 	 * @return
 	 */
-	DesignerWithBLOBs queryDesignerDetailInfo(String designerId);
+	Result queryDesignerDetailInfo(String designerId);
+	
+	/**
+	 * 申请设计列表
+	 * @param basePage
+	 * @param designerId 设计师id
+	 * @return
+	 */
+	Result applyDesignLis(BasePage basePage, String designerId);
+	
+	/**
+	 * 设计师处理装修设计申请
+	 * @param applyRecord
+	 * @return
+	 */
+	Result dealApply(ApplyRecord applyRecord);
+	
+	/**
+	 * 查询设计师的设计列表
+	 * @param userId 设计师id
+	 * @return
+	 */
+	Result myDesignLis(String userId);
+	
+	/**
+	 * 发送信息
+	 * @param receiveId 接收者id
+	 * @param userId 发送人id
+	 * @param content 发送内容
+	 * @return
+	 */
+	Result sendMsg(String receiveId, String userId, String content);
+	
+	/**
+	 * 查询消息列表
+	 * @param userId 用户id
+	 * @param basePage 
+	 * @return
+	 */
+	Result queryMsgList(String userId, BasePage basePage);
+	
+	/**
+	 * 统计消息列表
+	 * @param userId 用户id
+	 * @return
+	 */
+	Result countMsg(String userId);
 }

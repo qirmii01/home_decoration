@@ -1,5 +1,6 @@
 package com.hd.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,17 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hd.domain.ApplyAttachment;
+import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DecorationEffect;
 import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.DecorationEffectImg;
 import com.hd.domain.DecorationEffectKey;
+import com.hd.domain.DecorationStyle;
 import com.hd.domain.Result;
+import com.hd.mapper.ApplyAttachmentMapper;
+import com.hd.mapper.ApplyRecordMapper;
 import com.hd.mapper.DecorationApplyMapper;
 import com.hd.mapper.DecorationEffectImgMapper;
 import com.hd.mapper.DecorationEffectKeyMapper;
 import com.hd.mapper.DecorationEffectMapper;
+import com.hd.mapper.DecorationStyleMapper;
 import com.hd.service.DecorationService;
 import com.hd.util.Sequence;
 import com.hd.util.StringUtil;
@@ -39,11 +45,20 @@ public class DecorationServiceImpl implements DecorationService {
 	@Autowired
 	private Sequence sequence;
 	
+	@Autowired
+	private ApplyRecordMapper applyRecordMapper;
+	
+	@Autowired
+	private ApplyAttachmentMapper applyAttachmentMapper;
+	
+	@Autowired
+	private DecorationStyleMapper decorationStyleMapper;
+	
 	@Override
 	public Result queryDecorationApply(DecorationApply decorationApply) {
 		List<DecorationApply> decorationApplies = decorationApplyMapper
 				.queryDecorationApplyBySelective(decorationApply);
-		if(decorationApplies.size()!=0 && "0".equals(decorationApply.getStatus()) && decorationApplies.size() != 1){
+		if(decorationApply.getId()!= null && "0".equals(decorationApply.getStatus()) && decorationApplies.size() != 1){
 			return Result.buildErrorResult("系统错误");
 		}
 		
@@ -86,7 +101,9 @@ public class DecorationServiceImpl implements DecorationService {
 		if(StringUtil.isEmpty(decorationApply.getId())){
 			return Result.buildErrorResult("申请id为空");
 		}
-		if("1".equals(decorationApply.getStatus()) || "2".equals(decorationApply.getStatus())){
+		
+		DecorationApply decorationApply2 = decorationApplyMapper.selectByPrimaryKey(decorationApply.getId());
+		if( ("1".equals(decorationApply.getStatus()) && !"4".equals(decorationApply2.getStatus()) ) || "2".equals(decorationApply.getStatus())){
 			decorationApply.setCheckTime(new Date());
 		}else if("3".equals(decorationApply.getStatus())){
 			decorationApply.setAcceptTime(new Date());
@@ -103,18 +120,31 @@ public class DecorationServiceImpl implements DecorationService {
 	}
 	
 	@Override
-	public Result addAttachment(ApplyAttachment formData) {
-		if(StringUtil.isEmpty(formData.getApplyId())){
-			return Result.buildErrorResult("装修申请id不能为空");
+	public Result addAttachment(List<ApplyAttachment> formData) {
+		ApplyAttachment applyAttachment;
+		List<String> result = new ArrayList<String>();
+		for (int i = 0; i < formData.size(); i++) {
+			applyAttachment = formData.get(i);
+			if(StringUtil.isEmpty(applyAttachment.getApplyId()) || StringUtil.isEmpty(applyAttachment.getSourceId())){
+				result.add("第"+(i+1)+"条数据参数有误");
+				continue;
+			}
+			
+			applyAttachment.setId(sequence.getCommonID());
+			applyAttachment.setStatus("0");
+			applyAttachment.setCreateTime(new Date());
+			int j = applyAttachmentMapper.insert(applyAttachment);
+			if(j<=0){
+				result.add("第"+(i+1)+"条数据插入数据库失败");
+				continue;
+			}
 		}
 		
-		if(StringUtil.isEmpty(formData.getSourceId())){
-			return Result.buildErrorResult("资源路径不能为空");
+		if(result.isEmpty()){
+			return Result.buildSuccessResult();
+		}else{
+			return Result.buildErrorResult(result);
 		}
-		
-		formData.setId(sequence.getCommonID());
-		formData.setCreateTime(new Date());
-		return new Result("添加成功");
 	}
 
 	@Override
@@ -216,5 +246,118 @@ public class DecorationServiceImpl implements DecorationService {
 			}
 		}
 		return new Result("更新成功");
+	}
+
+	@Override
+	public Result decorationApplyRecord(ApplyRecord formData) {
+		if( StringUtil.isEmpty(formData.getApplyId()) ){
+			return Result.buildErrorResult("装修申请id不能为空");
+		}
+		
+		ApplyRecord record = new ApplyRecord();
+		record.setApplyId(formData.getApplyId());
+		record.setStatus("0");
+		List<ApplyRecord> applyRecordList = applyRecordMapper.selectBySelective(record);
+		if(applyRecordList.size() != 1){
+			return Result.buildErrorResult("系统错误");
+		}
+		ApplyRecord applyRecord = applyRecordList.get(0);
+		if(applyRecord == null && StringUtil.isNotEmpty(formData.getStatus())){
+			return Result.buildErrorResult("申请记录不存在");
+		}
+		
+		if(applyRecord != null && StringUtil.isEmpty(formData.getStatus())){
+			return Result.buildErrorResult("参数status不能为空");
+		}
+		
+		if(applyRecord == null && StringUtil.isEmpty(formData.getStatus())){
+			DecorationApply decorationApply = decorationApplyMapper.selectByPrimaryKey(formData.getApplyId());
+			if(decorationApply == null){
+				return Result.buildErrorResult("装修申请不存在");
+			}
+			
+			formData.setId(sequence.getCommonID());
+			formData.setTime(new Date());
+			formData.setUserId(decorationApply.getUserId());
+			formData.setStatus("0");
+			int i = applyRecordMapper.insert(formData);
+			if(i<=0){
+				return Result.buildErrorResult("数据插入失败");
+			}
+		}else {
+			applyRecord.setStatus(formData.getStatus());
+			applyRecord.setTime(new Date());
+			int i = applyRecordMapper.updateByPrimaryKeySelective(formData);
+			if(i<=0){
+				return Result.buildErrorResult("数据更新失败");
+			}
+			
+			if("1".equals(formData.getStatus())){
+				DecorationApply decorationApply = decorationApplyMapper.selectByPrimaryKey(formData.getApplyId());
+				decorationApply.setAcceptTime(new Date());
+				decorationApply.setAcceptId(formData.getDesignerId());
+				decorationApplyMapper.updateByPrimaryKeySelective(decorationApply);
+			}
+		}
+		
+		return Result.buildSuccessResult();
+	}
+
+	@Override
+	public Result queryAttachment(ApplyAttachment formData) {
+		List<ApplyAttachment> applyAttachments = applyAttachmentMapper.selectBySelective(formData);
+		return new Result(applyAttachments);
+	}
+
+	@Override
+	public Result queryStyles() {
+		List<DecorationStyle> decorationStyles = decorationStyleMapper.queryAll();
+		return new Result(decorationStyles);
+	}
+
+	@Override
+	public Result queryDesignResult(String applyId) {
+		ApplyAttachment applyAttachment = new ApplyAttachment();
+		applyAttachment.setApplyId(applyId);
+		applyAttachment.setStatus("0");
+		applyAttachment.setType("1");
+		List<ApplyAttachment> applyAttachments = applyAttachmentMapper.selectBySelective(applyAttachment);
+		return new Result(applyAttachments);
+	}
+
+	@Override
+	public Result queryMyApplyLis(String userId) {
+		List<DecorationApply> decorationApplies = decorationApplyMapper.selectByUserId(userId);
+		return new Result(decorationApplies);
+	}
+
+	@Override
+	public Result chooseDesigner(List<String> applyIds, String designerId, String userId) {
+		if(StringUtil.isEmpty(designerId)){
+			return Result.buildErrorResult("设计师id不能为空");
+		}
+		
+		ApplyRecord applyRecord =null;
+		for (String applyId : applyIds) {
+			if(decorationApplyMapper.selectByPrimaryKey(applyId) == null){
+				continue;
+			}
+			applyRecord = new ApplyRecord();
+			applyRecord.setApplyId(applyId);
+			applyRecord.setDesignerId(designerId);
+			applyRecord.setId(sequence.getCommonID());
+			applyRecord.setStatus("0");
+			applyRecord.setTime(new Date());
+			applyRecord.setUserId(userId);
+			applyRecordMapper.insert(applyRecord);
+		}
+		
+		return Result.buildSuccessResult();
+	}
+
+	@Override
+	public Result queryDecorationApplyBaseInfo(DecorationApply formData) {
+		List<DecorationApply> decorationApplies = decorationApplyMapper.queryBaseBySelective(formData);
+		return new Result(decorationApplies);
 	}
 }

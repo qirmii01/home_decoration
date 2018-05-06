@@ -62,7 +62,7 @@ layui.use("laypage",function(){
 })
 
 function show(id){
-	$("#layPage").html('<button class="layui-btn" onclick="<%=basePath%>user/showAllPerferActivities">返回优惠活动列表</button>');
+	$("#layPage").html('<button class="layui-btn" onclick="javascript:location.reload()">返回优惠活动列表</button>');
 	
 	$.ajax({
 		url:"queryActivity",

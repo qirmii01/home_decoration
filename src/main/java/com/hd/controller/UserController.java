@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.Result;
@@ -161,6 +162,10 @@ public class UserController {
 	@ResponseBody
 	public Result updateUser(User user){
 		Result result = userService.updateUser(user);
+		if(result.noError()){
+			HttpSession session = request.getSession();
+			session.setAttribute("userInfo", result.getData());
+		}
 		return result;
 	}
 	
@@ -180,13 +185,18 @@ public class UserController {
 	@ResponseBody
 	public Result addDesigner(DesignerWithBLOBs designerInfo,String telphone){
 		Result result = userService.addDesignerCheckInfo(designerInfo, telphone);
+		if(result.noError()){
+			HttpSession session = request.getSession();
+			session.setAttribute("userInfo", result.getData());
+		}
+		result.setData(((User)result.getData()).getId());
 		return result;
 	}
 	
 	@RequestMapping("designerDetailInfo/{designerId}")
 	public String designerDetailInfoPage(@PathVariable("designerId")String designerId){
-		DesignerWithBLOBs designerWithBLOBs = userService.queryDesignerDetailInfo(designerId);
-		request.setAttribute("designerInfo", designerWithBLOBs);
+		Result result = userService.queryDesignerDetailInfo(designerId);
+		request.setAttribute("designerInfo", result.getData());
 		return "jsp/user/designerDetailInfo";
 	}
 	
@@ -282,4 +292,55 @@ public class UserController {
 		return result;
 	}
 	
+	@RequestMapping("applyDesignLis")
+	@ResponseBody
+	public Result applyDesignLis(BasePage basePage){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.applyDesignLis(basePage,userSession.getId());
+		return result;
+	}
+	
+	@RequestMapping("dealApply")
+	@ResponseBody
+	public Result dealApply(ApplyRecord applyRecord){
+		Result result = userService.dealApply(applyRecord);
+		return result;
+	}
+	
+	@RequestMapping("myDesignLis")
+	@ResponseBody
+	public Result myDesignLis(){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.myDesignLis(userSession.getId());
+		return result;
+	}
+	
+	@RequestMapping("sendMsg")
+	@ResponseBody
+	public Result sendMsg(String receiveId, String content){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.sendMsg(receiveId, userSession.getId(), content);
+		return result;
+	}
+	
+	@RequestMapping("getMsgList")
+	@ResponseBody
+	public Result getMsgList(BasePage basePage){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.queryMsgList(userSession.getId(), basePage);
+		return result;
+	}
+	
+	@RequestMapping("countMsg")
+	@ResponseBody
+	public Result countMsg(){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.countMsg(userSession.getId());
+		return result;
+	}
 }
