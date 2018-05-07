@@ -19,6 +19,8 @@ public interface MessageMapper {
 	 * @mbggenerated
 	 */
 	int insertSelective(Message record);
+	
+	int updateByPrimaryKeySelective(Message record);
 
 	/**
      * 查询用户消息列表

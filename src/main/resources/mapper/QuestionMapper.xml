@@ -144,7 +144,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <resultMap id="questionAndAnswer" type="com.hd.domain.QuestionAndAnswerVO">
+  <resultMap id="questionAndAnswer" type="com.hd.domain.Question">
   	<id column="id" property="id" />
   	<result column="user_id" property="userId" />
   	<result column="create_time" property="createTime" />
@@ -154,31 +154,28 @@
   
   <select id="queryAnswer" resultType="com.hd.domain.QuestionAnswer">
   	SELECT
+  		id id,
+  		user_id userId,
+  		create_time createTime,
   		answer_content answerContent
   	FROM
   		question_answer
   	WHERE
-  		id = #{questionId}
+  		question_id = #{questionId}
   	ORDER BY
   		create_time
   </select>
   
-  <select id="queryQuestionAndAnswer" resultType="com.hd.domain.QuestionAndAnswerVO">
+  <select id="queryQuestionAndAnswer" resultMap="questionAndAnswer">
   	SELECT
-  		q.id id,
-  		q.user_id askUserId,
-  		DATE_FORMAT(q.create_time,'%Y-%m-%d') createTime,
-  		q.content question,
-  		qa.answer_content answerContent,
-  		qa.user_id answerUserId
+  		id,
+  		user_id,
+  		create_time,
+  		content
   	FROM
-  		question q
-		LEFT JOIN
-			question_answer qa
-			ON
-				qa.question_id = q.id
+  		question
   	ORDER BY
-  		q.create_time
+  		create_time
   	LIMIT #{page}, #{limit}
   </select>
 </mapper>

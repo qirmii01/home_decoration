@@ -95,7 +95,28 @@
     </trim>
   </insert>
   
-  <select id="selectMsgList" resultMap="BaseResultMap">
+  <update id="updateByPrimaryKeySelective" parameterType="com.hd.domain.Message">
+  	UPDATE
+  		message
+  	<set>
+      <if test="senderId != null">
+        sender_id = #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveId != null">
+        receive_id = #{receiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE
+    	id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectMsgList" resultType="com.hd.domain.Message">
   	SELECT 
   		id id,
   		sender_id senderId,

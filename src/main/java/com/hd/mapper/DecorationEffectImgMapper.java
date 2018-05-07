@@ -1,6 +1,9 @@
 package com.hd.mapper;
 
+import java.util.List;
+
 import com.hd.domain.DecorationEffectImg;
+import com.hd.domain.ImageObj;
 
 public interface DecorationEffectImgMapper {
     /**
@@ -38,5 +41,11 @@ public interface DecorationEffectImgMapper {
 	 * @mbggenerated
 	 */
 	int updateByPrimaryKey(DecorationEffectImg record);
-
+	
+	/**
+	 * 查询所有效果图
+	 * @param effectId 装修效果id
+	 * @return
+	 */
+	List<ImageObj> queryAllEffectImg(String effectId);
 }

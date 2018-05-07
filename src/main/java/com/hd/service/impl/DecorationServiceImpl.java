@@ -17,6 +17,8 @@ import com.hd.domain.DecorationEffectDTO;
 import com.hd.domain.DecorationEffectImg;
 import com.hd.domain.DecorationEffectKey;
 import com.hd.domain.DecorationStyle;
+import com.hd.domain.ImageObj;
+import com.hd.domain.ImgPreview;
 import com.hd.domain.Result;
 import com.hd.mapper.ApplyAttachmentMapper;
 import com.hd.mapper.ApplyRecordMapper;
@@ -359,5 +361,15 @@ public class DecorationServiceImpl implements DecorationService {
 	public Result queryDecorationApplyBaseInfo(DecorationApply formData) {
 		List<DecorationApply> decorationApplies = decorationApplyMapper.queryBaseBySelective(formData);
 		return new Result(decorationApplies);
+	}
+
+	@Override
+	public Result queryAllEffectImg(String effectId, String title) {
+		List<ImageObj> imageObjs = decorationEffectImgMapper.queryAllEffectImg(effectId);
+		ImgPreview imgPreview = new ImgPreview();
+		imgPreview.setId(sequence.getCommonID());
+		imgPreview.setImageObjs(imageObjs);
+		imgPreview.setTitle(title);
+		return new Result(imgPreview);
 	}
 }

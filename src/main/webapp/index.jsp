@@ -45,7 +45,7 @@
 	            </div>
 	            <div class="path2 mt20">
 	                <h2>最近量房申请</h2>
-	                <div class="plan"><a class="navhl_more_b" href="javascript:void(0)e">我也要免费申请 </a>
+	                <div class="plan"><a class="navhl_more_b free-apply" href="javascript:void(0)e">我也要免费申请 </a>
 	                    <span><a href="<%=basePath%>decoration/allApply" target="_blank">查看所有申请 &gt;&gt;</a></span>
 	                    <div></div>
 	                </div>
@@ -79,59 +79,7 @@
 	                        <ul></ul>
 	                    </div>
 	                </div>            
-	            <div class="navhl"><span>业主点评</span> <a href="javascript:;" class="navhl_more_b ask">发表我的评论 >> </a></div>
-	            <div class="comment_a">
-	                <div class="comment_al">
-	                    <div class="comment_al_1"><p>暂无</p>好评数</div>
-	                    <ul>
-	                        <li>
-	                            <p>好评100%</p>
-	                            <div class="commenttag_box">
-	                                <div class="commenttag_c" style="width:100%"></div>
-	                            </div>
-	                        </li>
-	                        <li>
-	                            <p>中评0%</p>
-	                            <div class="commenttag_box">
-	                                <div class="commenttag_c" style="width:0%"></div>
-	                            </div>
-	                        </li>
-	                        <li>
-	                            <p>差评0%</p>
-	                            <div class="commenttag_box">
-	                                <div class="commenttag_c" style="width:0%"></div>
-	                            </div>
-	                        </li>
-	                    </ul>
-	                </div>
-	                <div class="comment_ar">
-	                    <p>业主给他的标签：</p>
-	                    <a href="javascript:;" class="link_b">设计非常专业</a>
-	                    <a href="javascript:;" class="link_b">服务贴心</a>
-	                    <a href="javascript:;" class="link_b">施工精细</a>
-	                    <a href="javascript:;" class="link_b">诚信企业</a>
-	                    <a href="javascript:;" class="link_b">价格合理</a>
-	                    <a href="javascript:;" class="link_b">质量保证</a>
-	                    <a href="javascript:;" class="link_b">质量保障</a>
-	                </div>
-	            </div>
-	            <!-- 代码 开始 -->
-	            <div id="tab">
-	                <div class="tabList navhl_b">
-	                    <ul>
-	                        <li class="cur">好评<em>（0条）</em></li>
-	                        <li>中评<em>（0条）</em></li>
-	                        <li>差评<em>（0条）</em></li>
-	                    </ul>
-	                </div>
-	                <div class="tabCon">
-	                    <div class="cur" id="list_fdxx">暂时没有评论</div>
-	                    <div id="list_fdxx">暂时没有评论</div>
-	                    <div id="list_fdxx">暂时没有评论</div>
-	
-	                </div>
-	            </div>
-	            <!-- 代码 结束 -->
+	            <div class="navhl"><a href="javascript:;" class="navhl_more_b ask">发表我的问题 >> </a></div>
 	        </div>
 	    </div>
 	</div>
@@ -242,7 +190,7 @@
 						'<li><div class="piclist_img">'
 		                        +'<a href=""><img src="<%=filePath%>/'+data[i].effectSrc+'" width="325" height="210" alt="'+data[i].title+'"/></a>'
 		                        +'<div class="piclist_img_a">'+data[i].imgCount+'张</div>'
-		                        +'<div class="piclist_img_b"><a href="" target="_blank" title="获取设计方案">获取设计方案</a></div>'
+		                        +'<div class="piclist_img_b"><a href="javascript:designScheme(\''+data[i].id+'\',\''+data[i].title+'\');" target="_blank" title="获取设计方案">获取设计方案</a></div>'
 		                    +'</div>'
 		                    +'<div class="picont"><div class="piclist_txt">'
 		                        +'<a href="" title="'+data[i].designerName+'"><img src="<%=filePath%>/'+data.designerHeader+'" alt="data[i].designerName"></a>'
@@ -279,15 +227,14 @@
 					var html="";
 					if(data.length != 0){
 						for(var i=0; i<data.length; i++){
-							html+=
-								'<li><a href="<%=basePath%>user/showDesigner/'+data[i].userId+'" title="'+data[i].userName+'"><img';
+							html+='<li><a href="${basePath}user/designerDetailInfo/'+data[i].userId+'" target="_blank" title="'+data[i].userName+'"><img';
 								if(data[i].headerImg){
 									html+= (' src="<%=filePath%>/'+ data[i].headerImg + '"');
 								}
-							html+= 'alt="'+data[i].userName+' " title="'+data[i].userName+'"/></a>'
-								+'<dl><dt><a href="<%=basePath%>user/designerInfo/'+data[i].userId+'" class="colu_tw_btitle fl">'+data[i].userName+'</a></dt>'
+							html+= 'alt="'+data[i].userName+' " target="_blank" title="'+data[i].userName+'"/></a>'
+								+'<dl><dt><a href="${basePath}user/designerDetailInfo/'+data[i].userId+'" class="colu_tw_btitle fl">'+data[i].userName+'</a></dt>'
 								+'<dt><p>装修案例：</p><span>'+data[i].designNumber+'</span></dt><dt><p style="width: 45px">职称：</p>'
-								+'<div class="colu_tw_btxt">'+data[i].positionalTitles+'</div></dt></dl></li>';
+								+'<div class="colu_tw_btxt">'+data[i].positionalTitles ? data[i].positionalTitles:""+'</div></dt></dl></li>';
 						}
 					}else{
 						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
@@ -310,20 +257,50 @@
 				if(r.code == '0'){
 					var data = r.data;
 					console.log(data)
-					var html;
+					var html='';
 					if(data.length != 0){
 						for(var i=0 ;i<data.length; i++){
-							html+=
-								'<li><div class="welist_r" style="width:900px;"><dl>'
-								+'<dd class="d1">问题详情<i>'+data[i].createTime+'</i></dd>'
-								+'<dd class="d5"><h3><a href="javascript:void(0)" target="_blank">'+data[i].question+'</a></h3></dd>'
-								+'<dd class="d3"><div class="d3p30"><pre>'+data[i].answerContent
-								+'</pre></div></dd></dl></div><div class="clear"></div></li>';
+							html+='<li><div class="welist_r" style="width:900px;"><dl>'
+								+'<dd class="d1">问题详情<i>'+millisDateFormat(data[i].createTime, "yyyy-MM-dd")+'</i></dd>'
+								+'<dd class="d5"><h3><a href="javascript:void(0)" target="_blank">'+data[i].content+'</a></h3></dd>';
+								if(data[i].questionAnswers.length != 0){
+									html+='<dd class="d3"><div class="d3p30"><pre>'+data[i].questionAnswers[0].answerContent+'</pre></div></dd></dl>';
+								}
+								html+='<div class="fr"><a class="answer" question-id="'+data[i].id+'">我来回答</a></div></div><div class="clear"></div></li>';
 						}
 					}else{
 						html+='<p style="color:#5f5e5e;margin-top:30px;text-align:center;">暂无数据</p>';
 					}
 					$('.wd_l_list>ul').html(html);
+					
+					$('.answer').click(function(){
+						var questionId = $(this).attr("question-id");
+						var load = layer.load();
+						layer.prompt({
+							title:"回答问题",
+							area:['580px','380px'],
+							formType:2
+						},function(value,index,elem){
+							$.ajax({
+								url:"${basePath}question/addAnswer",
+								data:{answerContent:value,questionId:questionId},
+								method:"POST",
+								success:function(data){
+									if(data.code != '0'){
+										layer.msg(data.msg);
+									}else{
+										layer.alert("回答完成",function(){
+											location.reload();
+										})
+									}
+								},
+								error:function(err){
+									layer.close(load);
+									layer.msg("系统异常")
+								}
+							})
+						});
+					});
 				}
 			},
 			error:function(err){
@@ -356,40 +333,7 @@
 </body>
 </html>
 <script type="text/javascript">
-    window.onload = function () {
-        var oDiv = document.getElementById("tab");
-        var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
-        var aCon = oDiv.getElementsByTagName("div")[1].getElementsByTagName("div");
-        var timer = null;
-        for (var i = 0; i < oLi.length; i++) {
-            oLi[i].index = i;
-            oLi[i].onclick = function () {
-                show(this.index);
-            }
-        }
-        function show(a) {
-            index = a;
-            var alpha = 0;
-            for (var j = 0; j < oLi.length; j++) {
-                oLi[j].className = "";
-                aCon[j].className = "";
-                aCon[j].style.opacity = 0;
-                aCon[j].style.filter = "alpha(opacity=0)";
-            }
-            oLi[index].className = "cur";
-            clearInterval(timer);
-            timer = setInterval(function () {
-                        alpha += 2;
-                        alpha > 100 && (alpha = 100);
-                        aCon[index].style.opacity = alpha / 100;
-                        aCon[index].style.filter = "alpha(opacity=" + alpha + ")";
-                        alpha == 100 && clearInterval(timer);
-                    },
-                    5)
-        }
-    }
-    
-    $('.navhl_more_b').click(function(){
+    $('.free-apply').click(function(){
     	layer.open({
 			type:2,
 			title:"装修申请",
@@ -400,4 +344,51 @@
     })
     
     $('.nav>ul>li').eq(0).find("a").addClass("navxd");
+    
+    $('.ask').click(function(){
+    	var load = layer.load();
+    	layer.prompt({
+    		title:"<center>提问</center>",
+    		area:['580px','320px'],
+    		formType:2
+    	},function(value, index, elem){
+    		$.ajax({
+    			url:"${basePath}question/addQuestion",
+    			method:"POST",
+    			data:{content:value},
+    			success:function(data){
+    				if(data.code!= '0'){
+    					layer.msg(data.msg);
+    				}else{
+    					layer.alert("添加问题完成",function(){
+    						location.reload();
+    					});
+    				}
+    			}
+    		});
+    	});
+    });
+    
+    function designScheme(id,title){
+    	var load= layer.load();
+    	$.ajax({
+    		url:"${basePath}decoration/allEffectImgs",
+    		data:{id:id,title:title},
+    		success:function(data){
+    			layer.close(load);
+    			if(data.code != '0'){
+    				layer.msg(data.msg);
+    			}else{
+    				var da=data.data;
+    				layer.photos({
+    				    photos: da,
+    				    tab:function(pic, layero){}
+    				});
+    			}
+    		},
+    		error:function(err){
+    			layer.msg("系统异常");
+    		}
+    	});
+    }
 </script>

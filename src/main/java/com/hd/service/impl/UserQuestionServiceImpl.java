@@ -29,8 +29,8 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 	
 	@Override
 	public Result queryQuestions(BasePage basePage) {
-		List<QuestionAndAnswerVO> questionAndAnswerVO = questionMapper.queryQuestionAndAnswer(basePage);
-		return new Result(questionAndAnswerVO);
+		List<Question> question = questionMapper.queryQuestionAndAnswer(basePage);
+		return new Result(question);
 	}
 
 	@Override
@@ -59,6 +59,8 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 		if(StringUtil.isEmpty(questionAnswer.getUserId())){
 			return Result.buildErrorResult("用户id不能为空");
 		}
+		questionAnswer.setCreateTime(new Date());
+		questionAnswer.setId(sequence.getCommonID());
 		int i = questionAnswerMapper.insert(questionAnswer);
 		if(i <= 0 ){
 			return Result.buildErrorResult("数据添加失败");

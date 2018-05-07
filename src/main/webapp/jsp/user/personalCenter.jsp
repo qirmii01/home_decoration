@@ -19,7 +19,16 @@
 	.dr-addr:hover{text-decoration:underline;}
 	.doc-url{display:inline-block;width:700px;overflow:hidden;vertical-align:middle;}
 	.doc-url:hover{text-decoration:underline;}
-	.msg-status,.msg-time{position:absolute;}
+	.msg-status,.msg-time{position:absolute;top: 12px;}
+	.apply-detail .layui-form-label{width:130px;}
+	.apply-detail .layui-input{width:280px;}
+	.message-list .layui-form-label{width:290px;color: #4a4848;}
+	.message-list .layui-form-item{border-bottom: 1px dashed;}
+	.message-list .layui-input-block{margin-left: 320px;}
+	.message-list .msg-status{left:-12px;}
+	.message-list .msg-time{right:18px;}
+	.message-list .cont{height: 36px;line-height: 36px;line-height:50px;font-size:18px;width:685px;padding-left:5px;border-bottom:1px solid rgba(0,150,169,.5);overflow: hidden;}
+	.message-list .cont:hover{cursor:pointer;}
 </style>
 <div class="locat"><span><a href="<%=basePath%>">首页</a></span>&nbsp;&gt;&nbsp;<span>个人中心</span></div>
 <div id="my-content">
@@ -130,11 +139,12 @@
 </div>
 
 <div class="my-message" style="display:none;">
-	<h4 style="text-align:center;">我的消息</h4>
+	<h4 style="text-align:center;font-size:20px;">我的消息</h4>
 	<ul class="message-list">
 	</ul>
 	<div id="layPage"></div>
 </div>
+
 <%@include file="../common/footer.jsp"%>
 <script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script type="text/javascript">
@@ -172,8 +182,26 @@
 			html+='"><i class="layui-anim layui-icon"></i>';
 		}
 		html+='<div>女</div></div></div></div></div>';
-		$('.per-content').html(html);
 		
+		if("${sessionScope.userInfo.type == 1}"){
+			html+='<div class="layui-form-item"><label class="layui-form-label">选择风格</label><div class="layui-input-block styles"></div></div>';
+			$.ajax({
+				url:"${basePath}decoration/queryStyles",
+				success:function(data){
+					if(data.code != '0'){
+						layer.msg("加载设计风格失败");
+					}else{
+						var da= data.data;
+						if(da.length > 0){
+							for(var i=0 ; i<da.length; i++){
+								html += '<input type="checkbox" name="decorationStyle" title="'+da.name+'"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin=""><span>'+da.name+'</span><i class="layui-icon"></i></div>';
+							}
+						}
+					}
+				}
+			});
+		}
+		$('.per-content').html(html);
 		$('.oper a').click(function(){
 			var index = $(this).index();
 			if(index == 0){
@@ -230,7 +258,9 @@
 			}
 		});
 	})
-	
+	$(function(){
+		$('.t1').click();
+	})
 	$('.per-left li .t-apply').click(function(){
 		$('.per-content').html("");
 		$.ajax({
@@ -424,9 +454,11 @@
 	
 	//查看设计情况
 	function seeDesignInfo(id){
+		layer.close(load);
 		$.ajax({
 			url:"<%=basePath%>decoration/queryDesignResult",
 			success:function(data){
+				layer.close(load);
 				if(data.code != '0'){
 					layer.msg(data.msg)
 				}else{
@@ -456,6 +488,7 @@
 				}
 			},
 			error:function(err){
+				layer.close(load);
 				layer.msg("系统异常")
 			}
 		});
@@ -490,9 +523,11 @@
 			area:'420px',
 			content:$('.uploadEffectImg-box'),
 			success:function(){
+				var load=layer.load();
 				$.ajax({
 					url:"<%=basePath%>decoration/queryStyles",
 					success:function(data){
+						layer.close(load);
 						if(data.code != '0'){
 							layer.msg(data.msg);
 						}else{
@@ -507,6 +542,7 @@
 						}
 					},
 					error:function(err){
+						layer.close(load);
 						layer.msg("系统异常");
 					}
 				});
@@ -591,6 +627,7 @@
 					var load=layer.load();
 					var titles = boxObj.find('.docList input.title-items');
 					if(titles.length == 0){
+						layer.close(load);
 						return;
 					}
 					
@@ -605,10 +642,10 @@
 						decorationEffectImgs.push(attachment);
 					}
 					
-					var decorationEffectImg={};
+					var decorationEffectKey={};
 					$('.uploadEffectImg-box .layui-form-checked').each(function(i){
-						decorationEffectImg.keyWord = $(this).attr("data-id");
-						decorationEffectKeys.push(decorationEffectImg);
+						decorationEffectKey.keyWord = $(this).attr("data-id");
+						decorationEffectKeys.push(decorationEffectKey);
 					});
 					
 					params = {};
@@ -640,10 +677,12 @@
 	/** 设计师功能 */
 	//拒绝接受
 	function refuse(id){
+		var load=layer.load();
 		$.ajax({
 			url:"<%=basePath%>decoration/applyRecord",
 			data:{applyId:id,status:"2"},
 			success:function(data){
+				layer.close(load);
 				if(data.code != '0'){
 					layer.msg(data.msg);
 				}else{
@@ -651,6 +690,7 @@
 				}
 			},
 			error:function(err){
+				layer.close(load);
 				layer.msg("系统异常");
 			}
 		});
@@ -658,10 +698,12 @@
 	
 	//接受
 	function accept(id){
+		var load=layer.load();
 		$.ajax({
 			url:"<%=basePath%>decoration/applyRecord",
 			data:{applyId:id,status:"1"},
 			success:function(data){
+				layer.close(load);
 				if(data.code != '0'){
 					layer.msg(data.msg);
 				}else{
@@ -669,6 +711,7 @@
 				}
 			},
 			error:function(err){
+				layer.close(load);
 				layer.msg("系统异常");
 			}
 		});
@@ -807,6 +850,23 @@
 		});
 	});
 	
+	$('.message-list .layui-form-item').click(function(){
+		var renderId = $(this).attr("sender-id");
+		layer.alert({
+			title:"<center>来自&nbsp;"+renderId+"&nbsp;用户的消息</center>",
+			area:'750px',
+			maxHeight:'480px',
+			success:function(data){
+				$(this).find(".msg-status").removeClass("layui-badge-dot");
+				$.post("${basePath}user/updateMsg",{status:"1"},function(data){
+					if(data.code != '0'){
+						layer.msg(data.msg);
+					}
+				});
+			}
+		});
+	});
+	
 	$('.t-m').click(function(){
 		$('.per-content').html("");
 		var load = layer.load();
@@ -826,25 +886,25 @@
 						url:"<%=basePath%>user/getMsgList",
 						data:{"page":obj.curr,"limit":obj.limit},
 						success:function(data){
+							layer.close(load);
 							if(data.code != '0'){
 								layer.msg(data.msg);
 							}else{
 								if(data.data.length ==0){
-									$('.message-list').html("<center>暂无消息</center>");
-									return;
-								}
-								var re = data.data;
-								var html ='';
-								for(var i=0 ; i<re.length; i++){
-									html+='<div class="layui-form-item"><label class="layui-form-label">来自'+re[i].senderId+'的消息</label>'
-									+'<div class="layui-input-block">'+re[i].content+'<span class="msg-time">'+getYearMonthDate(re[i].createTime)+'</span>'
-									+'<span class="msg-status';
-									if(re[i].status == '0'){
-										html+='layui-badge-dot';
+									$('.message-list').html('<p style="text-align:center;">暂无消息</p>');
+								}else{
+									var re = data.data;
+									var html ='';
+									for(var i=0 ; i<re.length; i++){
+										html+='<div class="layui-form-item" sender-id="'+re[i].senderId+'"><label class="layui-form-label">来自&nbsp;<span style="color:#342;">'+re[i].senderId+'</span>&nbsp;的消息</label>'
+										+'<div class="layui-input-block"><p class="cont">'+re[i].content+'</p><span class="msg-time">'+getYearMonthDate(re[i].createTime)+'</span>'
+										+'<span class="msg-status ';
+										if(re[i].status == '0'){
+											html+='layui-badge-dot';
+										}
+										html +='"></span></div></div>';
 									}
-									html +='"></span></div></div>';
 								}
-								
 								$('.message-list').html(html);
 								$('.per-content').html($('.my-message'));
 								$('.my-message').css("display","block")
@@ -880,7 +940,7 @@
 								type: 1,
 								scrollbar: false,
 								area: ['520px', '600px'],
-								content:$('.detail-box'),
+								content:$('.apply-detail'),
 								success:function(){
 									var result =data.data[0];
 									$('.apply-detail input[name="id"]').val(result.id);
@@ -928,13 +988,13 @@
 										status = '装修完成';
 									}
 									$('.apply-detail input[name="status"]').val(status);
-									$('.apply-detail input[name="createTime"]').val(getYearMonthDate(result.createTime));
-									$('.apply-detail input[name="checkTime"]').val(getYearMonthDate(result.checkTime));
-									$('.apply-detail input[name="refuseTime"]').val(getYearMonthDate(result.refuseTime));
+									$('.apply-detail input[name="createTime"]').val(result.createTime ? getYearMonthDate(result.createTime):"");
+									$('.apply-detail input[name="checkTime"]').val(result.checkTime ? getYearMonthDate(result.checkTime) :"");
+									$('.apply-detail input[name="refuseTime"]').val(result.refuseTime ? getYearMonthDate(result.refuseTime):"");
 									$('.apply-detail input[name="refuseReason"]').val(result.refuseReason);
-									$('.apply-detail input[name="acceptTime"]').val(getYearMonthDate(result.acceptTime));
+									$('.apply-detail input[name="acceptTime"]').val(result.acceptTime ? getYearMonthDate(result.acceptTime) :"");
 									$('.apply-detail input[name="userId"]').val(result.userId);
-									$('.apply-detail input[name="finishTime"]').val(getYearMonthDate(result.finishTime));
+									$('.apply-detail input[name="finishTime"]').val(result.finishTime ? getYearMonthDate(result.finishTime) :"");
 								},
 								cancel:function(index){
 									layer.close(load);
@@ -1010,9 +1070,8 @@
 								
 								$.ajax({
 									url:"<%=basePath%>decoration/addAttachment",
-									data:{"applyAttachments":attachments},
-									dataType: "json",
-									method:"POST", 
+									data:{"applyAttachments":JSON.stringify(attachments)},
+									method:"POST",
 									success:function(data){
 										layer.close(load);
 										if(data.code != '0'){

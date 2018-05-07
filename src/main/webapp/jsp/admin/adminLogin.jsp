@@ -50,5 +50,11 @@
 			}
 		});
 	});
+	
+	window.onkeydown=function(e){
+		if(e.keyCode == 13){
+			$('#submit').click();
+		}
+	}
 </script>
 </html>

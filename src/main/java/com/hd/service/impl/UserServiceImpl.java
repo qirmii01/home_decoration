@@ -248,7 +248,6 @@ public class UserServiceImpl implements UserService {
 			if(formData.getAvatar() != null && formData.getAvatar().equals(user.getAvatar())
 				&& formData.getAvatarPath() != null && formData.getAvatarPath().equals(user.getAvatarPath())	
 				&& formData.getCaseExample() != null && formData.getCaseExample().equals(user.getCaseExample()) 
-				&& formData.getPositionalTitles() != null && formData.getPositionalTitles().equals(user.getPositionalTitles())
 				&& formData.getSex() != null && formData.getSex().equals(user.getSex())
 				&& formData.getStatus() != null && formData.getStatus().equals(user.getStatus())
 				&& formData.getTelphone() != null && formData.getTelphone().equals(user.getTelphone())
@@ -334,7 +333,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Result queryDesignerDetailInfo(String designerId) {
-		List<DesignerWithBLOBs> designerWithBLOBs = designerMapper.queryDesignerInfo(designerId, "0");
+		List<DesignerWithBLOBs> designerWithBLOBs = designerMapper.queryDesignerInfo(designerId, "1");
 		return new Result(designerWithBLOBs);
 	}
 
@@ -405,6 +404,8 @@ public class UserServiceImpl implements UserService {
 		record.setId(sequence.getCommonID());
 		record.setReceiveId(receiveId);
 		record.setSenderId(userId);
+		record.setStatus("0");
+		record.setCreateTime(new Date());
 		int i = messageMapper.insert(record);
 		if( i<= 0 ){
 			return Result.buildErrorResult("数据插入失败");
@@ -413,17 +414,38 @@ public class UserServiceImpl implements UserService {
 		return Result.buildSuccessResult();
 	}
 
-
 	@Override
 	public Result queryMsgList(String userId, BasePage basePage) {
 		List<Message> messages = messageMapper.selectMsgList(userId, basePage);
 		return new Result(messages);
 	}
 
-
 	@Override
 	public Result countMsg(String userId) {
 		int count = messageMapper.countMyMsg(userId);
 		return new Result(count);
 	}
+
+	@Override
+	public Result updateMsg(Message formData) {
+		if(StringUtil.isEmpty(formData.getId())){
+			return Result.buildErrorResult("消息id不能为空");
+		}
+		
+		if(StringUtil.isEmpty(formData.getContent()) 
+				&&StringUtil.isEmpty(formData.getReceiveId())
+				&&StringUtil.isEmpty(formData.getSenderId())
+				&&StringUtil.isEmpty(formData.getStatus())
+				&&formData.getCreateTime() == null){
+			return Result.buildErrorResult("更新参数不能为空");
+		}
+		
+		int i = messageMapper.updateByPrimaryKeySelective(formData);
+		if( i<=0 ){
+			return Result.buildErrorResult("数据更新失败");
+		}
+		return Result.buildSuccessResult();
+	}
+	
+	
 }

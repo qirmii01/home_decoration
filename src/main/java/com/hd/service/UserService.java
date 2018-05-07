@@ -3,6 +3,7 @@ package com.hd.service;
 import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DesignerWithBLOBs;
+import com.hd.domain.Message;
 import com.hd.domain.Result;
 import com.hd.domain.User;
 
@@ -168,4 +169,11 @@ public interface UserService {
 	 * @return
 	 */
 	Result countMsg(String userId);
+	
+	/**
+	 * 更新消息
+	 * @param formData 表单对象
+	 * @return
+	 */
+	Result updateMsg(Message formData);
 }

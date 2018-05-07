@@ -2,12 +2,13 @@ package com.hd.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hd.domain.ApplyAttachmentList;
 import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
@@ -98,9 +99,15 @@ public class DecorationController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addAttachment")
-	public Result addAttachment(ApplyAttachmentList applyAttachments){
-		Result result = decorationService.addAttachment(applyAttachments.getApplyAttachments());
-		return result;
+	public Result addAttachment(String applyAttachments){
+		try {
+			JSONArray jsonArray = new JSONArray(applyAttachments);
+		} catch (JSONException e) {
+			System.out.println("????????");
+			e.printStackTrace();
+		}
+		//Result result = decorationService.addAttachment(applyAttachments);
+		return null;
 	}
 	
 	/**
@@ -208,6 +215,18 @@ public class DecorationController extends BaseController{
 	@ResponseBody
 	public Result applyBaseInfo(DecorationApply decorationApply){
 		Result result = decorationService.queryDecorationApplyBaseInfo(decorationApply);
+		return result;
+	}
+	
+	/**
+	 * 查询装修效果图的所有图片
+	 * @param id 装修效果id
+	 * @return
+	 */
+	@RequestMapping("allEffectImgs")
+	@ResponseBody
+	public Result allEffectImgs(String id,String title){
+		Result result = decorationService.queryAllEffectImg(id,title);
 		return result;
 	}
 }

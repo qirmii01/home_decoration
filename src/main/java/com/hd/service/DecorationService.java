@@ -118,4 +118,12 @@ public interface DecorationService {
 	 * @return
 	 */
 	public Result queryDecorationApplyBaseInfo(DecorationApply formData);
+	
+	/**
+	 * 查询所有效果图
+	 * @param effectId 装修效果id
+	 * @param title 装修效果标题
+	 * @return
+	 */
+	public Result queryAllEffectImg(String effectId, String title);
 }

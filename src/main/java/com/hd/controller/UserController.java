@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DesignerWithBLOBs;
+import com.hd.domain.Message;
 import com.hd.domain.Result;
 import com.hd.domain.User;
 import com.hd.service.AdminService;
@@ -341,6 +342,13 @@ public class UserController {
 		HttpSession session = request.getSession();
 		User userSession = (User)session.getAttribute("userInfo");
 		Result result = userService.countMsg(userSession.getId());
+		return result;
+	}
+	
+	@RequestMapping("updateMsg")
+	@ResponseBody
+	public Result updateMsg(Message message){
+		Result result = userService.updateMsg(message);
 		return result;
 	}
 }

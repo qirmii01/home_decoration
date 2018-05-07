@@ -56,6 +56,6 @@ public interface QuestionMapper {
      * @param basePage 分页对象
      * @return
      */
-    List<QuestionAndAnswerVO> queryQuestionAndAnswer(BasePage basePage);
+    List<Question> queryQuestionAndAnswer(BasePage basePage);
     
 }

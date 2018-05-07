@@ -45,7 +45,7 @@ $('.nav>ul>li').eq(1).find("a").addClass("navxd");
 								'<li><div class="piclist_img">'
 				                        +'<a href=""><img src="<%=filePath%>/'+data[i].effectSrc+'" width="325" height="210" alt="'+data[i].title+'"/></a>'
 				                        +'<div class="piclist_img_a">'+data[i].imgCount+'张</div>'
-				                        +'<div class="piclist_img_b"><a href="" target="_blank" title="获取设计方案">获取设计方案</a></div>'
+				                        +'<div class="piclist_img_b"><a href="javascript:designScheme(\''+data[i].id+'\',\''+data[i].title+'\');" target="_blank" title="获取设计方案">获取设计方案</a></div>'
 				                    +'</div>'
 				                    +'<div class="picont"><div class="piclist_txt">'
 				                        +'<a href="" title="'+data[i].designerName+'"><img src="<%=filePath%>/'+data.designerHeader+'" alt="data[i].designerName"></a>'
@@ -73,4 +73,27 @@ $('.nav>ul>li').eq(1).find("a").addClass("navxd");
 			}
 		});
 	})
+	
+	function designScheme(id,title){
+    	var load= layer.load();
+    	$.ajax({
+    		url:"${basePath}decoration/allEffectImgs",
+    		data:{id:id,title:title},
+    		success:function(data){
+    			layer.close(load);
+    			if(data.code != '0'){
+    				layer.msg(data.msg);
+    			}else{
+    				var da=data.data;
+    				layer.photos({
+    				    photos: da,
+    				    tab:function(pic, layero){}
+    				});
+    			}
+    		},
+    		error:function(err){
+    			layer.msg("系统异常");
+    		}
+    	});
+    }
 </script>

@@ -124,4 +124,18 @@
       title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  
+  <select id="queryAllEffectImg" resultType="com.hd.domain.ImageObj">
+  	SELECT
+  		di.title alt,
+  		di.img pid,
+  		iso.path src
+  	FROM
+  		decoration_effect_img di,
+  		img_source iso
+  	WHERE
+  		di.img = iso.id
+  		AND
+  		di.effect_id = #{effectId}
+  </select>
 </mapper>

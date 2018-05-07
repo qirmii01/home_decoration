@@ -341,7 +341,11 @@
     	decoration_apply
     WHERE
     	1=1
-    	<if test="type != null">
+      <if test="id != null">
+    	AND
+        id = #{id,jdbcType=CHAR}
+      </if>
+      <if test="type != null">
     	AND
         type = #{type,jdbcType=CHAR}
       </if>

@@ -146,6 +146,7 @@
 	});
 	
 	$('#loginBtn').click(function () {
+		var load = layer.load();
 	    var name = $('[name="loginName"]').val();
 	    if($('.small_tip input[type="checkbox"]').prop("checked")){
 		    setCookie("userName",name,30);
@@ -158,6 +159,7 @@
 	                $('[name="loginName"]').focus();
 	            }
 	        });
+	        layer.close(load);
 	        return;
 	    }
 	    var pwd = $('[name="loginPwd"]').val();
@@ -167,6 +169,7 @@
 	                $('[name="loginPwd"]').focus();
 	            }
 	        });
+	        layer.close(load);
 	        return;
 	    }
 	    var data = {};
@@ -178,6 +181,7 @@
 	        data: data,
 	        dataType: 'json',
 	        success: function (result) {
+	        	layer.close(load);
 	            if (result.code == 0) {
 	            	layer.msg("登录成功",{
 	            		time:1400,
@@ -189,6 +193,10 @@
 	            	console.log(result.msg)
 	                layer.alert(result.msg, {time: 1500});
 	            }
+	        },
+	        error:function(err){
+	        	layer.close(load);
+	        	laer.msg("系统异常");
 	        }
 	    })
 	});

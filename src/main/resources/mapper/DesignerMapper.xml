@@ -254,7 +254,7 @@
 		d.engage_time engageTime,
 		d.introduce introduce,
 		d.record record,
-		u.positional_titles positionalTitle,
+		d.positional_title positionalTitle,
 		u.case_example caseExample,
 		`is`.path headerImg
   	FROM
@@ -358,7 +358,7 @@
     	AND
     	d.user_id = #{designerId}
       <if test="status!=null">
-          AND status = #{status}
+          AND d.status = #{status}
       </if>
   </select>
   
