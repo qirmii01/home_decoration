@@ -21,6 +21,13 @@ public interface DecorationService {
 	public Result queryDecorationApply(DecorationApply decorationApply);
 	
 	/**
+	 * 删除附件
+	 * @param id 附件id
+	 * @return
+	 */
+	public Result delAttachment(String id);
+	
+	/**
 	 * 查询装修申请列表
 	 * @param queryAll 查询所有标志
 	 * @return

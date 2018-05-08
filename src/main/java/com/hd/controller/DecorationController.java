@@ -1,18 +1,28 @@
 package com.hd.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hd.domain.ApplyAttachment;
 import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
+import com.hd.domain.DecorationEffect;
 import com.hd.domain.DecorationEffectDTO;
+import com.hd.domain.DecorationEffectImg;
+import com.hd.domain.DecorationEffectKey;
 import com.hd.domain.Result;
 import com.hd.domain.User;
 import com.hd.service.DecorationService;
@@ -59,11 +69,24 @@ public class DecorationController extends BaseController{
 	}
 	
 	/**
+	 * 删除装修申请附件
+	 * @param id 装修申请id
+	 * @return
+	 */
+	@RequestMapping("delAttachment")
+	@ResponseBody
+	public Result delAttachment(String id){
+		Result result = decorationService.delAttachment(id);
+		return result;
+	}
+	
+	/**
 	 * 装修申请页面
 	 * @return
 	 */
 	@RequestMapping("decorationApplyPage")
-	public String decorationApplyPage(){
+	public String decorationApplyPage(String applyId){
+		request.setAttribute("applyId", applyId);
 		return "jsp/user/decorationApply";
 	}
 	
@@ -99,15 +122,20 @@ public class DecorationController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("addAttachment")
+	@ResponseBody
 	public Result addAttachment(String applyAttachments){
-		try {
-			JSONArray jsonArray = new JSONArray(applyAttachments);
-		} catch (JSONException e) {
-			System.out.println("????????");
-			e.printStackTrace();
+		List<ApplyAttachment> attachments = new ArrayList<ApplyAttachment>();
+		JSONArray jsonArray=JSONArray.fromObject(applyAttachments);
+		
+		int len = jsonArray.size();
+		ApplyAttachment applyAttachment =null;
+		for (int i = 0; i <len; i++) {
+			JSONObject jsonObj =JSONObject.fromObject(jsonArray.get(i));
+			applyAttachment = (ApplyAttachment)JSONObject.toBean(jsonObj,ApplyAttachment.class);
+			attachments.add(applyAttachment);
 		}
-		//Result result = decorationService.addAttachment(applyAttachments);
-		return null;
+		Result result = decorationService.addAttachment(attachments);
+		return result;
 	}
 	
 	/**
@@ -129,9 +157,10 @@ public class DecorationController extends BaseController{
 	 */
 	@RequestMapping("addDecoEffect")
 	@ResponseBody
-	public Result addDecoEffect(DecorationEffectDTO formData){
-		Result result = decorationService.addDecorationEffect(formData);
-		return result;
+	public Result addDecoEffect(DecorationEffect decorationEffect,DecorationEffectKey[] decorationEffectKeys, DecorationEffectImg[] decorationEffectImgs){
+		System.out.println(decorationEffectKeys);
+//		Result result = decorationService.addDecorationEffect(formData);
+		return null;
 	}
 	
 	/**

@@ -336,7 +336,7 @@
   <select id="queryDesignerInfo" resultMap="designerDetailInfo">
     SELECT
     	d.id id,
-  		u.name name,
+  		u.user_name name,
   		iso.path avatarPath,
   		u.case_example caseExample,
   		d.user_id userId,

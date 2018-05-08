@@ -1,6 +1,9 @@
 package com.hd.mapper;
 
+import java.util.List;
+
 import com.hd.domain.DesignerStyle;
+import com.hd.domain.DesignerStyleInfo;
 
 public interface DesignerStyleMapper {
     /**
@@ -38,5 +41,19 @@ public interface DesignerStyleMapper {
 	 * @mbggenerated
 	 */
 	int updateByPrimaryKey(DesignerStyle record);
+	
+	/**
+	 * 查询设计师风格
+	 * @param designerId 设计师id
+	 * @return
+	 */
+	List<DesignerStyleInfo> queryStyles(String designerId);
+	
+	/**
+	 * 查询所有的风格与设计师对应的状态 
+	 * @param designerId 设计师id
+	 * @return
+	 */
+	List<DesignerStyleInfo> queryAllStyleStatus(String designerId);
 
 }

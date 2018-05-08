@@ -176,4 +176,18 @@ public interface UserService {
 	 * @return
 	 */
 	Result updateMsg(Message formData);
+	
+	/**
+	 * 查询我的设计风格
+	 * @param designerId 设计师id
+	 * @return
+	 */
+	Result queryMyStyles(String designerId);
+	
+	/**
+	 * 查询设计师所有风格的状态
+	 * @param designerId 设计师id
+	 * @return
+	 */
+	Result queryAllStyleStatusAboutDesigner(String designerId);
 }

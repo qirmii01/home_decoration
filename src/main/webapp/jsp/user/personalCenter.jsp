@@ -13,10 +13,11 @@
 	#my-content{border-top:1px solid #123;overflow:hidden;}
 	.per-left{min-height:450px;margin-right:20px;}
 	.per-content{margin-top:5px;width:1100px;}
+	.per-content .edit{}
 	.oper{margin-right:75px;}
 	.oper a:first-child{margin-right:8px;}
 	.avatar{line-height:100px;text-align:center;position:relative;}
-	.dr-addr:hover{text-decoration:underline;}
+	.dr-addr:hover{text-decoration:underline;cursor:pointer;}
 	.doc-url{display:inline-block;width:700px;overflow:hidden;vertical-align:middle;}
 	.doc-url:hover{text-decoration:underline;}
 	.msg-status,.msg-time{position:absolute;top: 12px;}
@@ -29,6 +30,8 @@
 	.message-list .msg-time{right:18px;}
 	.message-list .cont{height: 36px;line-height: 36px;line-height:50px;font-size:18px;width:685px;padding-left:5px;border-bottom:1px solid rgba(0,150,169,.5);overflow: hidden;}
 	.message-list .cont:hover{cursor:pointer;}
+	.indent20{text-indent:20px;}
+	.indent40{text-indent:40px;}
 </style>
 <div class="locat"><span><a href="<%=basePath%>">首页</a></span>&nbsp;&gt;&nbsp;<span>个人中心</span></div>
 <div id="my-content">
@@ -48,8 +51,9 @@
 	<div class="per-content fl" lay-filter="personCenter-cont"></div>
 </div>
 
-<div class="uploadEffectImg-box" style="display:none;">
+<div class="uploadEffectImg-box layui-form" style="display:none;">
 	<input type="hidden" class="apply-id">
+	<input type="hidden" class="designer-id">
 	<div class="layui-form-item">
 		<label class="layui-form-label">风格：</label>
 		<div class="layui-input-block">
@@ -145,6 +149,17 @@
 	<div id="layPage"></div>
 </div>
 
+<div class="layui-form edit-style" style="display:none;">
+	<div class="layui-form-item">
+	    <label class="layui-form-label">风格列表(绿色为我已选择的风格)</label>
+	    <div class="layui-input-block">
+	    </div>
+  </div>
+  <div class="layui-form-item">
+  	<div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="changeStyle">立即提交</button>
+  </div>
+</div>
 <%@include file="../common/footer.jsp"%>
 <script type="text/javascript" src="<%=basePath%>plugins/layui/layui.js"></script>
 <script type="text/javascript">
@@ -183,10 +198,11 @@
 		}
 		html+='<div>女</div></div></div></div></div>';
 		
-		if("${sessionScope.userInfo.type == 1}"){
-			html+='<div class="layui-form-item"><label class="layui-form-label">选择风格</label><div class="layui-input-block styles"></div></div>';
+		var userType = "${sessionScope.userInfo.type}";
+		if(userType == "1"){
+			html+='<div class="layui-form-item"><label class="layui-form-label">我的风格：</label><div class="layui-input-block styles"></div></div>';
 			$.ajax({
-				url:"${basePath}decoration/queryStyles",
+				url:"${basePath}user/queryMyStyles",
 				success:function(data){
 					if(data.code != '0'){
 						layer.msg("加载设计风格失败");
@@ -194,14 +210,66 @@
 						var da= data.data;
 						if(da.length > 0){
 							for(var i=0 ; i<da.length; i++){
-								html += '<input type="checkbox" name="decorationStyle" title="'+da.name+'"><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin=""><span>'+da.name+'</span><i class="layui-icon"></i></div>';
+								html += '<span data-id="'+da.id+'">'+da.styleName+'</span>';
 							}
+						}else{
+							html+='<span style="color:gray;">暂无</span>';
 						}
+						html+='<span class="edit"></span>';
 					}
 				}
 			});
 		}
 		$('.per-content').html(html);
+		
+		$('.styles .edit').click(function(){
+			var load = layer.load();
+			$.ajax({
+				url:"${basePath}user/allStylesStatusAboutDesigner",
+				success:function(data){
+					layer.close(load);
+					if(data.code != '0'){
+						layer.msg(data.msg);
+					}else{
+						var da = data.data;
+						var html="";
+						if(da.length ==0){
+							hmlt="暂无数据";
+						}else{
+							for(var i= 0 ;i<da.length; i++){
+								html+='<input type="checkbox" lay-skin="primary" name="style" data-id="'+da[i].id+'" title="'+da[i].styleName+'"';
+								if(da.status == '1'){
+									html+='checked';
+								}
+								html+='>';
+							}
+						}
+						$(".edit-style .layui-input-block").html(html);
+						layer.open({
+							type:1,
+							title:"风格编辑",
+							area:"680px",
+							content:$(".edit-style"),
+							success:function(layero,index){
+								layui.use('form',function(){
+									var form = layui.form;
+									form.on('sumbit(changeStyle)',function(obj){
+										console.log(obj.field)
+										
+										return false;
+									});
+								})
+							}
+						});
+					}
+				},
+				error:function(err){
+					layer.close(load);
+					layer.msg("系统异常");
+				}
+			});
+		});
+		
 		$('.oper a').click(function(){
 			var index = $(this).index();
 			if(index == 0){
@@ -267,7 +335,6 @@
 			url:"<%=basePath%>decoration/userDecorationApply",
 			data:{"userId":"${sessionScope.userInfo.id}"},
 			success:function(data){
-				console.log("s4:"+new Date().getTime())
 				if(data.code != '0'){
 					layer.msg(data.msg);
 				}else{
@@ -331,11 +398,11 @@
 											if(d.status == 0){
 												return "审核中";
 											}else if(d.status == 1){
-												return "已发布，等待设计师选择";
+												return "已发布";
 											}if(d.status == 2){
 												return "审核未通过";
 											}if(d.status == 3){
-												return d.designerName+"于"+getYearMonthDate(d.acceptTime)+"接受装修设计";
+												return "设计师于"+getYearMonthDate(d.acceptTime)+"接受装修设计";
 											}if(d.status == 4){
 												return getYearMonthDate(d.acceptTime)+"拒绝"+d.designerName+"的设计";;
 											}if(d.status == 5){
@@ -345,6 +412,7 @@
 											}
 										}},
 										{title:'操作',width:tableWid/7,templet:function(d){
+											console.log(d)
 											var templ;
 											if(d.status == 0){
 												templ='<a class="layui-btn layui-btn-xs" href="javascript:edit(\''+d.id+'\')">修改</a>';
@@ -353,17 +421,17 @@
 											}else if(d.status == 2){
 												templ='<a class="layui-btn layui-btn-xs" href="javascript:reapply(\''+d.userId+'\')">重新申请</a>';
 											}else if(d.status == 3){
-												templ='<a class="layui-btn layui-btn-xs" href="javascript:seeDesignInfo(\''+d.id+'\')">查看设计状态</a>';
+												templ='<a class="layui-btn layui-btn-xs" href="javascript:seeDesignInfo(\''+d.id+'\')" title="查看设计方案">查看</a>'
+													+'<a class="layui-btn layui-btn-xs" href="javascript:accept(\''+d.id+'\')" title="接受设计方案，开始装修">接受</a>'
+													+'<a class="layui-btn layui-btn-xs" href="javascript:inputRefuseReason(\''+d.id+'\')" title="拒绝接受设计方案，并输入理由">拒绝</a>';
 											}else if(d.status == 4){
 												templ='<a class="layui-btn layui-btn-xs" href="javascript:seeDesignInfo(\''+d.id+'\')">查看设计状态</a>'
-													+'<a class="layui-btn layui-btn-xs" href="javascript:inputRefuseReason(\''+d.id+'\')">拒绝接受设计方案，并输入理由</a>'
-													+'<a class="layui-btn layui-btn-xs" href="javascript:accept(\''+d.id+'\')">接受设计方案，开始装修</a>';
 											}else if(d.status == 5){
 												templ='<a class="layui-btn layui-btn-xs" href="javascript:seeDesignInfo(\''+d.id+'\')">查看设计状态</a>'
 												+'<a class="layui-btn layui-btn-xs" href="javascript:finish(\''+d.id+'\')">装修完成</a>';
 											}else if(d.status == 6){
 												templ='<a class="layui-btn layui-btn-xs" href="javascript:seeDesignInfo(\''+d.id+'\')">查看设计状态</a>'
-												+'<a class="layui-btn layui-btn-xs" href="javascript:uploadEffectImg(\''+d.id+'\')">上传装修效果图</a>'
+												+'<a class="layui-btn layui-btn-xs" href="javascript:uploadEffectImg(\''+d.id+'\',\''+d.acceptId+'\')">上传装修效果图</a>'
 												+'<a class="layui-btn layui-btn-xs" href="javascript:evaluate(\''+d.id+'\')">评价</a>';
 											}
 											return templ;
@@ -396,8 +464,10 @@
 	//修改申请
 	function edit(id){
 		layer.open({
+			type:2,
 			title:"修改申请",
-			content:"<%=basePath%>decoration/decorationApplyPage"
+			area:'380px',
+			content:"<%=basePath%>decoration/decorationApplyPage?applyId="+id
 		});
 	}
 	
@@ -448,13 +518,14 @@
 	function reapply(id){
 		layer.open({
 			title:"装修申请",
+			type:2,
 			content:"<%=basePath%>decoration/decorationApplyPage"
 		});
 	}
 	
 	//查看设计情况
 	function seeDesignInfo(id){
-		layer.close(load);
+		var load= layer.load();
 		$.ajax({
 			url:"<%=basePath%>decoration/queryDesignResult",
 			success:function(data){
@@ -463,25 +534,21 @@
 					layer.msg(data.msg)
 				}else{
 					var da=data.data;
+					console.log(da)
 					var html = '<ul class="design-result">';
 					for(var i=0 ; i<da.length; i++){
-						html+='<li><span>'+da[i].attachmentName+'：</span><span class="dr-addr"><%=filePath%>'+da[i].sourcePath+'</span></li>';
+						html+='<li><p class="indent20"><span>'+da[i].attachmentName+'：</span></p><p class="indent40"><span class="dr-addr"><%=filePath%>'+da[i].sourcePath+'</span><p></li>';
 					}
 					html+='</ul>';
 					layer.open({
 						title:"设计结果",
 						type:1,
-						area:"380px",
+						area:"860px",
 						content:html,
 						success:function(){
 							$('.dr-addr').click(function(){
 								var addr =$(this).text();
-								layer.open({
-									title:"资源",
-									area:"300px",
-									type:2,
-									content:addr
-								});
+								window.open(addr);
 							});
 						}
 					});
@@ -516,7 +583,7 @@
 		});
 	}
 	
-	function uploadEffectImg(id){
+	function uploadEffectImg(id,designerId){
 		layer.open({
 			title:"<center>添加效果图</center>",
 			type:1,
@@ -524,28 +591,36 @@
 			content:$('.uploadEffectImg-box'),
 			success:function(){
 				var load=layer.load();
-				$.ajax({
-					url:"<%=basePath%>decoration/queryStyles",
-					success:function(data){
-						layer.close(load);
-						if(data.code != '0'){
-							layer.msg(data.msg);
-						}else{
-							var styles = data.data;
-							for(var i = 0; i<styles.length ; i++){
-								var html ='<input type="checkbox" name="style" title="'+styles[i].name+'">'
-									+'<div class="layui-unselect layui-form-checkbox" data-id="'+styles[i].id+'" lay-skin="">'
-									+'<span>'+styles[i].name+'</span><i class="layui-icon"></i></div>';
-								$('.uploadEffectImg-box .layui-input-block').append(html);
+				if($('.uploadEffectImg-box .layui-input-block').html().trim() == ''){
+					$.ajax({
+						url:"<%=basePath%>decoration/queryStyles",
+						success:function(data){
+							layer.close(load);
+							if(data.code != '0'){
+								layer.msg(data.msg);
+							}else{
+								var styles = data.data;
+								for(var i = 0; i<styles.length ; i++){
+									var html ='<input type="checkbox" name="style" title="'+styles[i].name+'">'
+										+'<div class="style-cont layui-unselect layui-form-checkbox" data-id="'+styles[i].id+'" lay-skin="">'
+										+'<span>'+styles[i].name+'</span><i class="layui-icon"></i></div>';
+									$('.uploadEffectImg-box .layui-input-block').append(html);
+								}
+								$('.uploadEffectImg-box .apply-id').val(id);
+								$('.uploadEffectImg-box .designer-id').val(designerId);
+								$('.style-cont').click(function(){
+									$(this).toggleClass("layui-form-checked");
+								});
 							}
-							$('.uploadEffectImg-box .apply-id').val(id);
+						},
+						error:function(err){
+							layer.close(load);
+							layer.msg("系统异常");
 						}
-					},
-					error:function(err){
-						layer.close(load);
-						layer.msg("系统异常");
-					}
-				});
+					});
+				}else{
+					layer.close(load);
+				}
 			}
 		});
 		
@@ -574,16 +649,16 @@
 	}
 	
 	function evaluate(id){
-		var html = '<div class="layui-form-item"><label class="layui-form-label">评价</label><div class="layui-input-block">'
-	            +'<select name="commentRating" lay-verify="required"><option value=""></option><option value="0">差评</option>'
+		var html = '<div class="layui-form"><div class="layui-form-item"><label class="layui-form-label">评价</label><div class="layui-input-block">'
+	            +'<select name="commentRating" lay-verify="required"><option value="">选择评价等级</option><option value="0">差评</option>'
 	            +'<option value="1">一般</option><option value="2">好评</option></select><div class="layui-unselect layui-form-select">'
 	            +'<div class="layui-select-title"><input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div>'
 	            +'<dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">请选择</dd><dd lay-value="0" class="">差评</dd><dd lay-value="1" class="">一般</dd>'
 	            +'<dd lay-value="2" class="">好评</dd></dl></div></div></div>'
-	            +'<div class="layui-form-item"><div class="layui-input-block"><button class="layui-btn evaluate-btn" lay-submit="" lay-filter="formDemo">立即提交</button></div></div>'
+	            +'<div class="layui-form-item"><div class="layui-input-block"><button class="layui-btn evaluate-btn" lay-submit="" lay-filter="formDemo">立即提交</button></div></div></div>'
 	    layer.open({
 	    	title:"<center>评价</center>",
-	    	area:['348px','180px'],
+	    	area:['488px','280px'],
 	    	content: html,
 	    	success:function(){
 	    		$('.evaluate-btn').click(function(){
@@ -613,61 +688,72 @@
 	    });
 	}
 	
-	$('.uploadEffectImg-box .layui-form-checkbox').click(function(){
-		$(this).toggleClass("layui-form-checked");
-	});
-	
 	//上传效果图
 	$('#openBtn').click(function(){
 		var applyId = $('.uploadEffectImg-box .apply-id').val();
+		var designerId = $('.uploadEffectImg-box .designer-id').val();
 		MyUtil.docUpload(
 			{uploadUrl:"<%=basePath%>admin/upload",filePath:"<%=filePath%>"},
 			function(boxObj){
 				boxObj.find('.add-doc button.submit').click(function(){
-					var load=layer.load();
-					var titles = boxObj.find('.docList input.title-items');
-					if(titles.length == 0){
-						layer.close(load);
-						return;
-					}
-					
-					var decorationEffectImgs=[];
-					var decorationEffectKeys=[];
-					
-					var decorationEffectImg={};
-					for(var i=0; i<titles.length ; i++){
-						decorationEffectImg.img = titles.eq(i).attr("data-id");
-						decorationEffectImg.applyId = applyId;
-						decorationEffectImg.title= titles.eq(i).val();
-						decorationEffectImgs.push(attachment);
-					}
-					
-					var decorationEffectKey={};
-					$('.uploadEffectImg-box .layui-form-checked').each(function(i){
-						decorationEffectKey.keyWord = $(this).attr("data-id");
-						decorationEffectKeys.push(decorationEffectKey);
-					});
-					
-					params = {};
-					params.decorationEffectImgs = decorationEffectImgs;
-					params.decorationEffectKeys = decorationEffectKeys;
-					
-					$.ajax({
-						url:"<%=basePath%>decoration/addDecoEffect",
-						data:params,
-						dataType : 'json',
-						success:function(data){
+					var title ="";
+					layer.prompt({
+						title:"输入效果标题",
+						area:"480px"
+					},function(value,index,elem){
+						layer.close(index);
+						title = value;
+						var load=layer.load();
+						var titles = boxObj.find('.docList input.title-items');
+						if(titles.length == 0){
 							layer.close(load);
-							if(data.code != '0'){
-								layer.msg(data.msg);
-							}else{
-								layer.msg("添加成功")
-							}
-						},
-						error:function(err){
-							layer.close(load);
-							layer.msg("系统异常");
+							return;
 						}
+						
+						var decorationEffectImgs=[];
+						
+						for(var i=0; i<titles.length ; i++){
+							var decorationEffectImg={};
+							decorationEffectImg.img = titles.eq(i).attr("data-id");
+							if(!decorationEffectImg.img){
+								continue;
+							}
+							decorationEffectImg.applyId = applyId;
+							decorationEffectImg.title= titles.eq(i).val();
+							decorationEffectImgs.push(decorationEffectImg);
+						}
+						
+						var decorationEffectKeys=[];
+						$('.uploadEffectImg-box .layui-form-checked').each(function(i){
+							var decorationEffectKey={};
+							decorationEffectKey.keyWord = $(this).attr("data-id");
+							decorationEffectKeys.push(decorationEffectKey);
+						});
+						
+						var decorationEffect ={designerId:designerId,applyId:applyId,title:title};
+						
+						console.log(params)
+						$.ajax({
+							url:"<%=basePath%>decoration/addDecoEffect",
+							data:{
+								decorationEffect : decorationEffect,
+								decorationEffectKeys: decorationEffectKeys,
+								decorationEffectImgs: decorationEffectImgs,	
+							},
+							method:"POST",
+							success:function(data){
+								layer.close(load);
+								if(data.code != '0'){
+									layer.msg(data.msg);
+								}else{
+									layer.msg("添加成功")
+								}
+							},
+							error:function(err){
+								layer.close(load);
+								layer.msg("系统异常");
+							}
+						});
 					});
 				});
 			}
@@ -697,7 +783,7 @@
 	}
 	
 	//接受
-	function accept(id){
+	function acceptApply(id){
 		var load=layer.load();
 		$.ajax({
 			url:"<%=basePath%>decoration/applyRecord",
@@ -1013,7 +1099,10 @@
 				layer.prompt({
 					formType: 2,
 					title: '<center>给&nbsp;'+obj.data.userId+'&nbsp;用户发送消息</center>',
-					area: ['600px', '360px']
+					area: ['600px', '360px'],
+					cancel:function(index){
+						layer.closeAll();
+					}
 				},function(value, index, elem){
 					var load = layer.load();
 					$.ajax({
@@ -1044,12 +1133,14 @@
 								var load=layer.load();
 								var titles = boxObj.find('.docList input.title-items');
 								if(titles.length == 0){
+									layer.close(load);
+									layer.msg("木有添加文件");
 									return;
 								}
 								
 								var attachments=[];
-								var attachment={};
 								for(var i=0; i<titles.length ; i++){
+									var attachment={};
 									attachment.sourceId = titles.eq(i).attr("data-id");
 									if(!attachment.sourceId){
 										continue;
@@ -1082,7 +1173,9 @@
 											}
 											layer.alert(re);
 										}else{
-											layer.msg("添加成功")
+											layer.msg("添加成功",{time:2000},function(){
+												location.reload();
+											})
 										}
 									},
 									error:function(err){
@@ -1143,8 +1236,8 @@
 	{{# if(d.status == "3" ){ }}
 		<a class="layui-btn layui-btn-xs" lay-event="uploadDesign">上传设计图</a>
 	{{# }else if(d.status =="4" ){ }}
-		<a class="layui-btn layui-btn-xs" lay-event="seeReason"></a>
-		<a class="layui-btn layui-btn-xs" lay-event="stopService"></a>
+		<a class="layui-btn layui-btn-xs" lay-event="seeReason">查看拒绝原因</a>
+		<a class="layui-btn layui-btn-xs" lay-event="stopService">停止服务</a>
 		//<a class="layui-btn layui-btn-xs" lay-event="report">举报恶意拒绝</a>
 	{{# } }}
 </script>

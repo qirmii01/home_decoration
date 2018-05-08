@@ -68,6 +68,15 @@ public class DecorationServiceImpl implements DecorationService {
 	}
 
 	@Override
+	public Result delAttachment(String id) {
+		int i = applyAttachmentMapper.deleteByPrimaryKey(id);
+		if( i<= 0 ){
+			return Result.buildErrorResult("删除失败");
+		}
+		return Result.buildSuccessResult();
+	}
+
+	@Override
 	public Result queryDecorationApplyLis(boolean queryAll) {
 		List<HashMap<String,Object>> decorationApplies = decorationApplyMapper
 				.queryDecorationApplyLis(queryAll, 8);
@@ -175,10 +184,10 @@ public class DecorationServiceImpl implements DecorationService {
 			return Result.buildErrorResult("设计师不能为空");
 		}
 		if(StringUtil.isEmpty(formData.getTitle())){
-			return Result.buildErrorResult("效果标题不能为空");
+			return Result.buildErrorResult("请输入效果图标题");
 		}
 		if(formData.getDecorationEffectImgs().isEmpty()){
-			return Result.buildErrorResult("效果图片补鞥呢为空");
+			return Result.buildErrorResult("请上传效果图片");
 		}
 		DecorationEffect decorationEffect = formData;
 		

@@ -274,6 +274,9 @@ MyUtil.docUpload = function(options,callback){
 			if(callback){
 				callback($("#"+boxId));
 			}
+		},
+		cancel:function(index){
+			layer.closeAll();
 		}
 	});
 }

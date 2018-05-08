@@ -351,4 +351,22 @@ public class UserController {
 		Result result = userService.updateMsg(message);
 		return result;
 	}
+	
+	@RequestMapping("queryMyStyles")
+	@ResponseBody
+	public Result queryMyStyles(){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.queryMyStyles(userSession.getId());
+		return result;
+	}
+	
+	@RequestMapping("allStylesStatusAboutDesigner")
+	@ResponseBody
+	public Result queryAllStylesStatusAboutDesigner(){
+		HttpSession session = request.getSession();
+		User userSession = (User)session.getAttribute("userInfo");
+		Result result = userService.queryAllStyleStatusAboutDesigner(userSession.getId());
+		return result;
+	}
 }

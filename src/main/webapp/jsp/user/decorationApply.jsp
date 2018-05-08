@@ -83,55 +83,176 @@ body{min-width:auto;}
     		var budget = $('.budget').val();
     		var type = $('.type').val();
     		var area = $('#area').val();
-    		
-    		$('.show ul li').each(function(index){
-    			
-    			
-    		});
-    		//新增
-   			$.ajax({
-   				url:"<%=basePath%>decoration/addDecorationApply",
-   				data:{"status":"0","budgetAmount":budget,"type":type,"area":area},
-   				success:function(data){
-   					if(data.code != '0'){
-   						layer.msg(data.msg);
-   					}else{
-   						var applyId = data.data;
-   						var end= true;
-   						$('.show ul li').each(function(index){
-   			    			var sourceId = $(this).attr("data-id");
-   			    			$.ajax({
-   			    				url:"<%=basePath%>decoration/addAttachment",
-   			    				data:{"applyId":applyId,"sourceId":sourceId},
-   			    				success:function(data){
-   			    					if(data.code != '0'){
-   			    						end =false;
-   			    					}			
-   			    				},
-   			    				error:function(err){
-   			    					console.log(err);
-   			    					layer.msg("系统错误");
-   			    				}
-   			    			});
-   						});
-   						if(end){
-   							layer.msg("申请完成",{time:1600},function(){
-   								parent.location.reload();
-   							})
-   						}
-   					}
-   				},
-   				error:function(err){
-   					console.log(err);
-   					layer.msg("系统错误");
-   				}
-   			});
+    		if(area == ''){
+    			layer.close(load);
+    			layer.msg("装修面积不能为空")
+    			return ;
+    		}
+
+    		var applyId = '${applyId}';
+    		if(!applyId){
+	    		//新增
+	   			$.ajax({
+	   				url:"<%=basePath%>decoration/addDecorationApply",
+	   				data:{"status":"0","budgetAmount":budget,"type":type,"area":area},
+	   				success:function(data){
+	   					if(data.code != '0'){
+		   					layer.close(load);
+	   						layer.msg(data.msg);
+	   					}else{
+	   						var applyId = data.data;
+	   						var attachments=[];
+	   						$('.show ul li').each(function(index){
+	   							var attachment={};
+	   							attachment.sourceId = $(this).attr("data-id");
+	   			    			attachment.applyId = applyId;
+	   			    			attachment.attachmentName='申请附件'+index;
+	   			    			attachment.type = '0';
+								attachments.push(attachment);
+	   						});
+	   			    			
+			    			$.ajax({
+			    				url:"<%=basePath%>decoration/addAttachment",
+			    				data:{applyAttachments:JSON.stringify(attachments)},
+			    				success:function(data){
+			    					layer.close(load);
+			    					if(data.code != '0'){
+			    						var result = data.data;
+										var re="";
+										for(var i=0 ; i<result.length; i++){
+											re +=result[i]+";";
+										}
+										layer.alert(re);
+			    					}else{
+			    						layer.msg("申请完成",{time:1600},function(){
+			   								parent.location.reload();
+			   							})
+			    					}
+			    				},
+			    				error:function(err){
+			    					console.log(err);
+			    					layer.msg("系统错误");
+			    				}
+			    			});
+	   					}
+	   				},
+	   				error:function(err){
+	   					layer.close(load);
+	   					layer.msg("系统错误");
+	   				}
+	   			});
+	    	}else{
+	    		//更新
+	    		$.ajax({
+	   				url:"<%=basePath%>decoration/updateDecorationApply",
+	   				data:{"id": applyId,"budgetAmount":budget,"type":type,"area":area},
+	   				success:function(data){
+	   					if(data.code != '0'){
+		   					layer.close(load);
+	   						layer.msg(data.msg);
+	   					}
+	   					
+	   					var attachments=[];
+	   					$('.show ul li').each(function(index){
+	   						if($(this).children().length = 1){
+	   							var attachment={};
+	   							attachment.sourceId = $(this).attr("data-id");
+	   			    			attachment.applyId = applyId;
+	   			    			attachment.attachmentName='修改添加申请附件';
+	   			    			attachment.type = '0';
+	   						attachments.push(attachment);
+	   						}
+	   					});
+	   		    		
+	   					if(attachments.length >0){
+	   		    			$.ajax({
+	   		    				url:"<%=basePath%>decoration/addAttachment",
+	   		    				data:{applyAttachments:JSON.stringify(attachments)},
+	   		    				success:function(data){
+	   		    					layer.close(load);
+	   		    					if(data.code != '0'){
+	   		    						var result = data.data;
+	   									var re="";
+	   									for(var i=0 ; i<result.length; i++){
+	   										re +=result[i]+";";
+	   									}
+	   									layer.alert(re);
+	   		    					}else{
+	   		    						layer.msg("申请完成",{time:1600},function(){
+	   		   								parent.location.reload();
+	   		   							})
+	   		    					}
+	   		    				},
+	   		    				error:function(err){
+	   		    					layer.close(load);
+	   		    					layer.msg("系统错误");
+	   		    				}
+	   		    			});
+	   					}
+	   				},
+	   				error:function(err){
+	   					layer.close(load);
+	   					layer.msg("系统错误");
+	   				}
+	   			});
+	    	}
     	});
     	
 		$('#cancel').click(function(){
     		parent.location.reload();
     	});
-		
+		$(function(){
+			var applyId = '${applyId}';
+			if(applyId){
+				$.ajax({
+					url:"${basePath}decoration/userDecorationApply",
+					data:{id:applyId,status:'0'},
+					success:function(data){
+						if(data.code != '0'){
+							layer.msg(data.msg);
+						}else{
+							var re = data.data;
+							$('.budget').val(re.budgetAmount);
+							$('.type').val(re.type);
+							$('#area').val(re.area);
+							if(re.applyAttachments.length > 0){
+								attachment = re.applyAttachments;
+								for(var i=0; i<attachment.length; i++){
+									var html = '<li class="atts" data-url="'+attachment[i].sourcePath+'" data-id="'+attachment[i].sourceId
+									+'"><a target="_blank" href="${basePath}'+attachment[i].sourcePath+'">文件id：'+attachment[i].sourceId+'</a><a href="javascript:void(0);" class="del" data-id="'+attachment[i].id+'">删除</a></li>';
+									$('.show ul').append(html);
+								}
+								
+								$('.del').click(function(){
+									var load = layer.load();
+									var id = $(this).attr("data-id");
+									$(this).parent().remove();
+									$.ajax({
+										url:"${basePath}decoration/delAttachment?id="+id,
+										success:function(data){
+											layer.close(load);
+											if(data.code != '0'){
+												layer.msg(data.msg);
+											}else{
+												layer.msg("删除成功");
+											}
+										},
+										error:function(err){
+											layer.close(load);
+											layer.msg("系统异常");
+										}
+									});
+								});
+							}
+						}
+					},
+					error:function(err){
+						layer.msg("系统异常");
+					}
+					
+				});
+			}
+		});
     </script>
 </body>
 </html>

@@ -66,10 +66,10 @@
 							var html ='';
 							if(data.length != 0 && d.data !='无数据'){
 								for(var i =0 ; i <data.length ; i++){
-									html+= '<li><div class="designerlist_l"><a href="<%=basePath%>user/designer/'+data[i].userId
+									html+= '<li><div class="designerlist_l"><a href="<%=basePath%>user/designerDetailInfo/'+data[i].userId
 										+'"><img src="<%=filePath%>'+data[i].headerImg+'" alt="'+data[i].userName+'"></a><div class="companyinfo_b">'
 										+'<dl><dt>'+(data[i].designNumber?data[i].designNumber:"暂无")+'</dt><dd>案例</dd></dl></div></div><div class="designerlist_r"><div class="designerlist_r_a">'
-										+'<span><a href="<%=basePath%>user/designer/'+data[i].userId+'" title="'+data[i].userName+' ">'+data[i].userName+' </a></span>'
+										+'<span><a href="<%=basePath%>user/designerDetailInfo/'+data[i].userId+'" title="'+data[i].userName+' ">'+data[i].userName+' </a></span>'
 										+'<div class="fr"><a class="gr" href="javascript:;" onclick="helpDesign(\''+data[i].userId+'\')">找TA设计</a>'
 										+'</div></div><div class="designerlist_r_b"><dl><dt><span>所属公司：</span><span>${sessionScope.baseInfo.name}</span></dt><dt><span>设计风格：</span>';
 										if(data[i].designerStyles.length ==0){

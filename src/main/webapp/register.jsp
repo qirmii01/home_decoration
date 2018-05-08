@@ -74,110 +74,32 @@ String filePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 
 <div class="footer">
-    <div class="footer-hd clearfix">
-        <div class="box">
-            <div class="about">
-                <div class="item_about rd">
-                    <dl>
-                        <dt><span class="a1">关于我们</span></dt>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/about/" target="_blank" rel="nofollow">公司介绍</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/dongtai/" target="_blank" rel="nofollow">企业动态</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/contact/" target="_blank" rel="nofollow">联系我们</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/fukuan/" target="_blank" rel="nofollow">付款方式</a></span> </dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/agreement/" target="_blank" rel="nofollow">用户协议</a></span></dd>
-                    </dl>
-                </div>
-                <div class="item_about rd">
-                    <dl>
-                        <dt><span class="a1">我是业主</span></dt>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/shejishi/">找设计师</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/company/">找装修公司</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/baojia_2/" target="_blank" rel="nofollow">申请量房</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/yusuan/" target="_blank" rel="nofollow">申请报价</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/baojia/" target="_blank" rel="nofollow">免费设计</a></span></dd>
-                    </dl>
-                </div>
-                <div class="item_about rd">
-                    <dl>
-                        <dt><span class="a1">我是装修公司</span></dt>
-                        <dd><span class="a2"><a href="http://user.jiazhuang.com/register/" target="_blank" rel="nofollow">我要接单</a></span></dd>
-                        <!--<dd><span class="a2"><a href="http://www.jiazhuang.com/joinus/" target="_blank" rel="nofollow">成为合伙人</a></span></dd>-->
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/zhaobiao/list/" target="_blank" rel="nofollow">查看装修申请</a></span></dd>
-                    </dl>
-                </div>
-                <div class="item_about rd">
-                    <dl>
-                        <dt><span class="a1">装修课堂</span></dt>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/zhuangxiuriji/">装修日记</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/zhuangxiufengshui/">装修风水</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/zhuangxiuliucheng/">装修知识</a></span></dd>
-                        <dd><span class="a2"><a href="http://www.jiazhuang.com/sitemap/">网站地图</a></span></dd>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="weibo">
-                <div class="wb_tel">
-                    <ul>
-                        <li><span>联系客服</span></li>
-                        <li>周一至周日：08:00-22:00</li>
-                        <li>全国统一服务热线：</li>
-                        <li>400-889-7706</li>
-                    </ul>
-                    <div class="ser_btn">
-                        <blockquote>
-                            <p><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2010749522&amp;site=qq&amp;menu=yes" target="_blank" class="btn">在线咨询</a></p>
-                        </blockquote>
-                    </div>
-                </div>
-                <div class="wb_pub">
-                    <p class="t1">微信公众号</p>
-
-                    <p><img src="" width="96" height="96"></p>
-
-                    <p class="t2">在微信上关注我们！</p>
-                </div>
-
-                <div class="wb_pub">
-                    <p class="t1">家装网APP下载</p>
-
-                    <p><img src="" width="96" height="96"></p>
-
-                    <p class="t2">下载APP获得更多服务！</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- end box -->
-
     <div class="box">
         <div class="icon">
             <div class="list">
-                <a href="http://www.jiazhuang.com/baojia_2/" rel="nofollow"><i class="icon1"></i>免费量房<em></em></a>
-                <a href="http://www.jiazhuang.com/baojia/" rel="nofollow"><i class="icon2"></i>免费设计<em></em></a>
-                <a href="http://www.jiazhuang.com/yusuan/" rel="nofollow"><i class="icon3"></i>免费报价<em></em></a>
-                <a href="http://www.jiazhuang.com/baojia_4/" rel="nofollow"><i class="icon4"></i>先行赔付<em></em></a>
-                <a href="javascript:;"><i class="icon5"></i>业主监督<em></em></a>
-                <a href="http://www.jiazhuang.com/baojia_3/" rel="nofollow"><i class="icon6"></i>装修保障</a>
+                <a href="javascript:void(0);" rel="nofollow"><i class="icon1"></i>免费量房<em></em></a>
+                <a href="javascript:void(0);" rel="nofollow"><i class="icon2"></i>免费设计<em></em></a>
+                <a href="javascript:void(0);" rel="nofollow"><i class="icon3"></i>免费报价<em></em></a>
+                <a href="javascript:void(0);" rel="nofollow"><i class="icon4"></i>先行赔付<em></em></a>
+                <a href="javascript:void(0);"><i class="icon5"></i>业主监督<em></em></a>
+                <a href="javascript:void(0);" rel="nofollow"><i class="icon6"></i>装修保障</a>
             </div>
         </div>
         <div class="copyright">
             <ul>
                 <li>免责声明：本网站部分内容由用户自行上传，如权利人发现存在误传其作品情形，请及时与本站联系</li>
-                <li>家装网 保留所有权利 ©2005- 2017 jiazhuang.com</li>
-                <li>家装网 <a href="http://www.miitbeian.gov.cn/">闽ICP备16003468号-2</a></li>
+                <li>透明家装 保留所有权利 ©2005- 2017 jiazhuang.com</li>
+                <li>透明家装 <a href="javascript:<%=basePath%>;">闽ICP备1234567号-1</a></li>
             </ul>
         </div>
     </div>
-    <!-- end box -->
 </div>
 <!-- end footer -->
 <script type="text/javascript" src="<%=basePath%>js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/register.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/Validform_v5.3.2.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/gt.js"></script>
-<script type="text/javascript" src="<%=basePath%>plugins/layui/layer.js"></script>
+<script type="text/javascript" src="<%=basePath%>plugins/layui/lay/modules/layer.js"></script>
 <script type="text/javascript">
     $('#verifyImg').on('click', function() {
         $(this).attr("src",'getVerificationCode?abc='+Math.random());

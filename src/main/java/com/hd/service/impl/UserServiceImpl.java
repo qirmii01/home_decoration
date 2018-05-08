@@ -10,6 +10,8 @@ import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
 import com.hd.domain.DesignerInfo;
+import com.hd.domain.DesignerStyle;
+import com.hd.domain.DesignerStyleInfo;
 import com.hd.domain.DesignerWithBLOBs;
 import com.hd.domain.ImgSource;
 import com.hd.domain.Message;
@@ -21,6 +23,7 @@ import com.hd.mapper.ApplyRecordMapper;
 import com.hd.mapper.DecorationApplyMapper;
 import com.hd.mapper.DecorationEffectMapper;
 import com.hd.mapper.DesignerMapper;
+import com.hd.mapper.DesignerStyleMapper;
 import com.hd.mapper.ImgSourceMapper;
 import com.hd.mapper.MessageMapper;
 import com.hd.mapper.SysExperienceListMapper;
@@ -61,6 +64,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	MessageMapper messageMapper;
+	
+	@Autowired
+	DesignerStyleMapper designerStyleMapper;
 	
 	@Override
 	public Result queryUser(User user) {
@@ -154,6 +160,7 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(password);
 		}
 		user.setId(sequence.getCommonID());
+		user.setStatus(0);
 		user.setUserName(user.getTelphone());
 		
 		int result = userMapper.insertSelective(user);
@@ -446,6 +453,18 @@ public class UserServiceImpl implements UserService {
 		}
 		return Result.buildSuccessResult();
 	}
-	
-	
+
+
+	@Override
+	public Result queryMyStyles(String designerId) {
+		List<DesignerStyleInfo> designerStyleInfos = designerStyleMapper.queryStyles(designerId);
+		return new Result(designerStyleInfos);
+	}
+
+
+	@Override
+	public Result queryAllStyleStatusAboutDesigner(String designerId) {
+		List<DesignerStyleInfo> designerStyleInfos = designerStyleMapper.queryAllStyleStatus(designerId);
+		return new Result(designerStyleInfos);
+	}
 }

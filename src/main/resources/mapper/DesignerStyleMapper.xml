@@ -102,4 +102,31 @@
       style_id = #{styleId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="queryStyles" resultType="com.hd.domain.DesignerStyleInfo">
+  	SELECT
+  		dcs.id id
+  		dcs.name styleName,
+  	FROM
+  		designer_style drs
+  		LEFT JOIN
+  			decoration_style dcs
+  			ON
+  				drs.style_id = dcs.id
+  	WHERE
+  		drs.designer_id = #{designerId}
+  </select>
+  <select id="queryAllStyleStatus" resultType="com.hd.domain.DesignerStyleInfo">
+  	SELECT
+  		dcs.id id,
+  		dcs.name styleName,
+  		IF(drs.id IS NULL,"0","1") status
+  	FROM
+  		decoration_style dcs
+  		LEFT JOIN
+  			designer_style drs
+  			ON
+  				drs.style_id = dcs.id
+  				AND
+  				drs.designer_id = #{designerId}
+  </select>
 </mapper>
