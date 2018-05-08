@@ -732,13 +732,12 @@
 						
 						var decorationEffect ={designerId:designerId,applyId:applyId,title:title};
 						
-						console.log(params)
 						$.ajax({
 							url:"<%=basePath%>decoration/addDecoEffect",
 							data:{
 								decorationEffect : decorationEffect,
-								decorationEffectKeys: decorationEffectKeys,
-								decorationEffectImgs: decorationEffectImgs,	
+								decorationEffectKeys: JSON.stringify(decorationEffectKeys),
+								decorationEffectImgs: JSON.stringify(decorationEffectImgs),	
 							},
 							method:"POST",
 							success:function(data){

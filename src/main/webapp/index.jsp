@@ -39,7 +39,7 @@
 	                <div class="path1">
 	                    <div class="fl w650">
 	                        <div class="jzwicon34"></div>
-	                        <p><em>透明家装：</em>通过透明家装网平台预约的业主，独享本品牌智能装修报价及透明家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
+	                        <p><em>${sessionScope.baseInfo.name}：</em>通过透明家装网平台预约的业主，独享本品牌智能装修报价及透明家装网会员特权免费量房设计等以上服务 ,优惠，省钱、省心、还省时！</p>
 	                    </div>
 	                </div>
 	            </div>
@@ -70,7 +70,7 @@
 	            <div class="colu_tw_b">
 	                <ul></ul>
 	            </div>
-	                        <!--图文信息混排 结束-->
+	            <!--图文信息混排 结束-->
 	
 	            <!--问答动态-->
 	            <div class="navhl"><span>问答动态</span></div>

@@ -176,47 +176,44 @@ public class DecorationServiceImpl implements DecorationService {
 	}
 
 	@Override
-	public Result addDecorationEffect(DecorationEffectDTO formData) {
-		if(StringUtil.isEmpty(formData.getApplyId())){
+	public Result addDecorationEffect(DecorationEffect deoDecorationEffect, List<DecorationEffectKey> decorationEffectKey, List<DecorationEffectImg> decorationEffectImg) {
+		if(StringUtil.isEmpty(deoDecorationEffect.getApplyId())){
 			return Result.buildErrorResult("装修申请id不能为空");
 		}
-		if(StringUtil.isEmpty(formData.getDesignerId())){
+		if(StringUtil.isEmpty(deoDecorationEffect.getDesignerId())){
 			return Result.buildErrorResult("设计师不能为空");
 		}
-		if(StringUtil.isEmpty(formData.getTitle())){
+		if(StringUtil.isEmpty(deoDecorationEffect.getTitle())){
 			return Result.buildErrorResult("请输入效果图标题");
 		}
-		if(formData.getDecorationEffectImgs().isEmpty()){
+		if(decorationEffectImg.isEmpty()){
 			return Result.buildErrorResult("请上传效果图片");
 		}
-		DecorationEffect decorationEffect = formData;
 		
 		//插入装修效果表数据
 		String effectId = sequence.getCommonID();
-		decorationEffect.setId(effectId);
-		decorationEffect.setCreateTime(new Date());
-		int i = decorationEffectMapper.insertSelective(decorationEffect);
+		deoDecorationEffect.setId(effectId);
+		deoDecorationEffect.setCreateTime(new Date());
+		int i = decorationEffectMapper.insertSelective(deoDecorationEffect);
 		if(i <= 0){
 			return Result.buildErrorResult("数据插入失败");
 		}
 		
 		//插入效果图关键字
-		List<DecorationEffectKey> decorationEffectKeys = formData.getDecorationEffectKeys();
-		for (DecorationEffectKey decorationEffectKey : decorationEffectKeys) {
-			decorationEffectKey.setId(sequence.getCommonID());
-			decorationEffectKey.setEffectId(effectId);
-			i = decorationEffectKeyMapper.insert(decorationEffectKey);
+		for (DecorationEffectKey effectKey : decorationEffectKey) {
+			effectKey.setId(sequence.getCommonID());
+			effectKey.setEffectId(effectId);
+			i = decorationEffectKeyMapper.insert(effectKey);
 			if(i <= 0){
 				return Result.buildErrorResult("数据插入失败");
 			}
 		}
 		
 		//插入效果图记录
-		List<DecorationEffectImg> decorationEffectImgs = formData.getDecorationEffectImgs();
-		for (DecorationEffectImg decorationEffectImg : decorationEffectImgs) {
-			decorationEffectImg.setId(sequence.getCommonID());
-			decorationEffectImg.setEffectId(effectId);
-			i = decorationEffectImgMapper.insert(decorationEffectImg);
+		for (DecorationEffectImg effectImg : decorationEffectImg) {
+			effectImg.setId(sequence.getCommonID());
+			effectImg.setEffectId(effectId);
+			i = decorationEffectImgMapper.insert(effectImg);
 			if(i <= 0){
 				return Result.buildErrorResult("数据插入失败");
 			}

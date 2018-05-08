@@ -19,19 +19,21 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,  
             HttpServletResponse response, Object o)throws Exception {
-		String req = request.getServletPath();
+		String path = request.getServletPath();
         Object userInfo = request.getSession().getAttribute("userInfo");
         
 //        //登录	登出	主页	不用过滤权限
-//		if(!req.startsWith("/admin")){
-//			return true;
-//		}else{
-//			if(userInfo==null){
-//				response.sendRedirect("adminIndex.jsp");
-//				return false;
-//			}
-//			return true;
-//		}
+		if(path.startsWith("/admin")){
+			if( !path.equals("/admin/login") && !path.equals("/admin") && userInfo==null){
+				response.sendRedirect("adminIndex.jsp");
+				return false;
+			}
+		}else{
+			if( userInfo==null && !path.equals("/admin/login")){
+				response.sendRedirect("adminIndex.jsp");
+				return false;
+			}
+		}
         return true;
 	}
 	

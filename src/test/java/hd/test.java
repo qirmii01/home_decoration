@@ -5,7 +5,12 @@ import java.util.Scanner;
 public class test {
 	public static final String a ="%s我是啊";
 	public static void main(String[] args) {
-		System.out.println("13574355195".substring(5, 11));
+		String path = "/admin/login";
+		if(!path.startsWith("/admin/login") || path.length()>6){
+			System.out.println("login");
+		}else{
+			System.out.println("----");
+		}
 	}
 	
 	class Test{

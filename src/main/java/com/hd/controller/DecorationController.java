@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hd.domain.ApplyAttachment;
@@ -157,9 +156,30 @@ public class DecorationController extends BaseController{
 	 */
 	@RequestMapping("addDecoEffect")
 	@ResponseBody
-	public Result addDecoEffect(DecorationEffect decorationEffect,DecorationEffectKey[] decorationEffectKeys, DecorationEffectImg[] decorationEffectImgs){
-		System.out.println(decorationEffectKeys);
-//		Result result = decorationService.addDecorationEffect(formData);
+	public Result addDecoEffect(DecorationEffect decorationEffect, String decorationEffectKeys,String decorationEffectImgs){
+		List<DecorationEffectKey> dEffectKeys = new ArrayList<DecorationEffectKey>();
+		JSONArray jsonArray=JSONArray.fromObject(decorationEffectKeys);
+		
+		int len = jsonArray.size();
+		DecorationEffectKey decorationEffectKey =null;
+		for (int i = 0; i <len; i++) {
+			JSONObject jsonObj =JSONObject.fromObject(jsonArray.get(i));
+			decorationEffectKey = (DecorationEffectKey)JSONObject.toBean(jsonObj,DecorationEffectKey.class);
+			dEffectKeys.add(decorationEffectKey);
+		}
+		
+		List<DecorationEffectImg> dEffectImgs = new ArrayList<DecorationEffectImg>();
+		JSONArray jsonArray_2=JSONArray.fromObject(decorationEffectImgs);
+		
+		int len_2 = jsonArray_2.size();
+		DecorationEffectImg decorationEffectImg =null;
+		for (int i = 0; i <len_2; i++) {
+			JSONObject jsonObj =JSONObject.fromObject(jsonArray_2.get(i));
+			decorationEffectImg = (DecorationEffectImg)JSONObject.toBean(jsonObj,DecorationEffectImg.class);
+			dEffectImgs.add(decorationEffectImg);
+		}
+		
+		Result result = decorationService.addDecorationEffect(decorationEffect, dEffectKeys, dEffectImgs);
 		return null;
 	}
 	

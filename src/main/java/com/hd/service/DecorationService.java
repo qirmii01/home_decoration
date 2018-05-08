@@ -6,7 +6,10 @@ import com.hd.domain.ApplyAttachment;
 import com.hd.domain.ApplyRecord;
 import com.hd.domain.BasePage;
 import com.hd.domain.DecorationApply;
+import com.hd.domain.DecorationEffect;
 import com.hd.domain.DecorationEffectDTO;
+import com.hd.domain.DecorationEffectImg;
+import com.hd.domain.DecorationEffectKey;
 import com.hd.domain.Result;
 
 /**
@@ -64,10 +67,12 @@ public interface DecorationService {
 	
 	/**
 	 * 添加装修效果相关信息
-	 * @param formData
+	 * @param decorationEffect 装修效果基本信息
+	 * @param decorationEffectKey 装修效果关键字 
+	 * @param decorationEffectImg 装修效果图片
 	 * @return
 	 */
-	public Result addDecorationEffect(DecorationEffectDTO formData);
+	public Result addDecorationEffect(DecorationEffect decorationEffect, List<DecorationEffectKey> decorationEffectKey, List<DecorationEffectImg> decorationEffectImg);
 	
 	/**
 	 * 更新装修效果相关信息
